@@ -24,7 +24,11 @@ from app.models.notification import Notification
 from app.models.requisition_evaluator import RequisitionEvaluator
 from app.models.stage_history import StageHistory
 from app.models.stage_instance import StageInstance
-from app.services.file_storage import resolve_document_path, resolve_resume_path
+from app.services.file_storage import (
+    delete_stored_file,
+    resolve_document_path,
+    resolve_resume_path,
+)
 from app.services.job_descriptions import version_file_paths
 
 logger = logging.getLogger(__name__)
@@ -67,7 +71,7 @@ def remove_orphaned_files(paths: list[Path]) -> None:
     """
     for path in paths:
         try:
-            path.unlink(missing_ok=True)
+            delete_stored_file(path)
         except OSError:
             logger.warning("Could not remove uploaded file %s", path, exc_info=True)
 

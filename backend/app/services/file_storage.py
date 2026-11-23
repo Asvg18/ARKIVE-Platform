@@ -1,42 +1,163 @@
-"""Local-disk storage for uploaded files: resumes, documents, job
-description PDFs and profile photos. The interface would not change for
-S3-compatible storage."""
+"""Storage for uploaded files: resumes, documents, job description PDFs
+and profile photos.
 
+Two modes, picked by settings (see app.infra.config):
+
+* Local only (the default). Files live under uploads/ on disk, as they
+  always have.
+* Bucket-backed, when upload_bucket and the AWS_* settings are all set.
+  Every save is also written to an S3-compatible bucket (Neon Object
+  Storage), which holds the permanent copy. The local folders become a
+  cache: a file missing from disk is fetched from the bucket the first
+  time something asks for its path. That keeps every caller exactly as
+  it was, since they all work with local Paths, while letting the disk
+  be wiped (a redeploy, a free-tier restart) without losing anyone's
+  resume.
+"""
+
+import logging
 import re
 import uuid
 from pathlib import Path
 
+from app.infra.config import settings
+
+logger = logging.getLogger(__name__)
+
 _BACKEND_ROOT = Path(__file__).resolve().parents[2]
 _RESUME_UPLOAD_DIR = _BACKEND_ROOT / "uploads" / "resumes"
 _DOCUMENT_UPLOAD_DIR = _BACKEND_ROOT / "uploads" / "documents"
+
+# Error codes S3-compatible servers use for "no such object".
+_MISSING_CODES = {"404", "NoSuchKey", "NotFound"}
+
+_client = None
+
+
+def _bucket_enabled() -> bool:
+    return all(
+        (
+            settings.upload_bucket,
+            settings.aws_endpoint_url_s3,
+            settings.aws_access_key_id,
+            settings.aws_secret_access_key,
+        )
+    )
+
+
+def _s3():
+    """The bucket client, built on first use so local-only runs (and the
+    test suite) never import boto3 at all."""
+    global _client
+    if _client is None:
+        import boto3
+        from botocore.config import Config
+
+        _client = boto3.client(
+            "s3",
+            endpoint_url=settings.aws_endpoint_url_s3,
+            aws_access_key_id=settings.aws_access_key_id,
+            aws_secret_access_key=settings.aws_secret_access_key,
+            region_name=settings.aws_region or "us-east-1",
+            # Neon Object Storage speaks SigV4 and path-style URLs only.
+            config=Config(
+                signature_version="s3v4",
+                s3={"addressing_style": "path"},
+                retries={"max_attempts": 3, "mode": "standard"},
+                connect_timeout=10,
+                read_timeout=30,
+            ),
+        )
+    return _client
+
+
+def _key(path: Path) -> str:
+    """The bucket key for a stored file: uploads/<folder>/<file name>.
+    Built from the folder's own name, so it matches the stored_path
+    column for resumes and documents and needs no other bookkeeping."""
+    return f"uploads/{path.parent.name}/{path.name}"
+
+
+def _store(path: Path, data: bytes) -> None:
+    """Writes data to path and, in bucket mode, to the bucket too. A
+    failed bucket write removes the local copy and raises, so the caller
+    never records a file that is not safely kept."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+    if not _bucket_enabled():
+        return
+    try:
+        _s3().put_object(Bucket=settings.upload_bucket, Key=_key(path), Body=data)
+    except Exception:
+        path.unlink(missing_ok=True)
+        raise
+
+
+def _pull(path: Path) -> None:
+    """In bucket mode, fetches the file into the local cache when it is
+    not already on disk. A file the bucket does not have is left missing,
+    which callers already treat as "no such file"."""
+    if path.is_file() or not _bucket_enabled():
+        return
+    from botocore.exceptions import ClientError
+
+    try:
+        response = _s3().get_object(Bucket=settings.upload_bucket, Key=_key(path))
+        data = response["Body"].read()
+    except ClientError as error:
+        if error.response.get("Error", {}).get("Code") in _MISSING_CODES:
+            return
+        raise
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # Written beside the target and renamed into place, so a request that
+    # arrives mid-download never serves half a file.
+    partial = path.with_name(path.name + ".part")
+    partial.write_bytes(data)
+    partial.replace(path)
+
+
+def delete_stored_file(path: Path) -> None:
+    """Removes a stored file from disk and, in bucket mode, from the
+    bucket. A file already gone is not an error: the goal is that it's
+    gone. A bucket failure is raised as OSError, the same family a failed
+    unlink raises, so callers that already handle that keep working."""
+    path.unlink(missing_ok=True)
+    if not _bucket_enabled():
+        return
+    try:
+        _s3().delete_object(Bucket=settings.upload_bucket, Key=_key(path))
+    except Exception as error:
+        raise OSError(f"Could not remove {path.name} from the file bucket") from error
 
 
 def save_resume_file(pdf_bytes: bytes) -> str:
     """Writes pdf_bytes under a fresh UUID filename, never the
     browser-reported original name -- no collision risk, and nothing
     here ever builds a path from user input."""
-    _RESUME_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     stored_name = f"{uuid.uuid4().hex}.pdf"
-    (_RESUME_UPLOAD_DIR / stored_name).write_bytes(pdf_bytes)
+    _store(_RESUME_UPLOAD_DIR / stored_name, pdf_bytes)
     return f"uploads/resumes/{stored_name}"
 
 
 def resolve_resume_path(stored_path: str) -> Path:
-    return _BACKEND_ROOT / stored_path
+    path = _BACKEND_ROOT / stored_path
+    _pull(path)
+    return path
 
 
 def save_supplemental_document_file(pdf_bytes: bytes) -> str:
     """Same UUID-filename convention as save_resume_file, just kept in its
     own directory since these back a different entity (ApplicationDocument,
     not ApplicationResume)."""
-    _DOCUMENT_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     stored_name = f"{uuid.uuid4().hex}.pdf"
-    (_DOCUMENT_UPLOAD_DIR / stored_name).write_bytes(pdf_bytes)
+    _store(_DOCUMENT_UPLOAD_DIR / stored_name, pdf_bytes)
     return f"uploads/documents/{stored_name}"
 
 
 def resolve_document_path(stored_path: str) -> Path:
-    return _BACKEND_ROOT / stored_path
+    path = _BACKEND_ROOT / stored_path
+    _pull(path)
+    return path
 
 
 # Job-description PDFs, kept (not just read for extraction) so a job's
@@ -50,9 +171,8 @@ _JD_UPLOAD_ID = re.compile(r"[0-9a-f]{32}")
 def save_job_description_file(pdf_bytes: bytes) -> str:
     """Writes the PDF under a fresh UUID and returns that UUID as the
     upload id."""
-    _JD_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     upload_id = uuid.uuid4().hex
-    (_JD_UPLOAD_DIR / f"{upload_id}.pdf").write_bytes(pdf_bytes)
+    _store(_JD_UPLOAD_DIR / f"{upload_id}.pdf", pdf_bytes)
     return upload_id
 
 
@@ -62,7 +182,9 @@ def job_description_stored_path(upload_id: str) -> str | None:
     never reach the filesystem as anything but a 32-character hex name."""
     if not _JD_UPLOAD_ID.fullmatch(upload_id or ""):
         return None
-    if not (_JD_UPLOAD_DIR / f"{upload_id}.pdf").is_file():
+    path = _JD_UPLOAD_DIR / f"{upload_id}.pdf"
+    _pull(path)
+    if not path.is_file():
         return None
     return f"uploads/job_descriptions/{upload_id}.pdf"
 
@@ -70,7 +192,9 @@ def job_description_stored_path(upload_id: str) -> str | None:
 def resolve_job_description_path(stored_path: str) -> Path:
     # By file name within the one directory, so the stored value can't
     # walk anywhere else even if a row were edited by hand.
-    return _JD_UPLOAD_DIR / Path(stored_path).name
+    path = _JD_UPLOAD_DIR / Path(stored_path).name
+    _pull(path)
+    return path
 
 
 # Profile photos are served without sign-in (an <img> cannot send the
@@ -101,9 +225,8 @@ def sniff_avatar_format(data: bytes) -> str | None:
 
 def save_avatar_file(data: bytes, image_format: str) -> str:
     """Writes the photo under a fresh random name and returns that name."""
-    _AVATAR_DIR.mkdir(parents=True, exist_ok=True)
     name = f"{uuid.uuid4().hex}.{image_format}"
-    (_AVATAR_DIR / name).write_bytes(data)
+    _store(_AVATAR_DIR / name, data)
     return name
 
 
@@ -113,12 +236,12 @@ def resolve_avatar_path(name: str) -> Path | None:
     if not _AVATAR_NAME.fullmatch(name or ""):
         return None
     path = _AVATAR_DIR / name
+    _pull(path)
     return path if path.is_file() else None
 
 
 def delete_avatar_file(name: str | None) -> None:
     """Removes a replaced or cleared photo. Quietly does nothing for a
     name that is malformed or already gone."""
-    path = resolve_avatar_path(name) if name else None
-    if path is not None:
-        path.unlink(missing_ok=True)
+    if name and _AVATAR_NAME.fullmatch(name):
+        delete_stored_file(_AVATAR_DIR / name)

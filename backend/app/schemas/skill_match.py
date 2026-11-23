@@ -187,6 +187,34 @@ class QueryExpansion(BaseModel):
     expansions: list[RequirementProbes] = Field(default_factory=list)
 
 
+# The Critic's ruling on one strength or gap. The docstring below and the
+# field descriptions reach the model through the JSON schema, so the
+# reasons for their shape live here instead.
+#
+# Asked for one by one because a model asked only for a list of
+# unsupported claims lists claims its own reasoning accepted. Having to
+# name the requirement and say why is what makes a rejection one it
+# actually reasoned about.
+#
+# `accurate`, not `supported`, and after `reason`: `supported` reads as
+# "is the requirement supported", so a correct gap gets marked false.
+# `claim` is the label the claim was listed under (S1, G3), not its text:
+# copying many claims back, the model drifts and pairs a claim with the
+# reason meant for another.
+class ClaimReview(BaseModel):
+    """A ruling on one strength or gap of the assessment."""
+
+    claim: str = Field(description="The label of the strength or gap, as listed: S1, S2, G1, G2, ...")
+    requirement: str = Field(default="", description="The requirement whose evidence the claim was checked against.")
+    reason: str = Field(default="", description="One sentence: what that evidence shows that makes the claim true or false.")
+    accurate: bool = Field(
+        description=(
+            "True when what the claim says is true of the evidence. For a gap, true when the evidence "
+            "really lacks what the gap says is missing."
+        )
+    )
+
+
 class AuditVerdict(BaseModel):
     """Critic / Guardrail Agent's structured output. Deliberately not a
     score: the Critic's job is to decide whether the Scoring Agent's
@@ -194,6 +222,10 @@ class AuditVerdict(BaseModel):
     candidate. A second opinion on fit would just be a second
     hallucination."""
 
+    #: one ruling per strength and gap. When present, `is_grounded` and
+    #: `unsupported_claims` are derived from these (rag_catalog.
+    #: _settled_verdict), so the verdict cannot disagree with its rulings
+    claim_reviews: list[ClaimReview] = Field(default_factory=list)
     #: every claim traces to a retrieved chunk -- the accepting condition
     is_grounded: bool
     #: claims from the analysis with no supporting evidence behind them

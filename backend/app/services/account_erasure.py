@@ -23,6 +23,7 @@ from app.models.password_reset import PasswordResetToken
 from app.models.stage_instance import StageInstance
 from app.models.user import User
 from app.services.file_storage import (
+    delete_stored_file,
     resolve_avatar_path,
     resolve_document_path,
     resolve_resume_path,
@@ -161,4 +162,4 @@ def delete_files(files: list[Path]) -> None:
     """Removes what erase_applicant listed, once its changes are saved.
     A file already missing is not an error -- the goal is that it's gone."""
     for path in files:
-        path.unlink(missing_ok=True)
+        delete_stored_file(path)

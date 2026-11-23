@@ -17,14 +17,15 @@ from .text import _tokenize
 # slightly favors semantic over keyword -- catches conceptual matches
 # BM25 can't (e.g. "built LLM-backed tools" satisfying "AI/ML experience")
 _SEMANTIC_WEIGHT = 0.6
-# Raw cosine is not a percentage: even an excellent resume/job pair sits
-# far from 1.0. These anchors stretch the measured span onto 0-100,
-# clamped. They were measured on whole documents, not requirement/unit
-# pairs; re-measure before quoting a score band (see the algorithm doc).
+# Raw cosine is not a percentage: even a requirement a resume line
+# plainly meets sits far from 1.0. These anchors stretch the measured
+# span onto 0-100, clamped: the floor near where not-met requirements'
+# best cosines sit, the ceiling just above where met ones' median does
+# (scripts/calibrate_semantic_anchors.py, numbers in the algorithm doc).
 # Migration f7d2a9c4e815 keeps its own copy, so a change here only
 # affects new scores.
-_SEMANTIC_COSINE_FLOOR = 0.20
-_SEMANTIC_COSINE_CEILING = 0.70
+_SEMANTIC_COSINE_FLOOR = 0.30
+_SEMANTIC_COSINE_CEILING = 0.50
 _COVERAGE_WEIGHT = 0.5
 _VERDICT_POINTS = {"met": 1.0, "partial": 0.5, "not_met": 0.0}
 # below this an application is flagged instead of advanced; shared with

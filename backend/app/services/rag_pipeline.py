@@ -23,6 +23,7 @@ from app.services.agents.rag_catalog import (
     INGESTION,
     SCORING,
     VALIDATION,
+    _claim_key,
 )
 # the verdict checks; the private names are re-exported for the tests
 from app.services.verdict_settlement import (  # noqa: F401
@@ -214,6 +215,24 @@ def _build_graph():
 RAG_GRAPH = _build_graph()
 
 
+def _answered_gaps(state: RAGState, checks: list[RequirementCheck]) -> set[str]:
+    """Gaps written about a requirement whose settled verdict is a verified
+    `met` -- a gap the verdicts, after the quote check and the re-check,
+    say is not one.
+
+    Which requirement a gap is about is the Critic's ruling on it
+    (AuditVerdict.claim_reviews), not a guess from its wording. Without
+    rulings nothing is dropped. Without this, a gap the re-check overturned
+    would stand beside the verdict contradicting it."""
+    met = {check.requirement for check in checks if check.verdict == "met" and check.verified}
+    reviews = (state.get("verdict") or {}).get("claim_reviews", [])
+    return {
+        _claim_key(review["claim"])
+        for review in reviews
+        if review.get("requirement", "").strip() in met
+    }
+
+
 def _analysis_for(state: RAGState, checks: list[RequirementCheck]) -> SkillMatchAnalysis:
     """The assessment to return, given where the automaton stopped."""
     terminal = state.get("terminal_state", "")
@@ -226,13 +245,15 @@ def _analysis_for(state: RAGState, checks: list[RequirementCheck]) -> SkillMatch
         )
 
     analysis = SkillMatchAnalysis(**state["analysis"])
+    answered = _answered_gaps(state, checks)
+    gaps = [g for g in analysis.gaps if _claim_key(g) not in answered]
     if terminal != "manual_review":
-        return analysis.model_copy(update={"requirement_checks": checks})
+        return analysis.model_copy(update={"gaps": gaps, "requirement_checks": checks})
 
     rejected = {claim.strip() for claim in state.get("unsupported_claims", [])}
     return SkillMatchAnalysis(
         strengths=[s for s in analysis.strengths if s.strip() not in rejected],
-        gaps=[g for g in analysis.gaps if g.strip() not in rejected],
+        gaps=[g for g in gaps if g.strip() not in rejected],
         summary=_UNVERIFIED_PREFIX + analysis.summary,
         # audited on their own (_settle_verdicts), so they still count
         # even though the prose above did not pass the Critic

@@ -1,3 +1,4 @@
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -9,6 +10,20 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
     openai_api_key: str | None = None
+
+    @field_validator("database_url")
+    @classmethod
+    def _name_the_psycopg_driver(cls, value: str) -> str:
+        """Neon and hosting dashboards hand out plain postgresql:// (or the
+        older postgres://) addresses. SQLAlchemy reads those as the psycopg2
+        driver, which this app does not install, so the app would crash on
+        start. Naming psycopg here, once, means a pasted address works as
+        given instead of depending on everyone remembering to edit it."""
+        value = value.strip().strip("\"'")
+        for plain in ("postgresql://", "postgres://"):
+            if value.startswith(plain):
+                return "postgresql+psycopg://" + value[len(plain):]
+        return value
 
     # LLM-written retrieval probes (Context Router, Clarify). Off: an extra
     # model call while the applicant waits, with no measured gain
@@ -26,6 +41,19 @@ class Settings(BaseSettings):
     # From address to match the authenticated account anyway.
     smtp_from_email: str | None = None
     smtp_use_tls: bool = True
+
+    # Permanent storage for uploaded files (optional). Unset, uploads/ on
+    # local disk is the only copy, exactly as before. Set all five, and
+    # every upload is also written to this S3-compatible bucket (Neon
+    # Object Storage), with the local folders acting as a cache. Needed
+    # wherever the disk is wiped on restart, such as Render's free tier.
+    # The AWS_* names are the ones Neon writes into .env.local, so they
+    # can be copied across unchanged.
+    upload_bucket: str | None = None
+    aws_endpoint_url_s3: str | None = None
+    aws_access_key_id: str | None = None
+    aws_secret_access_key: str | None = None
+    aws_region: str | None = None
 
     # Browser origins allowed to call the API.
     # Comma-separated string, not list[str], on purpose -- pydantic-

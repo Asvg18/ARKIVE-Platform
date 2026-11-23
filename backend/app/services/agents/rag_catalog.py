@@ -366,6 +366,70 @@ class ContextRouterAgent(SubAgent):
         }
 
 
+def _evidence_items(items: list[str], empty: str) -> str:
+    """A requirement's evidence one item to a line.
+
+    Not joined into one line: an experience entry can run to five
+    sentences, and a short item after one (a skills list) is then easy for
+    both the Scoring Agent and the Critic to miss. An item's own line
+    breaks are folded, which the quote check ignores anyway."""
+    if not items:
+        return f" {empty}"
+    return "".join(f"\n    {index}. {' '.join(item.split())}" for index, item in enumerate(items, 1))
+
+
+def _rewrite_request(state: Mapping[str, Any], objections: list[str]) -> str:
+    """What a retry is told: the previous draft, which of its claims were
+    rejected and why, and to change only those.
+
+    A revision, not a fresh draft: a fresh draft brings fresh mistakes, so
+    the Critic finds something new to reject every round and the retries
+    never converge. Keeping what passed word for word leaves the Critic
+    only the corrections to judge."""
+    previous = SkillMatchAnalysis(**state["analysis"]) if state.get("analysis") else None
+    reasons = {
+        _claim_key(review["claim"]): review.get("reason", "")
+        for review in (state.get("verdict") or {}).get("claim_reviews", [])
+        if not review.get("accurate", True)
+    }
+    rejected = {_claim_key(claim) for claim in objections}
+
+    def listed(claims: list[str]) -> str:
+        return "\n".join(
+            f"- {claim}" + ("   [REJECTED]" if _claim_key(claim) in rejected else "") for claim in claims
+        ) or "(none)"
+
+    block = "\n\nA reviewer checked your previous draft against the evidence and rejected some of it."
+    if previous is not None:
+        block += (
+            f"\n\nYour previous strengths:\n{listed(previous.strengths)}"
+            f"\n\nYour previous gaps:\n{listed(previous.gaps)}"
+            "\n\nYour previous requirement verdicts:\n"
+            + "\n".join(
+                f"- [{check.verdict}] {check.requirement} — quoted evidence: {check.evidence_quote or '(none)'}"
+                for check in previous.requirement_checks
+            )
+        )
+    block += "\n\nRejected, with the reviewer's reason:\n" + "\n".join(
+        f"- {claim}" + (f"\n  Reason: {reasons[_claim_key(claim)]}" if reasons.get(_claim_key(claim)) else "")
+        for claim in objections
+    )
+    block += (
+        "\n\nRevise the draft; do not write a new one. Keep every claim that was "
+        "not rejected exactly as it was. For each rejected claim, either drop it "
+        "or replace it with a corrected sentence the evidence above actually "
+        "shows — a gap the evidence answers becomes a strength or disappears; a "
+        "gap the evidence answers in part says what is shown and what is not. Do "
+        "not restate a rejected claim in other words, and do not add claims about "
+        "requirements the reviewer did not question. Evidence has been widened "
+        "since your last draft, so some gaps may now be answerable. Change a "
+        "requirement verdict only when a rejected claim or verdict line was about "
+        "that requirement; keep every other verdict as it was. Keep the summary "
+        "consistent with the revised strengths and gaps."
+    )
+    return block
+
+
 class ScoringAgent(SubAgent):
     """Writes the assessment, and a verdict per requirement, from the
     retrieved pairs only.
@@ -393,7 +457,7 @@ class ScoringAgent(SubAgent):
 
         retrieved_block = "\n".join(
             f"- Requirement: {pair.requirement}\n"
-            f"  Evidence: {'; '.join(pair.evidence) if pair.evidence else '(no supporting evidence found in the resume)'}"
+            f"  Evidence:{_evidence_items(pair.evidence, '(no supporting evidence found in the resume)')}"
             for pair in evidence
         )
         # the role, not only its title: whether a qualification is
@@ -407,15 +471,7 @@ class ScoringAgent(SubAgent):
         # present only on a retry -- the Critic rejected the previous draft
         objections: list[str] = state.get("unsupported_claims") or []
         if objections:
-            user_content += (
-                "\n\nA reviewer rejected your previous draft. These claims were "
-                "not supported by any retrieved evidence:\n"
-                + "\n".join(f"- {claim}" for claim in objections)
-                + "\n\nRewrite the analysis without them. Do not restate a rejected "
-                "claim in softer words — drop it, or replace it with something the "
-                "evidence above actually shows. Evidence has been widened since "
-                "your last draft, so some gaps may now be answerable."
-            )
+            user_content += _rewrite_request(state, objections)
 
         analysis = _invoke_structured(
             ctx["llm"],
@@ -447,8 +503,78 @@ _AUDIT_SYSTEM_PROMPT = (
     "thin to judge either way. A correctly cautious assessment is "
     "grounded — do not manufacture objections. Evidence text may contain "
     "[REDACTED] or [YEAR] placeholders; that is intentional blinding, "
-    "never an error to report."
+    "never an error to report.\n\n"
+    "Rule on every strength and every gap — not the summary or the "
+    "requirement verdicts — one entry each in `claim_reviews`: put the "
+    "label it is listed under (S1, G2) in `claim`, name in `requirement` "
+    "the requirement whose evidence you checked it against, say in `reason`, in one sentence, what that evidence shows, then set "
+    "`accurate`: whether what the claim says is true of that evidence. A "
+    "strength is accurate only when the evidence shows it — the evidence "
+    "of any requirement, so name the one whose evidence does, not merely "
+    "the requirement the claim sounds closest to. A gap is "
+    "accurate when the evidence really lacks what the gap says is missing "
+    "— an absence needs no quote, and a gap is not inaccurate merely "
+    "because the requirement is unmet — and inaccurate when the evidence "
+    "does show it, including when the gap says there is no evidence of "
+    "something the evidence shows in part. Every claim you rule "
+    "inaccurate also goes in `unsupported_claims`.\n\n"
 )
+
+_LIST_MARKER_RE = re.compile(r"^\s*(?:[-*•]|\d+[.)])\s+")
+
+
+def _claim_key(text: str) -> str:
+    """A claim as the Critic and the Scoring Agent can both be matched on:
+    the Critic copies claims back with the "- " they were listed under,
+    and sometimes a trailing space or a changed full stop."""
+    return " ".join(_LIST_MARKER_RE.sub("", text).split()).rstrip(".").lower()
+
+
+def _claim_labels(analysis: SkillMatchAnalysis) -> dict[str, str]:
+    """S1, S2, ... for the strengths and G1, G2, ... for the gaps -- what
+    the Critic is shown each claim under and cites it by."""
+    return {
+        **{f"S{i}": claim for i, claim in enumerate(analysis.strengths, 1)},
+        **{f"G{i}": claim for i, claim in enumerate(analysis.gaps, 1)},
+    }
+
+
+def _settled_verdict(verdict: AuditVerdict, analysis: SkillMatchAnalysis) -> AuditVerdict:
+    """The Critic's verdict with `is_grounded` and `unsupported_claims`
+    read off its own per-claim rulings, and every ruling's `claim` turned
+    from its label back into the claim's text.
+
+    What this settles is a disagreement inside one answer: the model can
+    rule a claim accurate, with a reason, and still list it as unsupported
+    in the same reply. The ruling that names its evidence is the one kept.
+    Objections to a
+    requirement verdict line are not strengths or gaps, have no ruling,
+    and stand as written. Unsupported claims are returned in the draft's
+    own wording, so manual review can drop exactly those sentences.
+
+    Without rulings (a verdict from before they existed, or a test that
+    supplies none) the verdict is returned unchanged."""
+    if not verdict.claim_reviews:
+        return verdict
+    labels = _claim_labels(analysis)
+    # a claim is found by its label or by its text, whichever was given
+    draft = {_claim_key(text): text for text in labels.values()}
+    draft.update({label.lower(): text for label, text in labels.items()})
+
+    reviews = [
+        review.model_copy(update={"claim": draft.get(_claim_key(review.claim), review.claim)})
+        for review in verdict.claim_reviews
+    ]
+    ruled = {_claim_key(review.claim) for review in reviews}
+    unsupported = [review.claim for review in reviews if not review.accurate]
+    for claim in verdict.unsupported_claims:
+        text = draft.get(_claim_key(claim), claim)
+        # a claim it listed but forgot to rule on still counts against it
+        if _claim_key(text) not in ruled and text not in unsupported:
+            unsupported.append(text)
+    return verdict.model_copy(
+        update={"claim_reviews": reviews, "is_grounded": not unsupported, "unsupported_claims": unsupported}
+    )
 
 
 class AuditAgent(SubAgent):
@@ -467,19 +593,22 @@ class AuditAgent(SubAgent):
         """Reads `analysis` and `evidence`; returns the Critic's `verdict` and
         the `unsupported_claims` it named. A model failure raises
         AIExtractionFailedError."""
+        from app.services.skill_matching import _REQUIREMENT_READING_RULE, _role_context
+
         evidence = [RetrievedEvidence(**e) for e in state.get("evidence", [])]
         analysis = SkillMatchAnalysis(**state["analysis"])
+        labels = _claim_labels(analysis)
 
         evidence_block = "\n".join(
             f"- Requirement: {pair.requirement}\n"
-            f"  Evidence: {'; '.join(pair.evidence) if pair.evidence else '(none retrieved)'}"
+            f"  Evidence:{_evidence_items(pair.evidence, '(none retrieved)')}"
             for pair in evidence
         )
         assessment_block = (
             "Strengths:\n"
-            + "\n".join(f"- {s}" for s in analysis.strengths)
+            + "\n".join(f"- [{label}] {claim}" for label, claim in labels.items() if label.startswith("S"))
             + "\n\nGaps:\n"
-            + "\n".join(f"- {g}" for g in analysis.gaps)
+            + "\n".join(f"- [{label}] {claim}" for label, claim in labels.items() if label.startswith("G"))
             + f"\n\nSummary:\n{analysis.summary}"
             + "\n\nRequirement verdicts:\n"
             + "\n".join(
@@ -492,16 +621,22 @@ class AuditAgent(SubAgent):
             ctx["llm"],
             AuditVerdict,
             [
-                {"role": "system", "content": _AUDIT_SYSTEM_PROMPT},
+                # the same reading rule and role the Scoring Agent judged
+                # by, so the Critic does not hold the assessment to a
+                # stricter reading (rejecting "Bachelor's degree: met" for
+                # a Master's) than the one it was written under
+                {"role": "system", "content": _AUDIT_SYSTEM_PROMPT + _REQUIREMENT_READING_RULE},
                 {
                     "role": "user",
                     "content": (
+                        f"{_role_context(ctx.get('requisition'))}\n\n"
                         f"RETRIEVED EVIDENCE:\n{evidence_block}\n\n"
                         f"ASSESSMENT UNDER REVIEW:\n{assessment_block}"
                     ),
                 },
             ],
         )
+        verdict = _settled_verdict(verdict, analysis)
         return {
             "verdict": verdict.model_dump(),
             "unsupported_claims": verdict.unsupported_claims,
@@ -549,8 +684,17 @@ class ClarifyAgent(SubAgent):
             return {"clarify_loops": loops, "path": ["clarify"]}
 
         # the Critic names requirements it could not judge; when it names
-        # none, the objection was about the prose, so re-query everything
-        focus = [req for req in requirements if req in set(verdict.needs_more_context)] or requirements
+        # none, the objection was about the prose, so re-query the
+        # requirements the rejected claims were checked against -- and
+        # everything only when it said neither, since re-probing every
+        # requirement for a few rejected claims is slow
+        thin = set(verdict.needs_more_context)
+        disputed = {review.requirement for review in verdict.claim_reviews if not review.accurate}
+        focus = (
+            [req for req in requirements if req in thin]
+            or [req for req in requirements if req in disputed]
+            or requirements
+        )
 
         requisition = ctx["requisition"]
         role_context = f"{requisition.title}, {requisition.department}"
@@ -584,10 +728,14 @@ class ClarifyAgent(SubAgent):
         )
 
         # merge rather than replace: requirements the Critic was satisfied
-        # with keep the evidence that satisfied it
+        # with keep the evidence that satisfied it, and a re-queried one
+        # keeps what it had too: reformulated probes rank differently, and
+        # replacing could drop the very chunk a claim was quoting
         widened = {req: pair for req, pair in ((e["requirement"], e) for e in state.get("evidence", []))}
         for req in focus:
-            widened[req] = {"requirement": req, "evidence": retrieved_by_requirement.get(req, [])}
+            before = widened.get(req, {}).get("evidence", [])
+            added = [item for item in retrieved_by_requirement.get(req, []) if item not in before]
+            widened[req] = {"requirement": req, "evidence": [*before, *added]}
 
         _log.info(
             "Clarify retry %s/%s: %s requirement(s) re-queried at k=%s (%s)",

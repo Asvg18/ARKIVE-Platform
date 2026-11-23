@@ -98,7 +98,7 @@ __all__ = [
 
 _log = logging.getLogger(__name__)
 
-SCORE_METHOD = "applied_job_v3"
+SCORE_METHOD = "applied_job_v4"
 _SUGGESTION_LIMIT = 3
 
 

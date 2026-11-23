@@ -685,3 +685,112 @@ def test_expansion_is_skipped_when_the_jd_has_no_requirements(embeddings, monkey
     )
     assert "QueryExpansion" not in llm.calls
     assert trace.expanded_queries is False
+
+
+# ---------------------------------------------------------------------------
+# The Critic's per-claim rulings, and what the retry is told.
+# ---------------------------------------------------------------------------
+
+from app.schemas.skill_match import ClaimReview, RequirementCheck  # noqa: E402
+from app.services.agents import rag_catalog  # noqa: E402
+
+_DRAFT = SkillMatchAnalysis(
+    strengths=["Knows Python, Java and C++.", "Mentored a top-ten coding team."],
+    gaps=["No evidence of open source work.", "No evidence of C++."],
+    summary="",
+)
+
+
+def test_the_critics_rulings_decide_the_verdict_not_its_loose_list():
+    """A claim listed as unsupported that the Critic's own ruling, with a
+    reason, accepted. The rulings win, labels resolve to the claims'
+    own text, and a verdict-line objection -- which has no ruling -- stands."""
+    verdict = AuditVerdict(
+        is_grounded=False,
+        claim_reviews=[
+            ClaimReview(claim="S1", requirement="Programming languages", reason="Skills list names all three.", accurate=True),
+            ClaimReview(claim="S2", requirement="Student success", reason="4 of 5 ranked top ten.", accurate=True),
+            ClaimReview(claim="G1", requirement="Open source", reason="Nothing mentions open source.", accurate=True),
+            ClaimReview(claim="G2", requirement="Programming languages", reason="The skills list names C++.", accurate=False),
+        ],
+        unsupported_claims=["- Knows Python, Java and C++", "[met] Bachelor's degree — quoted evidence: (none)"],
+    )
+    settled = rag_catalog._settled_verdict(verdict, _DRAFT)
+
+    assert settled.unsupported_claims == ["No evidence of C++.", "[met] Bachelor's degree — quoted evidence: (none)"]
+    assert settled.is_grounded is False
+    assert [r.claim for r in settled.claim_reviews][:2] == _DRAFT.strengths
+
+
+def test_rulings_that_accept_everything_sign_the_assessment_off():
+    verdict = AuditVerdict(
+        is_grounded=False,
+        claim_reviews=[ClaimReview(claim=label, accurate=True) for label in ("S1", "S2", "G1", "G2")],
+        unsupported_claims=["Knows Python, Java and C++."],
+    )
+    settled = rag_catalog._settled_verdict(verdict, _DRAFT)
+    assert settled.is_grounded is True
+    assert settled.unsupported_claims == []
+
+
+def test_a_verdict_without_rulings_is_left_as_the_critic_gave_it():
+    verdict = AuditVerdict(is_grounded=False, unsupported_claims=["Knows Python, Java and C++."])
+    assert rag_catalog._settled_verdict(verdict, _DRAFT) == verdict
+
+
+def test_a_retry_is_shown_its_draft_and_told_to_change_only_what_was_rejected():
+    state = {
+        "analysis": _DRAFT.model_dump(),
+        "verdict": {
+            "claim_reviews": [{"claim": "No evidence of C++.", "reason": "The skills list names C++.", "accurate": False}]
+        },
+    }
+    request = rag_catalog._rewrite_request(state, ["No evidence of C++."])
+
+    assert "- Knows Python, Java and C++." in request
+    assert "- No evidence of C++.   [REJECTED]" in request
+    assert "Reason: The skills list names C++." in request
+    assert "Keep every claim that was not rejected exactly as it was" in request
+
+
+def test_clarify_adds_to_a_requirements_evidence_instead_of_replacing_it(embeddings):
+    """Reformulated probes rank differently; replacing the evidence dropped
+    the chunk a claim was quoting, and the Critic then asked for more
+    context on a requirement the resume plainly met."""
+    state = {
+        "verdict": AuditVerdict(is_grounded=False, needs_more_context=["Experience with Python"]).model_dump(),
+        "requirements": ["Experience with Python", "Experience with FastAPI"],
+        "redacted_chunks": ["Skills: Python, FastAPI", "Backend Engineer at Acme: Built APIs"],
+        "chunk_sections": ["skills", "experience"],
+        "evidence": [
+            {"requirement": "Experience with Python", "evidence": ["Skills: Python, FastAPI"]},
+            {"requirement": "Experience with FastAPI", "evidence": ["Skills: Python, FastAPI"]},
+        ],
+        "clarify_loops": 0,
+    }
+    ctx = {"llm": MagicMock(), "embeddings": embeddings, "requisition": _requisition()}
+    with patch.object(rag_catalog.settings, "rag_query_expansion", False):
+        out = rag_catalog.CLARIFY.run(state, ctx)
+
+    python = next(e for e in out["evidence"] if e["requirement"] == "Experience with Python")
+    assert python["evidence"][0] == "Skills: Python, FastAPI"
+    assert "Backend Engineer at Acme: Built APIs" in python["evidence"]
+
+
+def test_a_gap_about_a_requirement_settled_as_met_is_dropped():
+    """A gap beside a re-checked, verified `met` for its requirement is
+    dropped. Which requirement a gap is about is
+    the Critic's ruling, so a gap it did not tie to one stays."""
+    state = {
+        "verdict": {
+            "claim_reviews": [
+                {"claim": "No evidence of a track record.", "requirement": "Student success", "accurate": True},
+                {"claim": "No evidence of open source work.", "requirement": "Open source", "accurate": True},
+            ]
+        }
+    }
+    checks = [
+        RequirementCheck(requirement="Student success", verdict="met", evidence_quote="4 of 5 ranked", verified=True),
+        RequirementCheck(requirement="Open source", verdict="not_met", evidence_quote=""),
+    ]
+    assert rag_pipeline._answered_gaps(state, checks) == {rag_catalog._claim_key("No evidence of a track record.")}

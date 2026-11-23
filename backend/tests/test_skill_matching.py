@@ -478,8 +478,9 @@ def test_the_semantic_half_calibrates_each_requirements_best_cosine(
     result = sm.run_skill_matching(db_session, resume=resume, target_requisition=job)
 
     assert result.cosine_similarity == pytest.approx(0.66)
-    assert result.semantic_score == pytest.approx(92.0)
-    assert result.arithmetic_score == pytest.approx(0.6 * 92.0 + 0.4 * result.keyword_score, abs=0.1)
+    # above the ceiling, so a full 100 rather than the raw 66
+    assert result.semantic_score == pytest.approx(100.0)
+    assert result.arithmetic_score == pytest.approx(0.6 * 100.0 + 0.4 * result.keyword_score, abs=0.1)
 
 
 @patch("app.services.skill_matching.ChatOpenAI.with_structured_output")
@@ -1087,3 +1088,33 @@ def test_a_v2_score_is_explained_from_its_verdicts_alone():
     # a payload with only a score still explains what it can
     assert sm.read_match_breakdown({"match_score": 71.8}).requirements == []
     assert sm.read_match_breakdown(None) is None
+
+
+def test_skill_requirements_are_shown_the_whole_skills_list():
+    """A skills list split into chunks ("Python, Java" in one, "C++" in the
+    next) reads as a list without C++. A skill requirement, or one naming a
+    listed skill, is shown the list as one item."""
+    chunks = [
+        "Computer Science Teacher at [REDACTED]: Taught Python",
+        "Skills: Teaching, Python, Java, Curriculum Design",
+        "Skills: C++, Educational Technology",
+    ]
+    sections = ["experience", "skills", "skills"]
+    whole = "Skills: Teaching, Python, Java, Curriculum Design, C++, Educational Technology"
+    retrieved = {
+        "Experience with multiple programming languages such as Python, Java, and C++.": [chunks[1]],
+        "Experience with C++": [chunks[0]],
+        "Experience with JavaScript": [chunks[0]],
+        "Commitment to ongoing professional development": [chunks[0]],
+    }
+    completed = sm._ensure_section_evidence(retrieved, chunks, sections)
+
+    assert completed["Experience with multiple programming languages such as Python, Java, and C++."] == [
+        chunks[1],
+        whole,
+    ]
+    # names a listed skill, though nothing marks it a skills requirement
+    assert completed["Experience with C++"] == [chunks[0], whole]
+    # "Java" is listed, "JavaScript" is not -- a whole-word match only
+    assert completed["Experience with JavaScript"] == [chunks[0]]
+    assert completed["Commitment to ongoing professional development"] == [chunks[0]]

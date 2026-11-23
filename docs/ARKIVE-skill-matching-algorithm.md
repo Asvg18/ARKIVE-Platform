@@ -1,6 +1,6 @@
 # ARKIVE skill matching algorithm
 
-The one maintained description of how the Skill Matching Agent scores a résumé against the job it was submitted for. Checked against the code on 28 Oct 2026 (`score_method` `"applied_job_v3"`).
+The one maintained description of how the Skill Matching Agent scores a résumé against the job it was submitted for. Checked against the code on 29 Oct 2026 (`score_method` `"applied_job_v4"`).
 
 The code comments link here instead of repeating it. When the code and this file disagree, the code is right and this file is fixed. The measured results live in [`backend/scripts/eval/RESULTS.md`](../backend/scripts/eval/RESULTS.md), produced by `backend/scripts/eval_skill_matching.py`; this file explains the method and points there for the numbers.
 
@@ -26,7 +26,7 @@ Both halves read the résumé the applicant reviewed and submitted (`Application
 
 For each requirement line of the job:
 
-1. **Semantic score.** The requirement and every résumé unit are embedded (`text-embedding-3-small`, one call for all of them). The unit with the highest cosine similarity is the closest résumé line. That cosine is stretched onto 0 to 100 between two anchors, `_SEMANTIC_COSINE_FLOOR = 0.20` and `_SEMANTIC_COSINE_CEILING = 0.70`, and clamped outside them.
+1. **Semantic score.** The requirement and every résumé unit are embedded (`text-embedding-3-small`, one call for all of them). The unit with the highest cosine similarity is the closest résumé line. That cosine is stretched onto 0 to 100 between two anchors, `_SEMANTIC_COSINE_FLOOR = 0.30` and `_SEMANTIC_COSINE_CEILING = 0.50`, and clamped outside them.
 2. **Keyword score.** BM25 of the requirement against the résumé units, as a share of the best score that requirement could get: the requirement scored against itself, with the requirement lines added to the corpus so every word has an idf. This puts a short and a long résumé on the same 0 to 100 scale. When BM25 has no signal (a tiny corpus), the share of the requirement's words found in the résumé stands in.
 3. **Combined:** `0.6 × semantic + 0.4 × keyword` (`_SEMANTIC_WEIGHT = 0.6`). The semantic side weighs more because it catches conceptual matches BM25 cannot ("built LLM-backed tools" for "AI/ML experience").
 
@@ -145,7 +145,7 @@ This runs whether or not the Critic signed off the written assessment.
 | Constant | Value | Meaning | Provenance |
 |---|---|---|---|
 | `_SEMANTIC_WEIGHT` | 0.6 | Semantic share of the arithmetic half | Design choice: conceptual matches matter more than wording |
-| `_SEMANTIC_COSINE_FLOOR`, `_CEILING` | 0.20, 0.70 | Cosine stretched onto 0 to 100 | Measured on whole documents (12 résumés × 10 postings, dev data): unrelated 0.16 to 0.24, adjacent fields 0.35 to 0.46, strongest matches 0.56 to 0.66. Since v2 the arithmetic half compares one requirement with one résumé unit, whose cosines run on a different scale: **re-measure on requirement/unit pairs before quoting a score band.** The migration `f7d2a9c4e815` keeps its own copy, so changing them affects new scores only. |
+| `_SEMANTIC_COSINE_FLOOR`, `_CEILING` | 0.30, 0.50 | Cosine stretched onto 0 to 100 | Measured on requirement/résumé-unit pairs, the comparison the score makes, over the 163 labelled requirements of `scripts/eval/skill_matching_set.json` (`scripts/calibrate_semantic_anchors.py`, 29 Oct 2026). Best cosine, median (p25 to p75): met 0.454 (0.379 to 0.577), partly met 0.481 (0.435 to 0.557), not met 0.341 (0.299 to 0.379). The floor sits at the not-met p25, the ceiling a little above the met median, so a typical met requirement scores about 77 and a typical not-met one about 20 (0.20 and 0.70, measured on whole documents, gave 51 and 28). Met and partly met are not told apart by cosine; the verdicts do that. The labels are drafts until HR reviews them. The migration `f7d2a9c4e815` keeps its own copy, so changing them affects new scores only. |
 | `_COVERAGE_WEIGHT` | 0.5 | Coverage share of the match | Agreed 11 Oct 2026 |
 | `_VERDICT_POINTS` | met 1, partial 0.5, not met 0 | Coverage points | Design choice |
 | `MATCH_FLAG_THRESHOLD` | 60 | Below it, the application is flagged | In place since September 2026; the only flag reason since 19 Oct 2026 |
@@ -166,6 +166,7 @@ Changing any of these, a prompt, or the order of the graph is an algorithm chang
 | `applied_job_v3` | 18 Oct 2026 | Same formula. Degree and plural folding in the keyword half; section evidence for degree and credential requirements; role context and the reading rule for every judging agent; `basis` and reasoning on each verdict; per-requirement scores stored for HR; Lucene idf in BM25; every `not_met` read twice | v2 was too strict: a Master of Education major in Computer Science Teaching, applying to teach Computer Science, was judged against "Master's degree in Computer Science" as if unrelated (the model read "X, Y, or a related field" as all-of). In application 2438 the top three snippets for "Bachelor's degree" held no education entry at all. The measured v2 misses were all single readings of three snippets, e.g. "Google for Education Certified Trainer" judged no evidence of knowing educational technology. |
 | | 19 Oct 2026 | Only a score below 60 flags an application; an unverified assessment no longer does (it used to flag as `unverified_assessment`) | Candidates scoring well above 60 were held for review because a model could not verify its own prose |
 | | 22 Oct 2026 | Suggestions limited to openings the applicant can still apply to | |
+| `applied_job_v4` | 29 Oct 2026 | Same formula. Semantic anchors 0.20/0.70 → 0.30/0.50, re-measured on requirement/unit pairs | The old anchors came from whole-document cosines, so a met requirement's semantic score sat around 51 and text similarity ran low for every candidate |
 
 The retrieval graph replaced a single model call with the seven-agent automaton in September 2026; the retrieval strategy itself (BM25 + embeddings + RRF) did not change. Before that, the model was handed the whole résumé and job description regardless of relevance.
 

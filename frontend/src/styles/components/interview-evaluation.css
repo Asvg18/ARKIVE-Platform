@@ -1,0 +1,644 @@
+/* ===================================================== Interview evaluation
+ * The evaluator's page for one interview round (InterviewDetailPage).
+ * The applicant page's shape: the dark banner, then the
+ * work on the left and a rail on the right. The rail's upper cards (the
+ * schedule, the candidate) scroll away with the page; the last group —
+ * what is left to do, Submit, and the rating scale — pins to the top of
+ * the window for the length of the form, so Submit is always in reach. */
+
+/* The banner with a person in it: their photo in a glass ring where the
+ * applicant's banner has the department mark, and the review timer
+ * under the status. */
+.ark-app-hero__avatar {
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.ark-app-hero__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.ark-app-hero__timer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 640px) {
+  .ark-app-hero__side { align-items: flex-start; }
+}
+
+.ark-eval {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--space-5);
+}
+
+/* A container, so the rows and the recommendation cards can rearrange
+ * for the column's width rather than the window's. */
+.ark-eval__main {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.ark-eval__form {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+/* Stretches to the main column's height (the grid's default), so the
+ * group at its foot has the whole length of the form to stay pinned in. */
+.ark-eval__rail {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  min-width: 0;
+}
+
+.ark-eval__sticky {
+  position: sticky;
+  top: var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* The scale's words, above the form — shown only once the rail has
+ * dropped below it, where the rail's own scale card would be out of
+ * reach. */
+.ark-eval__inline-key { display: none; }
+
+@media (max-width: 1199px) {
+  .ark-eval { grid-template-columns: minmax(0, 1fr); }
+  .ark-eval__rail {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: start;
+  }
+  .ark-eval__sticky { position: static; }
+  .ark-eval__scale { display: none; }
+  .ark-eval__inline-key {
+    display: block;
+    margin-bottom: var(--space-4);
+    padding: var(--space-2-5) var(--space-3);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius);
+  }
+}
+
+/* How much of an area is answered, where the read-only rubric shows its
+ * average. Green once the whole area is done. */
+.ark-rate-area__count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-600);
+  white-space: nowrap;
+}
+
+.ark-rate-area__count[data-complete] { color: var(--success-text); }
+
+.ark-rate-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One item: the question with the chosen answer's word beneath it, and
+ * the scale. Top-aligned, with the question nudged down so its first
+ * line sits level with the middle of the scale. Centred in the window
+ * when the checklist jumps to it. */
+.ark-rate-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  border-top: 1px solid var(--hairline);
+  scroll-margin: var(--space-10);
+}
+
+.ark-rate-item:first-child { border-top: none; }
+
+.ark-rate-item__text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  padding-top: 7px;
+}
+
+.ark-rate-item__label {
+  font-size: var(--text-base);
+  line-height: 20px;
+  color: var(--ink-900);
+}
+
+.ark-rate-item__word {
+  min-height: 16px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--accent-dark);
+}
+
+.ark-rate-item__word[data-na] { color: var(--ink-600); }
+
+@container (max-width: 560px) {
+  .ark-rate-item { flex-wrap: wrap; row-gap: var(--space-2); }
+  .ark-rate-item__text { flex-basis: 100%; padding-top: 0; }
+}
+
+/* The scale: 1–5 as one segmented control, N/A apart from it — it is
+ * not a sixth step. Cells up to the answer take a tint and the answer
+ * the accent, so a column of answers reads as bars. */
+.ark-rate {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.ark-rate__scale {
+  display: inline-flex;
+  border: 1px solid var(--surface-border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.ark-rate__opt,
+.ark-rate__na {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: var(--surface);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-700);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.ark-rate__opt {
+  width: 38px;
+  border-left: 1px solid var(--surface-border);
+}
+
+.ark-rate__opt:first-child { border-left: 0; }
+
+.ark-rate__opt:hover { background: var(--surface-bg-alt); color: var(--ink-950); }
+
+.ark-rate__opt[data-filled] { background: var(--accent-bg); color: var(--accent-dark); }
+.ark-rate__opt[data-filled]:hover { background: var(--accent-bg-strong); }
+
+.ark-rate__opt[aria-checked="true"],
+.ark-rate__opt[aria-checked="true"]:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.ark-rate[data-na] .ark-rate__opt { color: var(--ink-400); }
+
+/* Drawn inside the cell: the scale's rounded edge clips anything
+ * outside it. */
+.ark-rate__opt:focus-visible {
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px var(--accent-ring);
+}
+
+.ark-rate__opt[aria-checked="true"]:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent-dark), inset 0 0 0 4px var(--surface);
+}
+
+.ark-rate__na {
+  width: 46px;
+  border: 1px solid var(--surface-border-strong);
+  border-radius: var(--radius);
+  font-size: var(--text-xs);
+}
+
+.ark-rate__na:hover { background: var(--surface-bg-alt); color: var(--ink-950); }
+.ark-rate__na:focus-visible { border-radius: var(--radius); }
+
+.ark-rate__na[aria-checked="true"],
+.ark-rate__na[aria-checked="true"]:hover {
+  border-color: var(--ink-700);
+  background: var(--ink-700);
+  color: #ffffff;
+}
+
+/* The recommendation, as three cards side by side: the icon and the
+ * radio across the top, the name and its line beneath. */
+.ark-choices--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.ark-choice--tile {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+.ark-choice__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+@container (max-width: 660px) {
+  .ark-choices--3 { grid-template-columns: minmax(0, 1fr); }
+  .ark-choice--tile { flex-direction: row; align-items: flex-start; }
+  .ark-choice--tile .ark-choice__top { order: 0; }
+}
+
+/* ------------------------------------------------ Your evaluation (rail) */
+.ark-eval-progress {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* One mark per item, grouped by area and each group as wide as its
+ * number of items, so the bar says where the gaps are. */
+.ark-eval-meter {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.ark-eval-meter__area {
+  display: grid;
+  gap: var(--space-1);
+  flex-basis: 0;
+  min-width: 0;
+}
+
+.ark-eval-meter__marks {
+  display: flex;
+  gap: 3px;
+}
+
+.ark-eval-meter__marks > span {
+  flex: 1;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--surface-bg-alt);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  transition: background-color var(--dur) var(--ease);
+}
+
+.ark-eval-meter__marks > [data-state="rated"] { background: var(--accent); box-shadow: none; }
+.ark-eval-meter__marks > [data-state="na"] { background: var(--ink-300); box-shadow: none; }
+
+.ark-eval-meter__code {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--ink-600);
+}
+
+.ark-eval-checks {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each line is a way to its part of the form. */
+.ark-eval-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  width: calc(100% + 2 * var(--space-2));
+  margin: 0 calc(-1 * var(--space-2));
+  padding: var(--space-1-5) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.ark-eval-check:hover { background: var(--surface-bg-alt); }
+
+.ark-eval-check__mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--surface-border-strong);
+  border-radius: var(--radius-full);
+  color: #ffffff;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.ark-eval-check[data-done] .ark-eval-check__mark {
+  border-color: var(--success-text);
+  background: var(--success-text);
+}
+
+.ark-eval-check__label { flex: 1; min-width: 0; }
+
+.ark-eval-check__detail {
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-600);
+  white-space: nowrap;
+}
+
+.ark-eval-progress__submit { width: 100%; justify-content: center; }
+
+.ark-eval-progress__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1-5);
+  margin: calc(-1 * var(--space-1)) 0 0;
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-600);
+}
+
+.ark-eval-progress__note svg { flex-shrink: 0; margin-top: 2px; }
+
+/* The scale's words. Two columns in the rail (1–3, then 4, 5 and N/A),
+ * one wrapping line above the form. */
+.ark-scale-key {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.ark-scale-key__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  grid-template-columns: auto auto;
+  justify-content: start;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-xs);
+  color: var(--ink-900);
+}
+
+.ark-scale-key__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.ark-scale-key__n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 var(--space-1);
+  box-sizing: border-box;
+  border: 1px solid var(--surface-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-700);
+}
+
+.ark-scale-key__n--na { font-size: var(--text-2xs); }
+
+.ark-scale-key__note {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-600);
+}
+
+.ark-scale-key[data-compact] .ark-scale-key__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+/* -------------------------------------------------- Schedule / candidate */
+.ark-eval-facts {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-eval-facts li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  color: var(--ink-900);
+}
+
+.ark-eval-facts__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-bg-alt);
+  color: var(--ink-700);
+}
+
+.ark-eval-facts li > span:last-child {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ark-eval-facts small {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--ink-600);
+}
+
+.ark-eval-facts__link {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ark-eval-pending {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+.ark-eval-pending > svg { flex-shrink: 0; margin-top: 1px; color: var(--warning-text); }
+.ark-eval-pending strong { display: block; font-weight: 600; color: var(--warning-text); }
+.ark-eval-pending span { display: block; margin-top: 2px; font-size: var(--text-xs); color: var(--ink-700); }
+
+.ark-eval-reschedule {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+}
+
+.ark-eval-candidate {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ark-eval-file {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2-5) var(--space-3);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
+}
+
+.ark-eval-file:hover { border-color: var(--surface-border-strong); background: var(--surface-bg); }
+
+.ark-eval-file__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-bg-alt);
+  color: var(--ink-700);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-eval-file:hover .ark-eval-file__icon { background: var(--accent-bg); color: var(--accent); }
+
+.ark-eval-file__text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.ark-eval-file__name {
+  overflow: hidden;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ark-eval-file__hint {
+  font-size: var(--text-xs);
+  color: var(--ink-600);
+}
+
+/* ---------------------------------------------------- Submitted (locked) */
+.ark-eval-locked {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ark-eval-result {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ark-eval-result__score {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1-5);
+}
+
+.ark-eval-result__score strong {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-950);
+}
+
+.ark-eval-result__score span {
+  font-size: var(--text-sm);
+  color: var(--ink-600);
+}
+
+.ark-eval-result__facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-2-5) var(--space-4);
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.ark-eval-result__facts dt { color: var(--ink-600); }
+
+.ark-eval-result__facts dd {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  margin: 0;
+  font-weight: 500;
+  color: var(--ink-900);
+}
+
+.ark-eval-result__none { color: var(--ink-600); }
+
+.ark-eval-prose {
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--ink-900);
+  white-space: pre-line;
+}
+
+.ark-eval-ai-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.ark-eval-ai-title svg { color: var(--accent); }
+
+.ark-empty--wide .ark-empty__body { max-width: 56ch; }

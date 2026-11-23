@@ -1,0 +1,135 @@
+# TLS-terminating reverse proxy for the on-premises deployment.
+#
+# This is what closes NFR-03. There is deliberately no TLS code inside
+# the FastAPI app: terminating TLS in a proxy is the standard shape, and
+# building it into the application itself would be unusual.
+#
+# ARKIVE_SITE_ADDRESS is the address the panel's browsers will type:
+#   localhost          — single machine (demo laptop only)
+#   192.168.1.42       — LAN, other machines on the same network
+#   arkive.mseuf.local — LAN with a hostname, if DNS is set up for it
+{
+	# `tls internal` below issues certificates from Caddy's own local CA
+	# rather than Let's Encrypt, which cannot issue for a private address.
+	# The encryption is real; the CA is simply not one browsers ship with,
+	# so each client machine has to trust it once — see docs/ARKIVE-deployment.md.
+	# No `auto_https` directive on purpose. Its useful values (`off`,
+	# `disable_redirects`) all need an argument, so it cannot be blanked
+	# out via an env var for the public-domain case — and Caddy's default
+	# is already what a public site wants: certificates managed
+	# automatically, and plain HTTP redirected to HTTPS. Verified to work
+	# unchanged for a bare LAN IP too.
+
+	# Required whenever ARKIVE_SITE_ADDRESS is a bare IP. SNI carries the
+	# hostname a client is asking for, and RFC 6066 forbids putting an IP
+	# literal in it — so a browser opening https://192.168.1.29/ sends no
+	# SNI at all, Caddy has nothing to match a certificate against, and
+	# the handshake dies with "tlsv1 alert internal error" *even though
+	# the certificate was issued correctly*. This names what to assume
+	# when SNI is absent. Harmless for hostname deployments.
+	default_sni {$ARKIVE_SITE_ADDRESS:localhost}
+}
+
+{$ARKIVE_SITE_ADDRESS:localhost} {
+	# Whole directive comes from the environment, because the right
+	# answer depends on what ARKIVE_SITE_ADDRESS is and the Caddyfile has
+	# no conditionals:
+	#
+	#   localhost / a LAN IP  ->  "tls internal"  (the default)
+	#       A public certificate authority cannot vouch for a private
+	#       address — nobody can prove they own 192.168.1.29. Caddy
+	#       issues from its own CA instead, which is real encryption but
+	#       needs trusting once per client machine.
+	#
+	#   a real domain name    ->  ARKIVE_TLS_DIRECTIVE= (empty) in .env
+	#       Caddy then fetches a free, publicly-trusted Let's Encrypt
+	#       certificate automatically, and redirects plain HTTP to HTTPS.
+	#       Nothing to install on any client.
+	#
+	# No default written here, on purpose: Caddy uses a {$VAR:default}
+	# default for an *empty* variable too, so "empty" could never reach
+	# this line and a public domain always got `tls internal` instead.
+	# docker-compose.prod.yml supplies "tls internal" when .env leaves the
+	# line out entirely. See docs/ARKIVE-deployment.md §8.
+	{$ARKIVE_TLS_DIRECTIVE}
+
+	# Instructions to the browser to be stricter than its defaults.
+	# Browsers stay permissive for the sake of old websites; these switch
+	# that off for this site. Set here rather than in the app because
+	# they describe how the *site* is served, and because they then cover
+	# the static bundle as well as the API.
+	header {
+		# Don't try the unencrypted version of this site again. Without
+		# it, someone typing the address without "https" makes one
+		# plain-text request first, which is the moment another machine
+		# on the same network can answer instead and serve a fake login
+		# page.
+		#
+		# Short max-age and no `preload` on purpose: this deployment
+		# issues its own certificates for a LAN address, and a long pin
+		# would make "serve this address over plain HTTP" impossible to
+		# undo for a year if that were ever needed. Browsers ignore this
+		# entirely for `localhost`.
+		Strict-Transport-Security "max-age=2592000"
+
+		# Take a file's stated type at its word. Applicants upload files;
+		# without this a browser may inspect one, decide it looks like a
+		# web page, and run it as one.
+		X-Content-Type-Options "nosniff"
+
+		# Don't tell an outside site which ARKIVE page someone came
+		# from. Those addresses carry application ids.
+		Referrer-Policy "strict-origin-when-cross-origin"
+
+		# Superseded by frame-ancestors below for any current browser,
+		# kept because it is what an older one -- and most scanners --
+		# actually look for.
+		X-Frame-Options "DENY"
+
+		# The one with teeth: the browser runs only code served from
+		# here, so a script that somehow reached a page is refused
+		# rather than executed. This is what holds up the decision to
+		# keep the session token in browser storage (see
+		# docs/ARKIVE-auth-decisions.md) -- that rests on there being
+		# nowhere for stray code to get in, and this keeps it true
+		# rather than leaving it a property that could quietly lapse.
+		#
+		# Each relaxation below is something the app genuinely does:
+		#   style 'unsafe-inline'  every component styles itself with a
+		#                          React style attribute; without it the
+		#                          entire interface renders unstyled
+		#   fonts.googleapis/gstatic  the one external resource, a
+		#                          stylesheet and its font files
+		#   frame-src blob:        résumé previews fetch the PDF with an
+		#                          auth header and point an iframe at the
+		#                          resulting blob (shared/components/
+		#                          PdfPreview.tsx); omit this and every
+		#                          preview in the candidate profile
+		#                          silently shows nothing
+		#   img-src data: blob:    inline icons and the same PDF blobs
+		# No 'unsafe-inline' or 'unsafe-eval' for scripts: the built
+		# bundle needs neither, which is what makes the rule worth
+		# having.
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+		# Caddy's own advertisement of itself. Nothing depends on it.
+		-Server
+	}
+
+	# API first: handle_path strips the /api prefix, so /api/auth/login
+	# reaches the backend as /auth/login and the routers need no changes.
+	handle_path /api/* {
+		reverse_proxy backend:8000
+	}
+
+	# Everything else is the single-page app. try_files sends unknown
+	# paths to index.html so a deep link like /hr/applications/4153
+	# reloads correctly instead of 404ing — the router is client-side.
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+
+	encode gzip
+}

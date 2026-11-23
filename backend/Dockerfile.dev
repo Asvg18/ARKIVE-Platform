@@ -1,0 +1,29 @@
+# Development image for the API. The production Dockerfile bakes the
+# source in; this one deliberately does not — compose bind-mounts the
+# working tree over /app so an edit on the host reloads the server
+# running in the container. Only the dependency layer is built here.
+#
+# Same python:3.12-slim base as production, on purpose: the whole point
+# of containerising development is that "works on my machine" stops
+# depending on whose machine it is. (The host venv on Windows was
+# running 3.14, which is exactly the kind of drift this removes.)
+FROM python:3.12-slim
+
+# curl for the healthcheck, same as production.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Only the requirements are copied. The source arrives as a bind mount
+# at runtime, so rebuilding is needed when dependencies change and at no
+# other time — editing a .py file never triggers a rebuild.
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8000
+
+# No CMD: docker-compose.yml supplies the command so that the migration
+# step and the --reload flag are visible where someone reading the stack
+# will actually look, rather than buried in a second entrypoint script.

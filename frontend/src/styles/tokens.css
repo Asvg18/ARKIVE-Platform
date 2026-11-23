@@ -1,0 +1,236 @@
+/* ARKIVE design tokens: the type scale, ink steps, accent, spacing, radii,
+ * shadows and motion every stylesheet reads. Every interactive element
+ * owes default / hover / focus / active / disabled, drawn from these;
+ * density from type (after Linear), layered shadows and tabular numerals
+ * (Stripe), and one colour doing the work (Vercel).
+ */
+
+:root {
+  /* ---------------------------------------------------------------- Type
+   * One family, six sizes. Not twenty. Every size below earns its place
+   * by being a different *rank* of information, not a slightly different
+   * flavour of the same rank — which is what 11 vs 11.5 vs 12 was.
+   *
+   * `--text-display` is the seventh and is deliberately outside the UI
+   * scale: it exists for the public job board's hero, where the job is
+   * to be marketing rather than to be an interface. */
+  --font: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-num: "Inter", ui-monospace, SFMono-Regular, monospace;
+
+  /* The scale dense admin tools settle on (14px body, 13px rows), with
+   * the headings kept compact: with many jobs and candidates on screen,
+   * larger type reads as a brochure, not a console — rows too tall to
+   * compare, titles louder than the data under them. --text-display is
+   * the public board's marketing hero, not the console. */
+  --text-2xs: 11px;   /* uppercase meta labels, counts under a number     */
+  --text-xs: 12px;    /* captions, secondary metadata                     */
+  --text-sm: 13px;    /* dense list rows, table cells, helper text        */
+  --text-base: 14px;  /* body — the default for anything readable         */
+  --text-lg: 16px;    /* card titles, emphasised body                     */
+  --text-xl: 18px;    /* section headings                                 */
+  --text-2xl: 24px;   /* page titles                                      */
+  /* A headline figure on a stat card — the one number a card exists to
+   * show. Its own rank rather than a bigger page title: set at weight
+   * 500, not 700, so it is large without being loud. */
+  --text-figure: 32px;
+  --text-display: 46px;
+
+  /* Tracking tightens as size grows — the reason large type set at 0
+   * looks amateur. Values are conservative; the eye should not notice
+   * them working. */
+  --track-tight: -0.021em;
+  --track-snug: -0.014em;
+  --track-normal: -0.006em;
+  --track-wide: 0.06em;   /* uppercase meta only, which needs the air */
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+
+  /* ----------------------------------------------------------------- Ink
+   * Five steps, so body text and metadata are not equally loud: the
+   * middle step (--ink-700) lets metadata recede.
+   *
+   * Neutral: greys with a blue-green cast would fight the warm red-orange
+   * accent — two temperatures on one screen, which reads as unfinished even
+   * when nobody can say why. These have no hue of their own, so the accent
+   * is the only colour on the page that is *meant*. */
+  --ink-950: #111113;  /* page titles only                     */
+  --ink-900: #1c1c1f;  /* primary text, headings               */
+  --ink-700: #404047;  /* secondary text — the middle step     */
+  --ink-600: #5e5e67;  /* metadata, supporting copy            */
+  --ink-400: #97979f;  /* placeholders, disabled, timestamps   */
+  --ink-300: #c6c6cc;  /* hairline-adjacent, icon rests        */
+
+  /* ------------------------------------------------------------ Surfaces
+   * Four steps, so a card can sit on a ground and hold a well without
+   * every layer being white-on-white — which is what made the pipeline
+   * rail read as a muddy stack of identical boxes.
+   *
+   * The ground was #f6f8f9, a tinted off-white that looked grey-green
+   * beside true white cards. It is now a clean neutral a breath off
+   * white: enough for a white card to sit on, not enough to read as a
+   * colour. The navigation sits on true white (see the shell), so the
+   * workspace is the one slightly-toned area and the eye settles there. */
+  --surface: #ffffff;
+  --surface-bg: #f8f8fa;       /* page ground                   */
+  --surface-bg-alt: #f1f1f4;   /* wells, inset areas, quiet fills */
+  --surface-sunken: #e8e8ec;   /* the deepest step, used sparingly */
+  /* The ground the signed-in shell's sidebar sits on, around the white
+   * page panel. A step darker than --surface-bg so the panel's edge
+   * reads without leaning on its border. */
+  --shell-ground: #f3f3f5;
+  --surface-border: rgba(17, 17, 19, 0.09);
+  --surface-border-strong: rgba(17, 17, 19, 0.15);
+  --hairline: rgba(17, 17, 19, 0.065);
+
+  /* -------------------------------------------------------------- Accent
+   * Unchanged in hue — it is the one colour every reviewed screen agreed
+   * on, and the brand does not move for a polish pass. What is new is
+   * the *discipline*: accent means "this one, the one you chose."
+   * Painting every open job green told the eye nothing, because
+   * fifteen of fifteen were green. Colour has to be earned.
+   *
+   * Deeper than the brighter #e63219, which is 4.34:1 on white and 4.09:1
+   * on the page ground, short of the 4.5:1 text needs. #cf2814 is 5.29:1 with
+   * white, 4.99:1 on the ground and 4.80:1 on --accent-bg; hover takes the
+   * dark red (6.48:1). */
+  --accent: #cf2814;
+  --accent-dark: #ba1a09;
+  --accent-hover: #ba1a09;
+  --accent-gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  --accent-bg: #fef1ef;
+  --accent-bg-strong: #fde3df;
+  --accent-ring: rgba(207, 40, 20, 0.38);
+
+  /* ------------------------------------------------------------ Semantic */
+  --success-bg: #ecfdf5;
+  --success-text: #067a55;
+  --success-line: #10b981;
+  --warning-bg: #fff4ed;
+  --warning-text: #b4460f;
+  --warning-line: #f59e0b;
+  --danger-bg: #fef2f2;
+  --danger-text: #b42318;
+  --info-bg: #eff6ff;
+  --info-text: #1d4ed8;
+  /* Two more soft tag tones (shared/ui/Tag), for kinds that are neither
+   * good nor bad news: a decision, an application update. Text on its
+   * own tint is at least 4.5:1, like the semantic pairs above. */
+  --violet-bg: #f5f3ff;
+  --violet-text: #6d28d9;
+  --teal-bg: #effcf9;
+  --teal-text: #0f766e;
+
+  /* --------------------------------------------------- Identity palette
+   * Identity colour, not status colour: one set of twelve shared by job
+   * badges (coloured by department, so Library Services looks like
+   * Library Services on every screen) and people's avatars. Vivid, since
+   * they are solid circles under white initials; each passes 4.5:1
+   * against white. Neighbours in the list are far apart in hue, because
+   * departments take them in order. Red is left out: the accent keeps it
+   * for selection. */
+  --dept-1: #2563eb;  /* blue    */
+  --dept-2: #c2410c;  /* orange  */
+  --dept-3: #0f766e;  /* teal    */
+  --dept-4: #7c3aed;  /* violet  */
+  --dept-5: #4d7c0f;  /* lime    */
+  --dept-6: #be185d;  /* pink    */
+  --dept-7: #0e7490;  /* cyan    */
+  --dept-8: #b45309;  /* amber   */
+  --dept-9: #4f46e5;  /* indigo  */
+  --dept-10: #15803d; /* green   */
+  --dept-11: #a21caf; /* fuchsia */
+  --dept-12: #0369a1; /* sky     */
+
+  /* ------------------------------------------------------------- Spacing
+   * Dense at the small end, as precision UI wants: every 2px from 2-12,
+   * then the 8px rhythm takes over for layout. */
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* -------------------------------------------------------------- Radius
+   * Nudged from a flat 8px everywhere to a scale. A 10px card beside a
+   * 6px chip reads as considered; the same 8px on both reads as a
+   * default nobody chose. */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;
+
+  /* ----------------------------------------------------------- Layout
+   * `<main>` had no ceiling, so a page filled whatever the window gave it
+   * while its own content was capped at 720px — a narrow column stranded
+   * in a very wide frame. One ceiling for the shell, and content decides
+   * how to use it.
+   *
+   * `--measure` is the readable line length for prose and single-column
+   * forms: past roughly 75 characters the eye loses the start of the next
+   * line. Wide pages (tables, boards, card grids) ignore it deliberately;
+   * they are scanned, not read. */
+  --page-max: 1440px;
+  --measure: 68ch;
+
+  /* ----------------------------------------------------------- Elevation
+   * Two layers each, tinted with the ink hue rather than pure black. A
+   * flat rgba(0,0,0,.05) blur is the single most recognisable tell of an
+   * unconsidered interface: real shadow has a tight contact edge *and* a
+   * wide ambient falloff, and it picks up the colour of the room. */
+  /* Cards rest on a border and a contact shadow rather than floating. A
+   * page of tables each lifted on a wide blur looked busy; resting surfaces
+   * read as calm and precise, and the big shadow is kept for what genuinely
+   * floats (menus, dialogs). */
+  --shadow-xs:
+    0 1px 2px rgba(17, 17, 19, 0.04);
+  --shadow-sm:
+    0 1px 3px rgba(17, 17, 19, 0.05),
+    0 1px 2px -1px rgba(17, 17, 19, 0.04);
+  --shadow-md:
+    0 2px 6px -2px rgba(17, 17, 19, 0.06),
+    0 1px 3px -1px rgba(17, 17, 19, 0.05);
+  --shadow-lg:
+    0 16px 36px -12px rgba(17, 17, 19, 0.18),
+    0 4px 10px -4px rgba(17, 17, 19, 0.08);
+  --shadow-accent: 0 1px 2px rgba(186, 26, 9, 0.24);
+  /* Kept: the first pass named this and buttons still ask for it. */
+  --shadow-button: var(--shadow-sm);
+
+  /* -------------------------------------------------------------- Focus
+   * There was no focus style at all, which is both a craft failure and an
+   * accessibility one — a keyboard user had no idea where they were. Two
+   * rings so it reads on any background: a surface-coloured gap, then the
+   * accent. */
+  --focus-ring: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent-ring);
+
+  /* -------------------------------------------------------------- Motion
+   * One easing curve for the whole app. It starts fast and settles — the
+   * shape that reads as responsive rather than floaty. Durations are
+   * short on purpose: interface motion should be felt, not watched. */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-fast: 110ms;
+  --dur: 170ms;
+  --dur-slow: 260ms;
+}
+
+/* Respect the system setting. Anyone who has asked for less motion has
+ * asked for a reason, and none of ours carries meaning that is lost. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}

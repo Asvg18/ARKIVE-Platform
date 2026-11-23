@@ -1,0 +1,156 @@
+# On-premises deployment. Everything runs on one machine; nothing leaves
+# the network. Bring it up with:
+#
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# See docs/ARKIVE-deployment.md for the full procedure, including making
+# the certificate trusted on the machines that will view the demo.
+
+# A distinct project name, and NOT optional. Compose derives the project
+# name from the directory when none is given, so without this line both
+# compose files claim the same project — and bringing this stack up
+# replaces the development database container, pointing it at a
+# different volume. The dev data survives (volumes are not deleted), but
+# the dev server loses its database until docker compose up -d is run
+# again.
+name: arkive-prod
+
+services:
+  db:
+    # Plain Postgres 16. This was pgvector/pgvector:pg16 for most of the
+    # project's life, on the reasoning that having the binary present
+    # would make adopting pgvector a one-line CREATE EXTENSION later.
+    # That adoption was then decided against for good reasons (~12
+    # requisitions; an ANN index would cost more than it saves — see the
+    # development guide S10), which left the deployment pulling a heavier
+    # image for an extension it deliberately never enables. Verified safe
+    # to switch: SELECT extname FROM pg_extension returns only plpgsql
+    # and no column anywhere has a vector type, so nothing in the
+    # existing data depends on it.
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # A separate volume from the dev one, deliberately: bringing the
+      # production stack up must never write into the database the dev
+      # server and the test suite are using.
+      - arkive_pg_data_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      # Defaults to the bundled db container. Override with a managed
+      # Postgres (Neon, Supabase, a DigitalOcean database) by setting
+      # DATABASE_URL in .env — the bundled container then just sits
+      # unused, or drop it from up with an explicit service list.
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # LLM-written retrieval probes for skill matching; see
+      # backend/app/infra/config.py for why it is off unless .env says so.
+      RAG_QUERY_EXPANSION: ${RAG_QUERY_EXPANSION:-false}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-}
+      # The proxy serves the app and the API from one origin, so the
+      # browser never issues a cross-origin request. Kept configurable
+      # anyway for a split deployment.
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+      # Where a link inside an email should point: the address people
+      # actually type, which is this stack's own site address.
+      #
+      # Without it the API falls back to the first allowed CORS origin,
+      # which defaults to the Vite dev server -- so every password-reset
+      # and invitation link mailed out of the deployment would point at
+      # http://localhost:5173, i.e. at the recipient's own machine,
+      # where nothing is running. The link would simply do nothing, and
+      # the failure only shows up in somebody else's inbox.
+      APP_BASE_URL: ${APP_BASE_URL:-https://${ARKIVE_SITE_ADDRESS:-localhost}}
+      # Whose X-Forwarded-For header the API is allowed to believe --
+      # see backend/docker-entrypoint.sh for why this matters and why it
+      # must never be "*". Defaults to this stack's own network (pinned
+      # below), i.e. "trust our proxy and nothing else".
+      FORWARDED_ALLOW_IPS: ${FORWARDED_ALLOW_IPS:-172.28.0.0/24}
+    volumes:
+      # Real applicant resumes and documents. Without this, a rebuild
+      # destroys them.
+      - arkive_uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend-build:
+    # Builds the static bundle into a shared volume, then exits. Not a
+    # long-running service — docker compose ps showing it as Exited(0)
+    # is the success case, not a failure.
+    build:
+      context: ./frontend
+    volumes:
+      - arkive_frontend_dist:/dist-out
+    # Clears the target first. Vite content-hashes its filenames, so a
+    # plain copy leaves every previously-built bundle behind in the
+    # volume forever — harmless to serving (index.html names the current
+    # one) but it grows without bound and makes "is the deployed bundle
+    # actually current?" impossible to answer by looking.
+    command: sh -c "rm -rf /dist-out/* && cp -r /dist/. /dist-out/"
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "443:443"
+      - "80:80"
+    environment:
+      ARKIVE_SITE_ADDRESS: ${ARKIVE_SITE_ADDRESS:-localhost}
+      # Which certificate Caddy gets (see the Caddyfile). Public domains
+      # must use a real ACME email, for example:
+      # ARKIVE_TLS_DIRECTIVE=tls admin@example.com
+      ARKIVE_TLS_DIRECTIVE: ${ARKIVE_TLS_DIRECTIVE:-tls internal}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - arkive_frontend_dist:/srv:ro
+      # Persisted so the locally-issued certificate and its CA survive a
+      # restart — otherwise every up mints a new CA and every client
+      # machine has to trust it again.
+      - arkive_caddy_data:/data
+      - arkive_caddy_config:/config
+    depends_on:
+      - backend
+      - frontend-build
+    restart: unless-stopped
+
+volumes:
+  arkive_pg_data_prod:
+  arkive_uploads:
+  arkive_frontend_dist:
+  arkive_caddy_data:
+  arkive_caddy_config:
+
+networks:
+  # Overriding compose's own `default` network rather than adding a named
+  # one, so every service still joins it automatically and no service
+  # block needs a `networks:` key.
+  #
+  # The subnet is pinned only so FORWARDED_ALLOW_IPS above can name it.
+  # Docker otherwise assigns one from its pool (172.17.0.0/16 upward),
+  # which changes between machines and would make "trust exactly our
+  # proxy" impossible to write down.
+  #
+  # If `docker compose up` ever fails saying this pool overlaps an
+  # existing network, pick another private /24 and change both places.
+  default:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24

@@ -1,0 +1,22 @@
+# Development image for the Vite dev server. The production Dockerfile
+# is build-only (it emits a static `dist` for Caddy to serve); this one
+# keeps node around because the dev server *is* the product here.
+#
+# Only node_modules is built into the image. The source arrives as a
+# bind mount at runtime, so edits hot-reload without a rebuild.
+FROM node:22-slim
+
+WORKDIR /app
+
+# Installed from the lockfile inside the image, which is what makes this
+# cross-platform: npm resolves optional native binaries (esbuild,
+# rollup) per platform, so a host node_modules built on Windows or macOS
+# contains the wrong ones for this Linux container. compose shadows the
+# host copy with an anonymous volume — see docker-compose.yml.
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+EXPOSE 5173
+
+# No CMD: docker-compose.yml supplies it, so the --host flag that makes
+# the server reachable from the host is visible in the stack definition.

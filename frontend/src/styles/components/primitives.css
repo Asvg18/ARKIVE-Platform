@@ -1,0 +1,418 @@
+/* =================================================================== Card */
+
+.ark-card {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+}
+
+.ark-card--flat { box-shadow: none; }
+.ark-card--raised { box-shadow: var(--shadow-md); }
+
+/* Only for a card that is genuinely a control — one you click to go
+ * somewhere. A card that merely contains things should not move. */
+.ark-card--interactive {
+  cursor: pointer;
+  transition:
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.ark-card--interactive:hover {
+  border-color: var(--surface-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.ark-card--interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ================================================================ Buttons
+ * One geometry, five skins. Every variant shares the same height, radius
+ * and transition so a row of mixed buttons sits on one line without
+ * anyone nudging a margin. */
+
+.ark-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+  line-height: 1;
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  /* a router <Link> dressed as a button keeps a button's look */
+  text-decoration: none;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+/* 1px, not 2 — enough to feel the press without the label appearing to
+ * jump. The shadow collapsing is what sells it. */
+.ark-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.ark-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.ark-btn--sm { font-size: var(--text-sm); padding: 6px 10px; gap: var(--space-1-5); }
+.ark-btn--lg { font-size: var(--text-base); padding: 11px 18px; }
+
+.ark-btn--primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-accent);
+}
+.ark-btn--primary:hover:not(:disabled) { background: var(--accent-hover); }
+.ark-btn--primary:active:not(:disabled) {
+  background: var(--accent-dark);
+  box-shadow: none;
+}
+
+.ark-btn--secondary {
+  background: var(--surface);
+  color: var(--ink-900);
+  border-color: var(--surface-border-strong);
+  box-shadow: var(--shadow-xs);
+}
+.ark-btn--secondary:hover:not(:disabled) {
+  background: var(--surface-bg);
+  border-color: var(--ink-300);
+}
+.ark-btn--secondary:active:not(:disabled) {
+  background: var(--surface-bg-alt);
+  box-shadow: none;
+}
+
+.ark-btn--outline {
+  background: transparent;
+  color: var(--ink-700);
+  border-color: var(--surface-border-strong);
+}
+.ark-btn--outline:hover:not(:disabled) {
+  background: var(--surface-bg-alt);
+  color: var(--ink-900);
+  border-color: var(--ink-300);
+}
+
+.ark-btn--ghost {
+  background: transparent;
+  color: var(--ink-700);
+}
+.ark-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-bg-alt);
+  color: var(--ink-900);
+}
+
+.ark-btn--danger {
+  background: transparent;
+  color: var(--danger-text);
+  border-color: rgba(180, 35, 24, 0.32);
+}
+.ark-btn--danger:hover:not(:disabled) {
+  background: var(--danger-bg);
+  border-color: var(--danger-text);
+}
+
+/* ================================================================== Chips
+ * A removable chip: a choice you made, with its × (an exam day picked in
+ * Add exam sessions). The tag's soft look, as a control. A tag that only
+ * labels something is shared/ui/Tag. */
+
+.ark-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 24px;
+  padding: 0 var(--space-2) 0 var(--space-2-5);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ark-chip--neutral { background: var(--surface-bg-alt); color: var(--ink-700); }
+
+/* A status dot for places where even a chip is too much furniture — a
+ * list row that already carries its status in a column heading. */
+.ark-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  background: currentColor;
+}
+
+/* ========================================================== Meta / labels */
+
+.ark-meta {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  line-height: 1.4;
+}
+
+/* ============================================================ Identity mark
+ * A job's or a department's badge (`IdentityMark`): two letters in a
+ * circle of the department's colour, the same shape and palette as a
+ * person's avatar. The colour carries a fact, so the eye can find a row
+ * without reading it, and it is the same on every screen. */
+.ark-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.ark-tile--sm { width: 26px; height: 26px; font-size: var(--text-2xs); }
+.ark-tile--lg { width: 40px; height: 40px; font-size: var(--text-xs); }
+.ark-tile--xl { width: 52px; height: 52px; font-size: var(--text-base); }
+
+/* ============================================================== List rows
+ * The pattern the pipeline rail, the candidate list and the review queue
+ * all wanted and each hand-rolled differently. */
+
+.ark-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  text-align: left;
+  padding: var(--space-2-5) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.ark-row:hover { background: var(--surface-bg-alt); }
+.ark-row:active { background: var(--surface-sunken); }
+
+/* The item you have open: a white card lifted
+ * off its column, a short red bar on its left, the title dark, and its
+ * count a small red pill. One rule for every selectable list: the HR
+ * Workflow's openings (.ark-row), Find Jobs (.ark-listing), and the
+ * inbox's folders and notices, which built it first. Tabs keep their own
+ * style. */
+.ark-row[aria-current="true"],
+.ark-listing[aria-current="true"],
+.ark-inbox__folder[aria-current],
+.ark-inbox__option[aria-selected="true"] {
+  position: relative;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.ark-row[aria-current="true"]:hover { background: var(--surface); }
+.ark-row[aria-current="true"]::before,
+.ark-listing[aria-current="true"]::before,
+.ark-inbox__folder[aria-current]::before,
+.ark-inbox__option[aria-selected="true"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent);
+}
+
+/* Kept so call sites are unchanged; the bar is drawn for every selected
+ * row now. */
+.ark-row--marked {
+  position: relative;
+}
+
+/* A list of rows on the page ground, so the selected one lifts off it. */
+.ark-row-list { background: var(--surface-bg); }
+
+/* A row's count: dark red while searching (it is the answer to the
+ * search; the brighter accent falls under 4.5:1 on the list's ground),
+ * quiet when it is zero, searching or not, and a small red pill on the
+ * selected row. */
+.ark-row__count {
+  flex-shrink: 0;
+  min-width: 18px;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink-700);
+}
+.ark-row__count[data-search] { color: var(--accent-dark); }
+.ark-row__count[data-zero] { color: var(--ink-300); }
+.ark-row[aria-current="true"] .ark-row__count:not([data-zero]) {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--radius-full);
+  background: var(--accent-dark);
+  font-size: var(--text-xs);
+  color: #ffffff;
+}
+
+/* ================================================================= Tabs */
+
+.ark-tabs {
+  display: inline-flex;
+  gap: var(--space-0-5);
+  padding: 3px;
+  background: var(--surface-bg-alt);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--hairline);
+}
+
+.ark-tab {
+  font-size: var(--text-sm);
+  font-weight: 550;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-600);
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-tab:hover { color: var(--ink-900); }
+
+.ark-tab[aria-selected="true"],
+.ark-tab[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--ink-900);
+  box-shadow: var(--shadow-xs);
+}
+
+/* How many rows a filter tab would show. Quieter than its label, and in
+ * tabular figures so the tabs do not change width as the count changes. */
+.ark-tab__count {
+  margin-left: var(--space-1-5);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-400);
+}
+
+.ark-tab[aria-pressed="true"] .ark-tab__count,
+.ark-tab[aria-selected="true"] .ark-tab__count { color: var(--ink-600); }
+
+/* A tone dot before a tab's label — green for what supports, amber for
+ * what wants a look, the same marks the verdict's facts carry. */
+.ark-tab__dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: var(--space-1-5);
+  border-radius: var(--radius-full);
+  vertical-align: 0.1em;
+  background: var(--ink-300);
+}
+
+.ark-tab__dot[data-tone="positive"] { background: var(--success-line); }
+.ark-tab__dot[data-tone="attention"] { background: var(--warning-line); }
+
+/* ============================================================ Empty state
+ * "Designed, not stubbed. Generic 'no data' placeholder text destroys
+ * hierarchy." The app had several bare italic sentences doing this job. */
+
+.ark-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  padding: var(--space-10) var(--space-6);
+  color: var(--ink-600);
+}
+
+.ark-empty__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-1);
+  border-radius: var(--radius);
+  background: var(--surface-bg-alt);
+  color: var(--ink-400);
+}
+
+.ark-empty__title {
+  font-size: var(--text-base);
+  font-weight: 650;
+  color: var(--ink-900);
+  letter-spacing: var(--track-snug);
+}
+
+.ark-empty__body {
+  font-size: var(--text-sm);
+  max-width: 34ch;
+  line-height: var(--leading-normal);
+}
+
+/* ================================================================ Loading
+ * A shimmer that reserves the shape of what is coming, instead of the
+ * word "Loading..." that shifts the whole page when it resolves. */
+
+.ark-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-bg-alt);
+  border-radius: var(--radius-sm);
+}
+
+.ark-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+  animation: ark-shimmer 1.4s infinite;
+}
+
+@keyframes ark-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ark-skeleton::after { animation: none; }
+}

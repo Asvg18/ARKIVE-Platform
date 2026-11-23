@@ -1,0 +1,730 @@
+/* ================================================== Dashboard building blocks
+ * A search field with its icon inside,
+ * a stat strip, a section heading with its tools on the right, a
+ * bordered data table with sentence-case headings, outlined status
+ * pills, and a pager. */
+
+/* A search field with the magnifier inside it. Hover and focus come from
+ * the base input rules. */
+.ark-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.ark-search__icon {
+  position: absolute;
+  left: 11px;
+  color: var(--ink-400);
+  pointer-events: none;
+}
+
+.ark-search__input {
+  width: 100%;
+  height: 36px;
+  padding: 0 var(--space-3) 0 33px;
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+}
+
+/* Headline numbers (Command Center). Each card reads top to
+ * bottom as title → figure → context: a small dark title, the figure
+ * large and at medium weight, and on the figure's line, at the right, a
+ * chip only when there is something to say ("2 past deadline", "All
+ * clear"). Numbers that answer one question share a card — what is
+ * waiting on HR is split into final decisions and flagged candidates,
+ * divided by a hairline, each over a status dot. */
+.ark-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.ark-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-5) var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+.ark-stat__title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-900);
+}
+
+/* Top-aligned, so every card's number sits on the same line across the
+ * row whether or not it has a label under it. A chip beside a number is
+ * nudged down to the number's middle. */
+.ark-stat__body {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  min-width: 0;
+}
+
+.ark-stat__value {
+  font-size: var(--text-figure);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-950);
+}
+
+.ark-stat__skeleton {
+  display: block;
+  width: 64px;
+  height: 30px;
+}
+
+.ark-stat__skeleton--sm { width: 44px; }
+
+.ark-stat__split {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.ark-stat__figure {
+  display: grid;
+  gap: var(--space-1-5);
+  min-width: 0;
+  padding-right: var(--space-6);
+}
+
+.ark-stat__figure + .ark-stat__figure {
+  padding-left: var(--space-6);
+  border-left: 1px solid var(--hairline);
+}
+
+.ark-stat__body > .ark-tag { margin-top: 7px; }
+
+.ark-stat__figure-value {
+  font-size: var(--text-figure);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-950);
+}
+
+.ark-stat__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ark-stat__status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+.ark-stat__status--info    { color: var(--info-text); }
+.ark-stat__status--warning { color: var(--warning-text); }
+
+/* A card title with an ⓘ beside it. */
+.ark-stat__title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.ark-stat__title-row .ark-tip-icon {
+  width: 22px;
+  height: 22px;
+  margin: -3px 0;
+}
+
+@media (max-width: 900px) {
+  .ark-stats { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* A section's title with its tools (search, filters, action) on the
+ * right, on one line above the thing it heads. */
+.ark-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.ark-section-head__title {
+  font-size: var(--text-xl);
+  font-weight: 650;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-950);
+}
+
+.ark-section-head__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* The data table. Bordered and rounded as one object; headings are
+ * sentence case at body size in a muted ink — a label for the column,
+ * not a shout — on the faintest tint so they still read as a header
+ * row. Rows are divided by hairlines and hold a two-line cell (name over
+ * a quieter detail) comfortably. */
+.ark-dt-wrap {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.ark-dt-scroll { overflow-x: auto; }
+
+.ark-dt {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.ark-dt th {
+  height: 40px;
+  padding: 0 var(--space-4);
+  text-align: left;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-600);
+  background: var(--surface-bg);
+  border-bottom: 1px solid var(--surface-border);
+  white-space: nowrap;
+}
+
+.ark-dt td {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: middle;
+}
+
+.ark-dt tbody tr:last-child td { border-bottom: none; }
+
+.ark-dt__primary {
+  display: block;
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-900);
+}
+
+.ark-dt__secondary {
+  display: block;
+  margin-top: 1px;
+  font-size: var(--text-xs);
+  color: var(--ink-600);
+}
+
+/* A heading that sorts. At rest it is the plain label with a faint
+ * up-down mark; the sort in force darkens and shows its direction. */
+.ark-dt__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0 calc(-1 * var(--space-1));
+  padding: 2px var(--space-1);
+  border-radius: var(--radius-xs);
+  font: inherit;
+  color: inherit;
+  transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+
+.ark-dt__sort svg { color: var(--ink-300); transition: color var(--dur-fast) var(--ease); }
+.ark-dt__sort:hover { color: var(--ink-900); background: var(--surface-bg-alt); }
+.ark-dt__sort:hover svg { color: var(--ink-600); }
+.ark-dt__sort[data-active="true"] { color: var(--ink-900); }
+.ark-dt__sort[data-active="true"] svg { color: var(--ink-900); }
+
+/* Rows that open something. The whole row answers the pointer; the
+ * row's own link or button stays the keyboard way in. */
+.ark-dt--rows tbody tr {
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.ark-dt--rows tbody tr:hover { background: var(--surface-bg); }
+
+.ark-dt--rows tbody tr.ark-dt__static { cursor: default; }
+.ark-dt--rows tbody tr.ark-dt__static:hover { background: transparent; }
+
+/* Under a table: where you are in it, and the way to the next page. */
+.ark-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--ink-600);
+}
+
+.ark-pager strong {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-900);
+}
+
+.ark-pager__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ark-pager__page { margin-right: var(--space-2); }
+
+/* ============================================================== Utilities
+ * A deliberately tiny set — only the things that were being re-declared
+ * inline on nearly every screen. */
+
+.ark-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.ark-hairline {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  margin: 0;
+}
+
+/* Fades a panel in on mount. Used where content arrives after a fetch, so
+ * it settles rather than snaps. */
+.ark-enter {
+  animation: ark-enter var(--dur-slow) var(--ease) both;
+}
+
+@keyframes ark-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ============================================================ Pipeline board
+ * A column is not --surface-bg, the page ground, or it would vanish into
+ * a box outlined in hairline. A column is a *well*: it sits
+ * below the page, and the cards sit above it. That ordering is what makes
+ * a board read as a board rather than as three lists side by side. */
+
+.ark-col {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  padding: var(--space-2-5);
+  min-height: 132px;
+  border-radius: var(--radius);
+  background: var(--surface-bg-alt);
+  border: 1px solid transparent;
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+/* The one legal next stage, highlighted while a card is in the air. The
+ * DFA's rule made visible before you act, instead of only as a refusal
+ * afterwards. */
+.ark-col--target {
+  background: var(--success-bg);
+  border-color: var(--success-line);
+  box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.18);
+}
+
+/* Under the cursor. Deliberately distinct from --target: one says "you
+ * may drop here", the other says "you are about to". */
+.ark-col--over {
+  background: var(--surface-sunken);
+  border-color: var(--ink-300);
+}
+
+.ark-col--target.ark-col--over {
+  background: #dcfaee;
+  border-color: var(--success-text);
+}
+
+.ark-col__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 0 var(--space-0-5) var(--space-0-5);
+}
+
+/* Candidate card. Grabbable, so it owes a grab cursor, a hover lift and a
+ * visibly different state while it is being carried. */
+.ark-card-candidate {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2-5);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs);
+  transition:
+    box-shadow var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.ark-card-candidate:hover {
+  border-color: var(--surface-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.ark-card-candidate:active { transform: translateY(0); }
+
+.ark-card-candidate--draggable { cursor: grab; }
+.ark-card-candidate--draggable:active { cursor: grabbing; }
+
+/* Being carried. Faded and tilted a degree — enough to read as "lifted"
+ * without the page appearing to glitch. */
+.ark-card-candidate--dragging {
+  opacity: 0.45;
+  transform: rotate(-1.2deg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* An empty column still has to hold its shape, or a board with three
+ * empty stages collapses into ragged strips of different heights. A
+ * dashed well says "this can receive something" — which a bare grey
+ * sentence never did. */
+.ark-col__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: var(--space-3);
+  border: 1px dashed var(--surface-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  text-align: center;
+}
+
+/* ================================================================ Metrics
+ * A headline number is not a fact on its own. "15" answers nothing until
+ * you know fifteen of what, out of what, and whether that is normal — so
+ * every metric here carries a supporting line, and the role colour is
+ * carried by a top rule rather than a left bar, which lets the cards sit
+ * flush in a grid without their contents shifting sideways. */
+
+.ark-metric {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+}
+
+/* No hover state, deliberately: a metric card is not a link, and one that
+ * lifts under the cursor promises a click it then ignores. */
+
+/* The role colour deliberately has *no* edge rule. An earlier pass drew
+ * one across the top of each card; it was read as visual noise banding
+ * the layout rather than as meaning, and the tinted icon chip inside the
+ * card already carries the same information more quietly. The
+ * --metric-accent custom property is still accepted and simply unused,
+ * so call sites did not have to change.
+ */
+
+.ark-metric__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.ark-metric__value {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  color: var(--ink-950);
+  font-variant-numeric: tabular-nums;
+}
+
+.ark-metric__note {
+  margin-top: var(--space-1-5);
+  font-size: var(--text-xs);
+  color: var(--ink-600);
+  line-height: var(--leading-snug);
+}
+
+/* ================================================================= Tables
+ * Density and alignment, which is most of what makes a data table read as
+ * considered. Row hover is one CSS rule, not React state: state would
+ * re-render the whole table on every mouse move. */
+
+.ark-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ark-table th {
+  text-align: left;
+  padding: var(--space-2) var(--space-6);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  /* --ink-600, not 400: at 11px the lighter grey fell under 3:1 on the
+   * header's toned ground, so headings were decoration, not labels. */
+  color: var(--ink-600);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--surface-bg);
+  white-space: nowrap;
+}
+
+.ark-table td {
+  padding: var(--space-2-5) var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: middle;
+}
+
+.ark-table tbody tr:last-child td { border-bottom: none; }
+
+/* For a wide grid of figures (the Final Decision Board's eleven score
+ * columns): the same table, with the side padding pulled in so the
+ * columns sit close enough to compare across a row. */
+.ark-table--dense th,
+.ark-table--dense td {
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.ark-table--rows tbody tr {
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.ark-table--rows tbody tr:hover { background: var(--surface-bg); }
+.ark-table--rows tbody tr:active { background: var(--surface-bg-alt); }
+
+/* The row's affordance only resolves on hover. A permanent arrow on every
+ * row is fifteen arrows competing with the content; one that fades in
+ * under the cursor says the same thing at the moment it is useful. */
+.ark-table--rows .ark-row-go {
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.ark-table--rows tbody tr:hover .ark-row-go,
+.ark-table--rows tbody tr:focus-visible .ark-row-go {
+  opacity: 1;
+  transform: none;
+}
+
+/* A row in a clickable table that has nowhere to go from this screen —
+ * a locked job on the Pre-Screening picker. It must not light up under
+ * the cursor and then refuse the click. */
+.ark-table--rows tbody tr.ark-tr-static { cursor: default; }
+.ark-table--rows tbody tr.ark-tr-static:hover,
+.ark-table--rows tbody tr.ark-tr-static:active { background: transparent; }
+
+/* A sortable column heading. It stays the quiet uppercase label until it
+ * is the sort in force, so a row of headings does not read as a row of
+ * buttons; the arrow only appears on the active one or under the cursor. */
+.ark-th-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  text-transform: inherit;
+  border-radius: var(--radius-xs);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.ark-th-sort:hover,
+.ark-th-sort[data-active="true"] { color: var(--ink-900); }
+
+/* In a centred (numeric) column the arrow hangs off the label's right
+ * side, out of the flow: the label itself sits in the middle, over the
+ * figures beneath it, and a narrow count column need not reserve room
+ * for an arrow it only sometimes shows. */
+.ark-th-sort--center { position: relative; }
+
+.ark-th-sort--center .ark-th-sort__mark {
+  position: absolute;
+  left: 100%;
+  margin-left: var(--space-1);
+}
+
+.ark-th-sort__mark {
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.ark-th-sort:hover .ark-th-sort__mark { opacity: 0.45; }
+.ark-th-sort[data-active="true"] .ark-th-sort__mark { opacity: 1; }
+
+/* A job picker's Status column: one icon-and-word per row that is both
+ * the job's state and, where the row opens, the way in — a real link, so
+ * it takes keyboard focus and opens in a new tab like any other.
+ *
+ * Both states share the same shape (icon, then word), and the negative
+ * margin cancels the padding, so down the column every icon sits on the
+ * heading's left edge and every word starts on one line. The trailing
+ * arrow only appears under the cursor: at rest the column is just the
+ * two words, and the arrow says "this opens" at the moment it matters. */
+.ark-access {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  margin-left: calc(-1 * var(--space-2));
+  border-radius: var(--radius-xs);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-600);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.ark-access__icon { flex-shrink: 0; color: var(--ink-400); }
+
+.ark-access--edit { color: var(--accent); font-weight: 650; }
+.ark-access--edit .ark-access__icon { color: currentColor; }
+
+.ark-access__go {
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.ark-table--rows tbody tr:hover a.ark-access:not(.ark-access--edit) { color: var(--ink-900); }
+
+.ark-table--rows tbody tr:hover .ark-access__go,
+.ark-access:focus-visible .ark-access__go {
+  opacity: 1;
+  transform: none;
+}
+
+.ark-access:focus-visible { background: var(--surface-bg-alt); }
+
+/* A column that gives way on a narrow window, and the line that stands in
+ * for it. Below 1200px the sidebar and page padding leave the table too
+ * little room for a department column beside an untruncated job title. */
+.ark-only-narrow { display: none; }
+
+@media (max-width: 1200px) {
+  .ark-hide-narrow { display: none; }
+  .ark-only-narrow { display: block; }
+}
+
+/* ================================================================== Links
+ * A link that sits beside a primary button cannot also be accent — two
+ * accents in one header compete, and the button loses. This reads as
+ * text until the cursor arrives, then commits. */
+
+.ark-link-quiet {
+  color: var(--ink-700);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.ark-link-quiet:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent-ring);
+}
+
+
+/* ============================================================ Disclosure
+ * <summary> with `list-style: none` loses its marker on every browser, so
+ * the caret is drawn here — and it turns, which is what tells you the
+ * control is a toggle rather than a link. */
+
+.ark-disclosure {
+  width: 0;
+  height: 0;
+  flex-shrink: 0;
+  border-left: 5px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform var(--dur) var(--ease);
+}
+
+details[open] > summary .ark-disclosure {
+  transform: rotate(90deg);
+}
+
+summary::-webkit-details-marker { display: none; }
+
+summary:hover { color: var(--ink-900); }
+
+/* ============================================================ Card grids
+ * A small set of side-by-side choices — the Job Opening Builder's "upload
+ * a PDF or write it by hand". The "pick a job" screens (Workflow Builder,
+ * Pre-Screening Questions) used this grid too, and before it a 720px
+ * column; they moved to a table (JobPickerTable) once the job list grew
+ * long enough that a page of equal cards was harder to scan than rows.
+ *
+ * auto-fill with a minimum rather than a fixed column count, so the same
+ * markup is three-up on a monitor, two-up on a laptop and one-up on a
+ * tablet without a single breakpoint. */
+
+.ark-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+/* One choice in such a grid. */
+.ark-pick {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  justify-content: space-between;
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+  transition:
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.ark-pick--open:hover {
+  border-color: var(--surface-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}

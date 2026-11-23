@@ -1,0 +1,35 @@
+/* Entry stylesheet. The design system proper lives in ./styles — this
+ * file only orders it and keeps the handful of page-specific rules that
+ * have nowhere better to be.
+ *
+ * Order matters: tokens define the variables, base applies them to bare
+ * elements, components build on both. */
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+@import "./styles/components.css";
+
+:root {
+  color-scheme: light;
+
+  /* Legacy aliases. Older screens reference these three directly; they
+   * resolve to the real scale. Do not add new uses. */
+  --text: var(--ink-900);
+  --bg: var(--surface);
+  --border: var(--surface-border);
+
+  /* The first-pass name for the type family. Still referenced from
+   * hundreds of inline styles, so it stays as an alias rather than a
+   * rename that would touch every file for no visual gain. */
+  --arkive-font: var(--font);
+}
+
+/* --- Pipeline ---------------------------------------------------------- */
+
+/* The rail and the board sit side by side and each scrolls on its own; on
+   a narrow window the rail moves above the board rather than squeezing it,
+   because a 200px-wide job list is unreadable and a 200px-wide kanban
+   column is unusable. */
+@media (max-width: 1080px) {
+  .pipeline-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .pipeline-rail { max-height: 320px !important; }
+}

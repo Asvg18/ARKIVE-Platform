@@ -1,0 +1,23 @@
+/* Component layer: every interactive element has default, hover, focus,
+ * active and disabled states, which React's inline `style` prop cannot
+ * write; each area's classes live in components/ and load in this order.
+ */
+
+@import "./components/primitives.css"; /* Cards, buttons, chips, labels, identity marks, list rows, tabs, empty and loading states. */
+@import "./components/shell.css"; /* The portal shell, page headers, menus and info tips. */
+@import "./components/dashboard.css"; /* Dashboard blocks, utilities, the pipeline board, metrics, tables, links, disclosure and card grids. */
+@import "./components/forms.css"; /* The wizard, workflow stages, fields, choices, the drop zone and alerts. */
+@import "./components/auth.css"; /* The sign-in and sign-up pages. */
+@import "./components/modal.css"; /* Modal dialogs. */
+@import "./components/jobs.css"; /* Job description history and the job opening detail page. */
+@import "./components/candidate-profile.css"; /* The Candidate Profile, its interviews and rubric areas. */
+@import "./components/account.css"; /* Account Settings, the photo viewer and photo crop. */
+@import "./components/public-board.css"; /* The public job board and Find Jobs. */
+@import "./components/interview-evaluation.css"; /* The evaluator's interview page. */
+@import "./components/staff-accounts.css"; /* User Management. */
+@import "./components/reading-progress.css"; /* The resume reading progress screen. */
+@import "./components/notifications.css"; /* Notification pop-ups. */
+@import "./components/tags.css"; /* Status tags. */
+@import "./components/inbox.css"; /* The notifications inbox and the bell list. */
+@import "./components/scheduling.css"; /* The calendar and exam sessions. */
+@import "./components/help.css"; /* The user manual: contents, search and the guide. */

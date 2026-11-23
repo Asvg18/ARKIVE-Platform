@@ -1,0 +1,50 @@
+/* ============================================================== Auth page
+ * Login, sign-up and invite acceptance: a card on the supplied
+ * architectural plate. The plate is almost white already, so it is laid
+ * under a wash that keeps every pixel of the form's contrast intact.
+ *
+ * A single element with layered backgrounds rather than an <img> behind
+ * the card: nothing here is content, it must never be announced to a
+ * screen reader, and it must never scroll independently of the form. */
+
+.ark-auth {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  isolation: isolate;
+  background-color: var(--surface-bg);
+  /* Order matters: the wash sits *above* the plate. */
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(246, 248, 249, 0.94) 0%,
+      rgba(246, 248, 249, 0.80) 42%,
+      rgba(230, 50, 25, 0.05) 100%
+    ),
+    url("/brand/auth-bg.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* The card lifts off the plate rather than sitting on it — a flat card on
+ * a photograph reads as pasted on. */
+.ark-auth__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* The form floats off the plate. A card carrying only a hairline reads as
+ * printed onto the photograph rather than laid over it, which is the one
+ * thing a background image must never do to the thing in front of it. */
+.ark-auth__panel .ark-card {
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+}

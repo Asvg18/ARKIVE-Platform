@@ -1,0 +1,899 @@
+/* ================================================================= Wizard
+ * A create flow: one centred column holding the title, a stepper and a
+ * single panel (Create Job Opening). A flow with one task
+ * at a time belongs on the centre line, with its actions in the panel's
+ * own footer — where the eye lands after the last field — instead of
+ * trailing the fields at whatever height they happened to end. */
+
+.ark-wizard {
+  max-width: 820px;
+  margin: 0 auto;
+  padding-top: var(--space-2);
+}
+
+/* Stepper: four equal columns, each with its dot centred over its label,
+ * and a track from each dot to the next that fills with the accent as the
+ * step is finished. Centred rather than left-aligned, so the first and
+ * last dots sit the same distance in from either edge. */
+.ark-steps {
+  display: grid;
+  grid-template-columns: repeat(var(--steps, 4), minmax(0, 1fr));
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.ark-step { position: relative; min-width: 0; }
+
+/* From just past this dot's right edge to just short of the next dot:
+ * the next dot's centre is exactly one column-width along. */
+.ark-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: calc(50% + 22px);
+  width: calc(100% - 44px);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--surface-sunken);
+  transition: background-color var(--dur-slow) var(--ease);
+}
+
+.ark-step[data-state="done"]::after { background: var(--accent); }
+
+.ark-step__btn {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 100%;
+  min-width: 0;
+  padding: 0 var(--space-2);
+  text-align: center;
+  border-radius: var(--radius-sm);
+}
+
+div.ark-step__btn { cursor: default; }
+
+.ark-step__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-bottom: var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  border: 1.5px solid var(--surface-border-strong);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-400);
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur-slow) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+.ark-step[data-state="current"] .ark-step__dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 0 4px var(--accent-bg);
+}
+
+.ark-step[data-state="done"] .ark-step__dot {
+  background: var(--accent-bg);
+  border-color: transparent;
+  color: var(--accent-dark);
+}
+
+.ark-step__label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-400);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.ark-step[data-state="current"] .ark-step__label { color: var(--ink-900); }
+.ark-step[data-state="done"] .ark-step__label { color: var(--ink-700); }
+
+.ark-step__hint {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+}
+
+button.ark-step__btn:hover .ark-step__label { color: var(--ink-950); }
+button.ark-step__btn:hover .ark-step__dot { background: var(--accent-bg-strong); }
+
+/* The panel. Head, body and footer are one object; the footer sits on
+ * the page-ground tint so the actions read as the panel's floor. */
+.ark-wizard__panel {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.ark-wizard__stage { animation: ark-enter var(--dur-slow) var(--ease) both; }
+
+.ark-wizard__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-6) var(--space-8) 0;
+}
+
+/* Takes the line and lets the tag beside it drop underneath when the
+ * panel is too narrow for both. */
+.ark-wizard__heading { flex: 1 1 280px; min-width: 0; }
+
+.ark-wizard__title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: var(--track-snug);
+  line-height: var(--leading-tight);
+  color: var(--ink-950);
+}
+
+.ark-wizard__sub {
+  margin: var(--space-1-5) 0 0;
+  max-width: 60ch;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-600);
+}
+
+.ark-wizard__file {
+  font-weight: 600;
+  color: var(--ink-900);
+  overflow-wrap: anywhere;
+}
+
+.ark-wizard__body {
+  padding: var(--space-5) var(--space-8) var(--space-8);
+}
+
+.ark-wizard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-8);
+  min-height: 60px;
+  box-sizing: border-box;
+  border-top: 1px solid var(--hairline);
+  background: var(--surface-bg);
+}
+
+.ark-wizard__foot-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.ark-wizard__note {
+  margin-right: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+}
+
+.ark-wizard__aside-note {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-600);
+}
+
+/* ====================================================== Workflow stages
+ * One stage per row (features/hr/view/components/WorkflowStagesEditor), in
+ * Create Job Opening and the Workflow Builder. Every row is the same
+ * grid, so the name, length, "Visible to applicant" and remove columns
+ * line up down the list, whatever field a row holds (a dropdown sizes
+ * itself to its longest option, a text box doesn't) and whether or not
+ * its stage can be removed. Locked rows drop the drag handle and the
+ * remove button, all of them together. */
+.ark-stage-row {
+  display: grid;
+  grid-template-columns: 14px 24px minmax(0, 1fr) 128px 28px;
+  grid-template-areas: "drag num name length remove";
+  align-items: center;
+  column-gap: var(--space-3);
+  row-gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--surface-border);
+  background: var(--surface);
+  cursor: grab;
+}
+.ark-stage-row:last-child { border-bottom: none; }
+.ark-stage-row[data-dragging] { background: var(--accent-bg); }
+.ark-stage-row[data-locked] {
+  grid-template-columns: 24px minmax(0, 1fr) 128px;
+  grid-template-areas: "num name length";
+  cursor: default;
+}
+
+.ark-stage-row__drag {
+  grid-area: drag;
+  font-size: var(--text-lg);
+  line-height: 1;
+  letter-spacing: 2px;
+  color: var(--ink-400);
+  user-select: none;
+}
+
+.ark-stage-row__num {
+  grid-area: num;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--surface-bg-alt);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--ink-600);
+}
+
+.ark-stage-row__name { grid-area: name; min-width: 0; font-weight: 600; color: var(--ink-900); }
+/* a locked stage's plain name starts where the text in a box does */
+span.ark-stage-row__name { padding-left: calc(var(--space-3) + 1px); font-size: var(--text-base); }
+.ark-stage-row__length { grid-area: length; min-width: 0; }
+
+.ark-stage-row__remove {
+  grid-area: remove;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: var(--text-xl);
+  line-height: 1;
+  color: var(--ink-400);
+}
+button.ark-stage-row__remove { cursor: pointer; }
+button.ark-stage-row__remove:hover { background: var(--surface-bg-alt); color: var(--ink-900); }
+
+/* Narrow: the name keeps its line, and an interview's length takes the
+ * next one, still under the name column. A stage with no length (every
+ * other kind) stays on one line. */
+@media (max-width: 640px) {
+  .ark-stage-row {
+    grid-template-columns: 14px 24px minmax(0, 1fr) 28px;
+    grid-template-areas:
+      "drag num name remove"
+      ". . length .";
+  }
+  .ark-stage-row[data-locked] {
+    grid-template-columns: 24px minmax(0, 1fr);
+    grid-template-areas:
+      "num name"
+      ". length";
+  }
+  .ark-stage-row:has(> span.ark-stage-row__length) { grid-template-areas: "drag num name remove"; }
+  .ark-stage-row[data-locked]:has(> span.ark-stage-row__length) { grid-template-areas: "num name"; }
+  span.ark-stage-row__length { display: none; }
+}
+
+@media (max-width: 640px) {
+  .ark-step__hint { display: none; }
+  .ark-step__label { font-size: var(--text-xs); }
+  .ark-wizard__head,
+  .ark-wizard__body { padding-left: var(--space-5); padding-right: var(--space-5); }
+  .ark-wizard__foot { flex-wrap: wrap; padding: var(--space-3) var(--space-5); }
+  .ark-wizard__note { flex-basis: 100%; order: -1; margin: 0; }
+  .ark-wizard__foot-end { flex-wrap: wrap; }
+}
+
+/* ================================================================= Fields
+ * Sentence-case label above its control, with room on the right of the
+ * label line for a flag ("Not found in the PDF"), and a hint beneath. */
+
+.ark-fields {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.ark-fields--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .ark-fields--2 { grid-template-columns: 1fr; }
+}
+
+.ark-field {
+  display: grid;
+  gap: var(--space-1-5);
+  min-width: 0;
+  align-content: start;
+}
+
+.ark-field__label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.ark-field__label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-field__req {
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  color: var(--ink-400);
+}
+
+.ark-field__flag {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--warning-text);
+  white-space: nowrap;
+}
+
+.ark-field__flag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ark-field__flag--ok { color: var(--success-text); }
+.ark-field__flag--changed {
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--accent-bg);
+  color: var(--accent-dark);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+}
+
+.ark-field__hint {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-400);
+}
+
+.ark-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius);
+  font-size: var(--text-base);
+  color: var(--ink-900);
+}
+
+.ark-input--lg {
+  height: 48px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-lg);
+  letter-spacing: var(--track-snug);
+}
+
+/* A password field's show/hide control, sat inside the field's right
+ * end. shared/ui/PasswordInput wraps the field in .ark-reveal-wrap and
+ * leaves room for it. */
+.ark-reveal-wrap { position: relative; }
+
+/* Edge on Windows draws an eye of its own inside every password field,
+ * which would sit beside this one; one control is enough. */
+.ark-reveal-wrap input::-ms-reveal,
+.ark-reveal-wrap input::-ms-clear { display: none; }
+
+.ark-reveal {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink-600);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+
+.ark-reveal:hover { color: var(--ink-900); background: var(--surface-bg-alt); }
+.ark-reveal:focus-visible { outline: 2px solid var(--accent-ring); outline-offset: 1px; }
+
+textarea.ark-input {
+  height: auto;
+  min-height: 96px;
+  padding: var(--space-2-5) var(--space-3);
+  line-height: var(--leading-normal);
+  resize: vertical;
+}
+
+/* ================================================================ Choices
+ * A radio group drawn as cards: an icon, a title and a line, with the
+ * radio in the corner so the card's state reads at a glance. The chosen
+ * card takes the accent edge and a soft halo; the other stays quiet. */
+
+.ark-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.ark-choices--stack { grid-template-columns: 1fr; }
+
+@media (max-width: 640px) {
+  .ark-choices { grid-template-columns: 1fr; }
+}
+
+.ark-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
+}
+
+.ark-choice:hover:not(:disabled) {
+  border-color: var(--surface-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.ark-choice[aria-checked="true"],
+.ark-choice[aria-checked="true"]:hover:not(:disabled) {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.ark-choice:disabled { opacity: 0.6; }
+
+.ark-choice:focus-visible { border-radius: var(--radius-lg); }
+
+.ark-choice__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: var(--surface-bg-alt);
+  color: var(--ink-600);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.ark-choice[aria-checked="true"] .ark-choice__icon {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.ark-choice__text {
+  display: grid;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.ark-choice__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: 650;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-900);
+}
+
+.ark-choice__count {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--ink-400);
+}
+
+.ark-choice__desc {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-600);
+}
+
+.ark-choice__radio {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  box-sizing: border-box;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--surface-border-strong);
+  background: var(--surface);
+  transition:
+    border-color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.ark-choice[aria-checked="true"] .ark-choice__radio {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3.5px var(--surface);
+}
+
+/* A workflow's stages in order, as small numbered steps. */
+.ark-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1-5);
+  margin-top: var(--space-2-5);
+}
+
+.ark-flow__stage {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: 3px 9px 3px 3px;
+  border-radius: var(--radius-full);
+  background: var(--surface-bg);
+  border: 1px solid var(--hairline);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--ink-700);
+  white-space: nowrap;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.ark-flow__n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-600);
+}
+
+.ark-choice[aria-checked="true"] .ark-flow__stage {
+  background: var(--accent-bg);
+  border-color: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--ink-900);
+}
+
+.ark-choice[aria-checked="true"] .ark-flow__n { color: var(--accent-dark); box-shadow: none; }
+
+/* ============================================================ Drop zone */
+
+.ark-drop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1-5);
+  margin-top: var(--space-4);
+  padding: var(--space-8) var(--space-6);
+  border: 1.5px dashed var(--surface-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-bg);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
+}
+
+.ark-drop:hover { border-color: var(--ink-300); background: var(--surface-bg-alt); }
+
+.ark-drop[data-over] {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.ark-drop:has(input:focus-visible) { box-shadow: var(--focus-ring); }
+
+.ark-drop__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-1-5);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-sm);
+  color: var(--accent);
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.ark-drop:hover .ark-drop__icon,
+.ark-drop[data-over] .ark-drop__icon { transform: translateY(-2px); }
+
+.ark-drop__title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-drop__link { color: var(--accent); }
+
+.ark-drop__hint {
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+}
+
+/* The chosen file, standing in for the drop zone. While it is being
+ * read, a thin bar runs along its floor. */
+.ark-file {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-3);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  animation: ark-enter var(--dur-slow) var(--ease) both;
+}
+
+.ark-file__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.ark-file__text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ark-file__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-file__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+}
+
+.ark-file__meta[data-tone="busy"] { color: var(--accent-dark); font-weight: 500; }
+.ark-file__meta[data-tone="done"] { color: var(--success-text); font-weight: 500; }
+
+.ark-file__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.ark-file__actions .ark-btn:has(input:focus-visible) { box-shadow: var(--focus-ring); }
+
+.ark-file__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  color: var(--ink-400);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-file__remove:hover { background: var(--surface-bg-alt); color: var(--ink-900); }
+.ark-file__remove:focus-visible { border-radius: var(--radius-full); }
+
+.ark-file__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  overflow: hidden;
+  background: var(--accent-bg-strong);
+}
+
+.ark-file__progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: ark-indeterminate 1.2s var(--ease) infinite;
+}
+
+@keyframes ark-indeterminate {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(260%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ark-file__progress::after { animation: none; width: 100%; opacity: 0.5; }
+}
+
+/* ============================================================ Alerts */
+
+.ark-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  animation: ark-enter var(--dur-slow) var(--ease) both;
+}
+
+.ark-alert--warning { background: var(--warning-bg); border-color: rgba(245, 158, 11, 0.32); }
+.ark-alert--danger  { background: var(--danger-bg);  border-color: rgba(180, 35, 24, 0.18); }
+
+.ark-alert__icon { flex-shrink: 0; margin-top: 1px; }
+.ark-alert--warning .ark-alert__icon { color: var(--warning-text); }
+.ark-alert--danger .ark-alert__icon  { color: var(--danger-text); }
+
+.ark-alert__text { min-width: 0; }
+
+.ark-alert__title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+}
+
+.ark-alert--warning .ark-alert__title { color: var(--warning-text); }
+.ark-alert--danger .ark-alert__title  { color: var(--danger-text); }
+
+.ark-alert__body {
+  margin: var(--space-1-5) 0 0;
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-700);
+}
+
+.ark-alert__action { margin-top: var(--space-3); }
+
+.ark-alert--success { background: var(--success-bg); border-color: rgba(6, 122, 85, 0.22); }
+.ark-alert--success .ark-alert__icon,
+.ark-alert--success .ark-alert__title { color: var(--success-text); }
+
+/* A quiet aside inside a form: an icon and a sentence or two. */
+.ark-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--surface-bg);
+  border: 1px solid var(--hairline);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-600);
+  animation: ark-enter var(--dur-slow) var(--ease) both;
+}
+
+.ark-callout svg { flex-shrink: 0; margin-top: 1px; color: var(--ink-400); }
+
+/* A callout that needs reading before what follows it is trusted. */
+.ark-callout--warn {
+  background: var(--warning-bg);
+  border-color: rgba(245, 158, 11, 0.32);
+  color: var(--warning-text);
+}
+
+/* "Unverified" beside a tab's label, in the same quiet warning tone. */
+.ark-tab__flag {
+  margin-left: var(--space-1-5, 6px);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  color: var(--warning-text);
+}
+
+/* What the wizard is about to create, on its last step. */
+.ark-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 var(--space-5);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--surface-bg);
+}
+
+.ark-summary > div {
+  min-width: 0;
+  padding: var(--space-2-5) var(--space-4);
+}
+
+.ark-summary > div + div { border-left: 1px solid var(--hairline); }
+
+.ark-summary dt {
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+.ark-summary dd {
+  margin: 2px 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+@media (max-width: 640px) {
+  .ark-summary { grid-template-columns: 1fr; }
+  .ark-summary > div + div { border-left: none; border-top: 1px solid var(--hairline); }
+}
+
+/* Present to a screen reader and to keyboard focus, invisible on screen
+ * — for a native file input whose visible face is the label around it. */
+.ark-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

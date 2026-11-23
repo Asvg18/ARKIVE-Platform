@@ -1,0 +1,2215 @@
+/* ===================================================== Public job board
+ * The homepage. Laid out on the pattern mature job
+ * boards share — a full hero with search, departments, openings, process
+ * — in ARKIVE's own colours and data. One typeface throughout, the
+ * brand's Inter: headings at 800 and tightly tracked, text at book
+ * weight. No serif display face: it reads as another brand. */
+
+.ark-home {
+  /* How far the hero's bottom edge falls from left to right -- the roof's
+   * diagonal. The band below is cut on the same line, so
+   * both read from this one value and can never drift apart. */
+  --home-cut: 72px;
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--ink-900);
+  font-family: var(--font);
+}
+
+/* Where the system keeps scrollbars showing (Windows; a Mac set to
+ * "always"), the page's scrollbar took a white strip down the right
+ * edge — beside the dark band and the photograph it read as an uneven
+ * margin, and nothing on the page can paint under it. The homepage
+ * hides it; wheel, trackpad and keys scroll as ever. The portals keep
+ * theirs. */
+:root:has(.ark-home) { scrollbar-width: none; }
+:root:has(.ark-home)::-webkit-scrollbar { display: none; }
+
+.ark-home__container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-8);
+  box-sizing: border-box;
+}
+
+/* The header and hero run wider than the sections below: on a laptop
+ * screen the 1200px column left the header's links and buttons floating
+ * in wide empty margins (188px a side at 1512px), and 3.2vw (48px) then
+ * pressed them against the edges. 5.5vw is about 80px on a laptop —
+ * room to breathe without reading as empty. */
+.ark-home__container--wide {
+  max-width: 1600px;
+  padding: 0 clamp(var(--space-5), 5.5vw, 96px);
+}
+
+/* --- Header: see-through over the hero, solid once scrolled ------------ */
+.ark-home__nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 20;
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.ark-home__nav[data-scrolled] {
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom-color: var(--hairline);
+  box-shadow: var(--shadow-xs);
+}
+
+.ark-home__nav-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 72px;
+}
+
+.ark-home__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ink-950);
+  text-decoration: none;
+}
+
+/* The header's words a step up from the page's 13px captions and in
+ * near-black: over the photograph, grey 13px links read as fine print. */
+.ark-home__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0 auto;
+}
+
+.ark-home__links a {
+  position: relative;
+  padding: var(--space-1) 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-900);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+/* The underline grows from the centre — the link answers the cursor. */
+.ark-home__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform var(--dur) var(--ease);
+}
+
+.ark-home__links a:hover { color: var(--ink-950); }
+.ark-home__links a:hover::after { transform: scaleX(1); }
+
+.ark-home__nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.ark-home__nav-actions .ark-btn { font-size: 15px; padding: 11px 20px; }
+
+.ark-home__text-link {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-950);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ark-home__text-link:hover { color: var(--accent-dark); }
+
+/* --- Hero -------------------------------------------------------------- */
+/* The plate is hero-bg-wide.jpg: the photograph's long roof mirrored
+ * about a line just past its corner (made from hero-bg.jpg),
+ * so the building rises to one ridge in the middle and falls away to
+ * both edges instead of sitting in the right-hand two thirds with blank
+ * sky beside it. The layer is taller than the hero and anchored to its
+ * foot, which lifts the sky out of frame and puts the ridge just under
+ * the header — the header sits on the building. Sized by the hero's
+ * height, never stretched on one axis; the bottom edge is cut on the
+ * roof's own diagonal. */
+.ark-home__hero {
+  position: relative;
+  isolation: isolate;
+  padding: calc(72px + var(--space-12)) 0 calc(var(--space-16) + 40px);
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--home-cut)));
+  overflow: hidden;
+  /* Above the band, which is tucked up underneath it: the photo's edge is
+   * then smoothed against the dark band rather than against white, so
+   * the seam between them is one clean line. */
+  z-index: 2;
+}
+
+/* The ridge sits 35% of the way down the image, so a layer 45% taller
+ * than the hero puts it about 6% below the top: under the header. */
+.ark-home__hero::before {
+  content: "";
+  position: absolute;
+  inset: -45% 0 0 0;
+  z-index: -2;
+  background: url("/brand/hero-bg-wide.jpg") 50% 100% / cover no-repeat;
+}
+
+/* A warm glow of the brand behind the headline, and a lighter wash that
+ * keeps the copy readable where it crosses the building while still
+ * letting the building show on the left. */
+.ark-home__hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(640px 420px at 12% 22%, rgba(230, 50, 25, 0.07), transparent 70%),
+    radial-gradient(760px 460px at 24% 52%, rgba(255, 255, 255, 0.7), transparent 72%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0) 70%);
+}
+
+.ark-home__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.ark-home__hero-copy { min-width: 0; }
+
+.ark-home__live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px 6px 10px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-xs);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
+.ark-home__pulse {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+.ark-home__pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  animation: ark-pulse 2s var(--ease) infinite;
+}
+
+@keyframes ark-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  80%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ark-home__pulse::after { animation: none; }
+}
+
+.ark-home__title {
+  margin: var(--space-5) 0 0;
+  font-size: clamp(40px, 5vw, 60px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--ink-950);
+}
+
+/* The brand word, in the brand colour on a marker stroke — the one
+ * accent in the headline. */
+.ark-home__mark {
+  padding: 0 0.04em;
+  color: var(--accent);
+  background: linear-gradient(transparent 64%, var(--accent-bg-strong) 64%, var(--accent-bg-strong) 90%, transparent 90%);
+}
+
+.ark-home__lede {
+  max-width: 540px;
+  margin: var(--space-5) 0 0;
+  font-size: var(--text-lg);
+  line-height: 1.65;
+  color: var(--ink-700);
+}
+
+.ark-home__search {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto;
+  align-items: center;
+  max-width: 640px;
+  margin-top: var(--space-8);
+  padding: var(--space-1-5);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: 0 22px 44px -22px rgba(17, 17, 19, 0.28), var(--shadow-sm);
+}
+
+.ark-home__search label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  height: 48px;
+  padding: 0 var(--space-3);
+  color: var(--ink-600);
+}
+
+.ark-home__search-dept { border-right: 1px solid var(--hairline); }
+
+.ark-home__search select,
+.ark-home__search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+  box-shadow: none;
+}
+
+.ark-home__search select { cursor: pointer; text-overflow: ellipsis; }
+
+.ark-home__search select:focus-visible,
+.ark-home__search input:focus-visible { box-shadow: none; outline: none; }
+
+/* The field's own ring, drawn round the segment being typed in. */
+.ark-home__search label:focus-within {
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 2px var(--accent-ring);
+}
+
+.ark-home__search-clear {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: var(--surface-bg-alt);
+  color: var(--ink-600);
+}
+
+.ark-home__search-clear:hover { background: var(--surface-sunken); color: var(--ink-900); }
+
+.ark-home__search-go { height: 48px; padding: 0 var(--space-5); }
+
+.ark-home__popular {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1-5) var(--space-3);
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--ink-600);
+}
+
+.ark-home__popular > span { font-weight: 600; color: var(--ink-900); }
+
+.ark-home__popular button {
+  font-size: var(--text-sm);
+  color: var(--ink-700);
+  text-decoration: underline;
+  text-decoration-color: var(--ink-300);
+  text-underline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+.ark-home__popular button:hover { color: var(--accent-dark); text-decoration-color: currentColor; }
+
+/* The sign-in card — frosted, so the building reads through it. */
+.ark-home__signin {
+  padding: var(--space-6) 26px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--hairline);
+}
+
+.ark-home__signin-eyebrow {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ark-home__signin-title {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink-950);
+}
+
+.ark-home__signin-lede {
+  margin: var(--space-1-5) 0 var(--space-5);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-700);
+}
+
+.ark-home__signin-form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ark-home__signin-form .ark-input { background: var(--surface); }
+
+.ark-home__forgot {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ark-home__forgot:hover { color: var(--accent-dark); text-decoration: underline; }
+
+.ark-home__signin-error {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--danger-text);
+}
+
+.ark-home__signin-foot {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--text-sm);
+  text-align: center;
+  color: var(--ink-700);
+}
+
+.ark-home__signin-foot a { font-weight: 700; color: var(--accent); text-decoration: none; }
+.ark-home__signin-foot a:hover { color: var(--accent-dark); text-decoration: underline; }
+
+.ark-home__signin-name {
+  overflow: hidden;
+  font-size: var(--text-base);
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink-950);
+}
+
+.ark-home__signin-role {
+  margin-top: 1px;
+  font-size: var(--text-xs);
+  color: var(--ink-700);
+}
+
+/* --- Sections ---------------------------------------------------------- */
+.ark-home__section { padding: var(--space-16) 0 88px; }
+.ark-home__section--ground { background: var(--surface-bg); border-top: 1px solid var(--hairline); }
+
+/* Tucked up under the band's slanted foot (see .ark-home__band), with
+ * the same extra room at the top so its heading stays where it was. */
+.ark-home__band + .ark-home__section {
+  margin-top: calc(-1 * var(--home-cut) - 2px);
+  padding-top: calc(var(--space-16) + var(--home-cut) + 2px);
+}
+
+.ark-home__head {
+  max-width: 640px;
+  margin: 0 auto var(--space-10);
+  text-align: center;
+}
+
+.ark-home__head[data-align="start"] { margin-left: 0; text-align: left; }
+
+.ark-home__eyebrow {
+  display: block;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ark-home__h2 {
+  margin: var(--space-2-5) 0 0;
+  font-size: clamp(28px, 3.2vw, 38px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink-950);
+}
+
+.ark-home__sub {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+
+/* The transparency band — the one dark section, in the HR console's
+ * ink, holding a picture of the applicant's tracker. */
+/* Both edges are cut on the hero's diagonal, sloping the same way: a flat
+ * band under a slanted photo reads as too formal. The band is pulled up
+ * under the hero by the cut (plus 2px the hero overlaps, so no hairline of
+ * white shows at the seam), and the openings section below is pulled up
+ * under the band the same way, so each slant is a seam between two sections
+ * rather than a white wedge. The extra padding at each end keeps the
+ * content clear of the slant. */
+.ark-home__band {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: calc(-1 * var(--home-cut) - 2px);
+  padding: calc(88px + var(--home-cut) + 2px) 0 calc(88px + var(--home-cut));
+  clip-path: polygon(0 0, 100% var(--home-cut), 100% 100%, 0 calc(100% - var(--home-cut)));
+  /* Warm light gathered in several places rather than one, so the ink
+   * reads as a lit room and not a flat panel: strongest behind the cards,
+   * softer pools at the corners and along the foot. */
+  background:
+    radial-gradient(600px 380px at 85% 30%, rgba(230, 50, 25, 0.22), transparent 70%),
+    radial-gradient(560px 380px at 4% 100%, rgba(255, 112, 64, 0.2), transparent 70%),
+    radial-gradient(520px 320px at 22% -8%, rgba(230, 50, 25, 0.17), transparent 70%),
+    radial-gradient(720px 300px at 58% 112%, rgba(200, 40, 24, 0.24), transparent 70%),
+    radial-gradient(420px 320px at 102% 92%, rgba(255, 138, 115, 0.14), transparent 70%),
+    var(--ink-900);
+}
+
+/* A faint drafting grid for texture — the building plate's linework,
+ * pared down. Faded out at the edges so it gathers behind the section's
+ * middle instead of ruling the whole band like graph paper. */
+.ark-home__band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse 75% 85% at 60% 50%, #000 20%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 85% at 60% 50%, #000 20%, transparent 100%);
+  pointer-events: none;
+}
+
+.ark-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.ark-home__band .ark-home__eyebrow { color: #ff8a73; }
+.ark-home__band .ark-home__h2 { color: var(--surface); }
+.ark-home__band .ark-home__sub { max-width: 520px; color: rgba(255, 255, 255, 0.72); }
+
+.ark-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+/* The applicant's screens on a ring (ApplicationOrbit). The script sets
+ * each card's position, size and --dim every frame; this sheet gives
+ * the ring its room and the cards their chrome. */
+.ark-orbit {
+  position: relative;
+  height: 470px;
+  perspective: 1400px;
+}
+
+.ark-orbit__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(340px, 88%);
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* Distance, as the band's own ink laid over the card rather than the
+ * card fading out — a faded card would show the one behind through it. */
+.ark-orbit__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ink-900);
+  opacity: var(--dim, 0);
+  pointer-events: none;
+}
+
+.ark-orbit__head { display: grid; gap: 2px; }
+
+.ark-orbit__stage {
+  justify-self: start;
+  margin-bottom: var(--space-1-5);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: var(--accent-bg);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.ark-orbit__title,
+.ark-orbit__offer-title {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: var(--leading-snug);
+  color: var(--ink-950);
+}
+
+.ark-orbit__offer-title { display: block; margin-top: var(--space-3); }
+
+.ark-orbit__dept { font-size: var(--text-xs); color: var(--ink-600); }
+
+.ark-orbit__rows {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.ark-orbit__row { display: flex; align-items: center; gap: 10px; }
+
+.ark-orbit__row-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: var(--radius);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.ark-orbit__row-label {
+  display: block;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+
+.ark-orbit__row-value {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-orbit__ask {
+  display: grid;
+  gap: var(--space-2-5);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--surface-border);
+}
+
+.ark-orbit__ask-q { font-size: var(--text-sm); font-weight: 650; color: var(--ink-900); }
+
+.ark-orbit__btns { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ark-orbit__card .ark-btn { pointer-events: none; }
+.ark-orbit__card > .ark-orbit__btns { margin-top: var(--space-4); }
+
+.ark-orbit__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: 10px 12px;
+  border-left: 3px solid var(--success-text);
+  border-radius: var(--radius-xs);
+  background: var(--success-bg);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--ink-900);
+}
+
+.ark-orbit__note svg { flex-shrink: 0; margin-top: 1px; color: var(--success-text); }
+
+.ark-orbit__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: var(--success-bg);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--success-text);
+}
+
+.ark-orbit__text {
+  margin: var(--space-1-5) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--ink-600);
+}
+
+.ark-orbit__text b { color: var(--ink-900); }
+
+.ark-orbit__countdown {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: 10px 12px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  background: var(--surface-bg);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.ark-orbit__files {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.ark-orbit__file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+}
+
+.ark-orbit__file-icon { display: grid; color: var(--ink-600); }
+
+.ark-orbit__file-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-orbit__file-size { font-size: var(--text-2xs); color: var(--ink-600); }
+.ark-orbit__file-ok { flex-shrink: 0; color: var(--success-text); }
+
+.ark-orbit__done {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--success-text);
+}
+
+.ark-tracker__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.ark-tracker__eyebrow {
+  display: block;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+
+.ark-tracker__title {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--ink-950);
+}
+
+.ark-tracker__count {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-dark);
+}
+
+.ark-tracker__bar {
+  height: 6px;
+  margin: var(--space-3) 0 var(--space-5);
+  border-radius: var(--radius-full);
+  background: var(--accent-bg-strong);
+  overflow: hidden;
+}
+
+.ark-tracker__bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-gradient);
+}
+
+.ark-tracker__steps {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-tracker__steps li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
+  color: var(--ink-600);
+}
+
+/* The thread joining the nodes. */
+.ark-tracker__steps li + li::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: -12px;
+  height: 22px;
+  width: 2px;
+  background: var(--surface-sunken);
+}
+
+.ark-tracker__steps li[data-state="done"] + li::before,
+.ark-tracker__steps li[data-state="current"]::before { background: var(--accent); }
+
+.ark-tracker__node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--surface-sunken);
+  background: var(--surface);
+  color: var(--surface);
+}
+
+.ark-tracker__steps li[data-state="done"] .ark-tracker__node { border-color: var(--accent); background: var(--accent); }
+.ark-tracker__steps li[data-state="current"] .ark-tracker__node {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-bg-strong);
+}
+.ark-tracker__steps li[data-state="current"] .ark-tracker__node::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+.ark-tracker__steps li[data-state="done"] .ark-tracker__label { color: var(--ink-900); }
+.ark-tracker__steps li[data-state="current"] .ark-tracker__label { font-weight: 700; color: var(--ink-950); }
+
+.ark-tracker__now {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: var(--accent-bg);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+/* Openings — department tabs, then the cards. */
+.ark-home__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.ark-home__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-700);
+  white-space: nowrap;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-home__tab:hover { border-color: var(--surface-border-strong); color: var(--ink-950); }
+
+.ark-home__tab[aria-selected="true"] {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--accent-bg);
+  color: var(--accent-dark);
+}
+
+.ark-home__tab-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--dept);
+}
+
+.ark-home__tab-count {
+  min-width: 18px;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: var(--surface-bg-alt);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--ink-700);
+}
+
+.ark-home__tab[aria-selected="true"] .ark-home__tab-count { background: var(--surface); color: var(--accent-dark); }
+
+.ark-home__result-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-8) 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
+.ark-home__result-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* "See all N" -- the section's one way through to the rest of the openings.
+ * A quiet grey link is easy to miss, so it reads as a button:
+ * brand-coloured text in an outlined pill that fills with the accent on
+ * hover, its arrow nudging forward. */
+.ark-home__see-all {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  height: 36px;
+  padding: 0 var(--space-4);
+  border: 1px solid rgba(230, 50, 25, 0.35);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  color: var(--accent-dark);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.ark-home__see-all svg { transition: transform var(--dur-fast) var(--ease); }
+
+.ark-home__see-all:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.ark-home__see-all:hover svg { transform: translateX(3px); }
+
+.ark-home__loading { margin: var(--space-6) 0 0; font-size: var(--text-sm); color: var(--ink-700); }
+
+.ark-home__jobs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-5);
+  transition: opacity var(--dur) var(--ease);
+}
+
+.ark-home__jobs[data-busy] { opacity: 0.5; pointer-events: none; }
+
+.ark-home__empty {
+  grid-column: 1 / -1;
+  padding: var(--space-12) var(--space-6);
+  border: 1px dashed var(--surface-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: center;
+  color: var(--ink-600);
+}
+
+.ark-home__empty-title { margin: var(--space-3) 0 0; font-size: var(--text-base); font-weight: 700; color: var(--ink-900); }
+.ark-home__empty-body { margin: var(--space-1) 0 0; font-size: var(--text-sm); color: var(--ink-700); }
+
+.ark-job {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+/* Hover lifts the card a little and deepens its shadow -- enough to see
+ * which card the pointer is on, not enough to jump. No coloured edge
+ * along the top (distracting); the title and the button already take the
+ * brand colour. */
+.ark-job:hover {
+  transform: translateY(-2px);
+  border-color: var(--surface-border-strong);
+  box-shadow: 0 14px 30px -18px rgba(17, 17, 19, 0.3), var(--shadow-sm);
+}
+
+.ark-job:focus-within { box-shadow: var(--focus-ring); }
+
+.ark-job__top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ark-job__who { display: grid; flex: 1; min-width: 0; }
+
+.ark-job__dept {
+  overflow: hidden;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink-900);
+}
+
+.ark-job__posted { font-size: var(--text-xs); color: var(--ink-600); }
+
+.ark-job__flag {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: var(--warning-bg);
+  box-shadow: inset 0 0 0 1px rgba(180, 70, 15, 0.2);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--warning-text);
+}
+
+.ark-job__title {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: var(--track-snug);
+}
+
+/* The title is the card's one control; its hit area is stretched over
+ * the whole card. */
+.ark-job__title button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--ink-950);
+  text-align: left;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.ark-job__title button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ark-job__title button:focus-visible { box-shadow: none; }
+.ark-job:hover .ark-job__title button { color: var(--accent-dark); }
+
+.ark-job__rail {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-600);
+}
+
+.ark-job__rail-bars { display: inline-flex; gap: 2.5px; }
+
+.ark-job__rail-bars > span {
+  width: 10px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--ink-300);
+}
+
+.ark-job__rail-bars > [data-first] { background: var(--accent); }
+
+.ark-job__desc {
+  display: -webkit-box;
+  flex: 1;
+  margin: var(--space-3) 0 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+
+.ark-job__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2-5);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+}
+
+.ark-job__deadline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-600);
+}
+
+.ark-job__deadline[data-soon] { color: var(--warning-text); }
+
+.ark-job__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-bg);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--accent-dark);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-job:hover .ark-job__cta { background: var(--accent); color: var(--surface); }
+
+/* The process — five steps on one thread. */
+.ark-process {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each step centred in its column, so the row sits balanced: the first
+ * and last numbers stand the same distance in from either edge. */
+.ark-process__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  text-align: center;
+}
+
+/* The thread, drawn a step at a time from each number to the next —
+ * from just past this circle's right edge (half the column plus the
+ * circle's radius) to just short of the next circle, half a column and
+ * a gap beyond this one's right edge. Nothing runs past the last. */
+.ark-process__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: calc(50% + 35px);
+  right: calc(35px - 50% - var(--space-6));
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--accent-bg-strong) 0 8px, transparent 8px 14px);
+}
+
+.ark-process__n {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--accent-bg-strong);
+  background: var(--surface);
+  font-size: var(--text-base);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  box-shadow: 0 0 0 6px var(--surface);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.ark-process__step:hover .ark-process__n { border-color: var(--accent); background: var(--accent); color: var(--surface); }
+
+.ark-process__title {
+  display: block;
+  margin-top: var(--space-4);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--ink-950);
+}
+
+.ark-process__detail {
+  max-width: 26ch;
+  margin: var(--space-1-5) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+
+/* Closing call to action — the brand gradient with the building's
+ * hatching laid faintly over it, so the page ends on the image it
+ * began with. */
+/* The brand red, taken down toward the page's ink — brick to oxblood.
+ * The accent itself is tuned for a button; spread across a whole band
+ * at full strength it glared. */
+.ark-home__cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 74%, var(--ink-950)) 0%,
+    color-mix(in srgb, var(--accent-dark) 62%, var(--ink-950)) 100%
+  );
+  color: var(--surface);
+}
+
+.ark-home__cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("/brand/hero-bg.jpg") 60% 90% / cover no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+}
+
+.ark-home__cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.ark-home__cta-title {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--surface);
+}
+
+.ark-home__cta-text {
+  max-width: 560px;
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ark-home__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  height: 48px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.4);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--accent-dark);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.ark-home__cta-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.45); }
+
+/* Footer — on the console's ink, closing the page. */
+.ark-home__footer {
+  background: var(--ink-950);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ark-home__footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+  gap: var(--space-10);
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-12);
+}
+
+.ark-home__brand--footer { color: var(--surface); }
+
+.ark-home__footer-brand p {
+  max-width: 360px;
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+
+.ark-home__footer nav { display: grid; gap: var(--space-2-5); align-content: start; }
+
+.ark-home__footer-head {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ark-home__footer nav a {
+  width: fit-content;
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+}
+
+.ark-home__footer nav a:hover { color: var(--surface); text-decoration: underline; text-underline-offset: 3px; }
+
+.ark-home__footer-base {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* The job's dialog. */
+.ark-home__modal-title {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--ink-950);
+}
+
+.ark-home__modal-close {
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  border-radius: var(--radius-full);
+  color: var(--ink-600);
+}
+
+.ark-home__modal-close:hover { background: var(--surface-bg-alt); color: var(--ink-950); }
+
+/* --- Narrower screens -------------------------------------------------- */
+@media (max-width: 1080px) {
+  .ark-home__hero-grid { grid-template-columns: minmax(0, 1fr); }
+  /* Stacked, the hero grows far taller than it is wide, and sizing the
+   * plate by that height blew the slats up to several times their size.
+   * Here it takes a fixed height instead — ridge still under the header —
+   * and fades out below the headline. */
+  .ark-home__hero::before {
+    inset: -300px 0 auto 0;
+    height: 1000px;
+    background-size: auto 100%;
+    background-position: 50% 0;
+    -webkit-mask-image: linear-gradient(#000 62%, transparent 100%);
+    mask-image: linear-gradient(#000 62%, transparent 100%);
+  }
+  .ark-home__signin { max-width: 440px; }
+  .ark-band { grid-template-columns: minmax(0, 1fr); gap: var(--space-10); }
+  .ark-process { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .ark-process__step::after { display: none; }
+}
+
+@media (max-width: 900px) {
+  .ark-home__links { display: none; }
+  .ark-home__nav-actions { margin-left: auto; }
+  .ark-home__hero::after {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.8) 100%);
+  }
+  .ark-home__cta-inner { flex-direction: column; align-items: flex-start; }
+  .ark-home__footer-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+}
+
+@media (max-width: 640px) {
+  .ark-home__container { padding: 0 var(--space-4); }
+  .ark-home__hero::before { top: -226px; height: 760px; }
+  .ark-home__nav-actions .ark-home__text-link { display: none; }
+  .ark-home__search { grid-template-columns: minmax(0, 1fr); }
+  .ark-home__search-dept { border-right: none; border-bottom: 1px solid var(--hairline); }
+  .ark-home__search-go { width: 100%; }
+  .ark-home__tabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding-bottom: var(--space-1); }
+}
+
+/* ================================================================ Find Jobs
+ * The applicant's job browser: a filter bar, then the openings down the
+ * left and the chosen one in full on the right. */
+.ark-finder {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  padding: var(--space-2);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-bg);
+}
+
+.ark-finder__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 1 280px;
+  min-width: 0;
+  height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-600);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.ark-finder__search:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 0 0 3px var(--accent-bg-strong);
+}
+
+.ark-finder__search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+}
+
+.ark-finder__search input:focus-visible { outline: none; box-shadow: none; }
+
+.ark-finder__clear {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: var(--surface-bg-alt);
+  color: var(--ink-600);
+}
+
+.ark-finder__clear:hover { background: var(--surface-sunken); color: var(--ink-900); }
+
+/* A select that names its filter: "Department  All ▾". The native select
+ * is kept (keyboard and screen readers for free) and only dressed. */
+.ark-filter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  height: 40px;
+  padding: 0 var(--space-8) 0 var(--space-3);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.ark-filter:hover { border-color: var(--surface-border-strong); }
+.ark-filter:focus-within { border-color: color-mix(in srgb, var(--accent) 45%, transparent); box-shadow: 0 0 0 3px var(--accent-bg-strong); }
+
+.ark-filter__label { color: var(--ink-600); white-space: nowrap; }
+
+.ark-filter select {
+  appearance: none;
+  -webkit-appearance: none;
+  max-width: 190px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink-950);
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.ark-filter select:focus-visible { outline: none; box-shadow: none; }
+
+.ark-filter__caret {
+  position: absolute;
+  right: var(--space-2-5);
+  color: var(--ink-600);
+  pointer-events: none;
+}
+
+.ark-finder__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-900);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ark-browse__meta-end {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ark-finder__toggle input { width: 15px; height: 15px; margin: 0; accent-color: var(--accent); }
+
+.ark-browse {
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.ark-browse__list {
+  display: grid;
+  gap: var(--space-2-5);
+  transition: opacity var(--dur) var(--ease);
+}
+
+.ark-browse__list[data-busy] { opacity: 0.55; }
+
+.ark-browse__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 0 var(--space-1) var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--ink-700);
+}
+
+.ark-browse__meta b { color: var(--ink-950); }
+
+.ark-listing {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  text-align: left;
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), transform var(--dur) var(--ease);
+}
+
+.ark-listing:hover {
+  border-color: var(--surface-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.ark-listing:focus-visible { border-radius: var(--radius-lg); }
+
+/* The chosen opening: the shared selected look (see .ark-row above),
+ * lifted a step further, since every listing is already a card. */
+.ark-listing[aria-current="true"] {
+  box-shadow: var(--shadow-md);
+  transform: none;
+}
+
+.ark-listing__body {
+  display: grid;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ark-listing__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.ark-listing__title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--track-snug);
+  color: var(--ink-950);
+}
+
+.ark-listing__dept {
+  font-size: var(--text-xs);
+  color: var(--ink-600);
+}
+
+.ark-listing__desc {
+  display: -webkit-box;
+  margin-top: var(--space-1-5);
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+.ark-listing__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-2-5);
+  padding-top: var(--space-2-5);
+  border-top: 1px dashed var(--surface-border-strong);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-600);
+}
+
+.ark-listing__deadline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ark-listing__deadline[data-soon] { color: var(--warning-text); }
+
+.ark-browse__empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-10) var(--space-5);
+  border: 1px dashed var(--surface-border-strong);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--ink-600);
+}
+
+.ark-browse__empty-title { margin: var(--space-1) 0 0; font-size: var(--text-base); font-weight: 700; color: var(--ink-900); }
+.ark-browse__empty-body { margin: 0 0 var(--space-2); font-size: var(--text-sm); color: var(--ink-700); }
+
+.ark-browse__note {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+  text-align: center;
+  color: var(--ink-600);
+}
+
+/* Held in view while the list scrolls past it. */
+.ark-browse__detail {
+  position: sticky;
+  top: var(--space-4);
+  max-height: calc(100vh - 2 * var(--space-4));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scroll-margin-top: var(--space-4);
+  border-radius: var(--radius-lg);
+}
+
+.ark-jobpanel {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-6) 28px 28px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.ark-jobpanel__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ark-jobpanel__heading { flex: 1; min-width: 0; }
+
+.ark-jobpanel__heading h2 {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--ink-950);
+}
+
+.ark-jobpanel__heading p {
+  margin: var(--space-1-5) 0 0;
+  font-size: var(--text-sm);
+  color: var(--ink-700);
+}
+
+.ark-jobpanel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.ark-jobpanel__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.ark-jobpanel__fact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--surface-bg);
+  min-width: 0;
+}
+
+.ark-jobpanel__fact-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.ark-jobpanel__fact[data-soon] .ark-jobpanel__fact-icon { background: var(--warning-bg); color: var(--warning-text); }
+
+/* Lets the value's ellipsis engage: a flex item won't shrink below its
+ * content without this, so a long department name ("Information
+ * Technology Office") pushed the strip past the panel instead. */
+.ark-jobpanel__fact-text { min-width: 0; }
+
+.ark-jobpanel__fact-label {
+  display: block;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+
+.ark-jobpanel__fact-value {
+  display: block;
+  overflow: hidden;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink-950);
+}
+
+.ark-jobpanel__fact[data-soon] .ark-jobpanel__fact-value { color: var(--warning-text); }
+
+.ark-jobpanel .ark-alert { margin-top: 0; }
+
+.ark-jobpanel__section h3 {
+  margin: 0 0 var(--space-2-5);
+  font-size: var(--text-base);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ink-950);
+}
+
+.ark-jobpanel__section p {
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--ink-700);
+}
+
+/* A section from the job description's own headings (salary, documents
+ * to submit...): kept one item per line, as HR wrote it. */
+.ark-jobpanel__text { white-space: pre-line; }
+
+.ark-jobpanel__checks {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-jobpanel__checks li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--ink-900);
+}
+
+.ark-jobpanel__checks svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding: 2px;
+  border-radius: var(--radius-full);
+  background: var(--success-bg);
+  color: var(--success-text);
+  box-sizing: content-box;
+}
+
+/* The job's own stages, as numbered steps that wrap. */
+/* The stages as one column read top to bottom, each number joined to the
+ * next by a line. As wrapping pills they ran across and then jumped back
+ * to the start of a new row, in rows of uneven length — the order had to
+ * be worked out from the numbers rather than seen. */
+.ark-jobpanel__stages {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-jobpanel__stages li {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: 7px 0;
+}
+
+/* The thread from this number down to the next, touching both circles so
+ * the steps read as one chain: from this circle's foot (7px row padding
+ * + 26px circle) to the next circle's head (7px into the following row).
+ * Measured from the top of the row, so a label that wraps to two lines
+ * only lengthens the line. In the circles' own red, softened. */
+.ark-jobpanel__stages li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 33px;
+  bottom: -7px;
+  left: 12px;
+  width: 2px;
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+}
+
+.ark-jobpanel__stage-n {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background: var(--accent-bg);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-dark);
+}
+
+.ark-jobpanel__stage-label {
+  min-width: 0;
+  padding-top: 3px;
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--ink-900);
+}
+
+/* The application page's banner (StageLayout): which job, and where the
+ * application stands, on the portal's own dark ground with a little of
+ * the brand's red light pooled in its corners and a faint drafting grid
+ * — the homepage's dark band in small. Plain title-and-subtitle on white
+ * read as a form heading; this is the one thing the page is about. */
+.ark-app-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+  padding: 26px 28px 28px;
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(460px 260px at 100% 0%, rgba(230, 50, 25, 0.34), transparent 70%),
+    radial-gradient(380px 240px at 0% 100%, rgba(255, 112, 64, 0.16), transparent 70%),
+    radial-gradient(420px 200px at 62% 130%, rgba(190, 36, 22, 0.22), transparent 70%),
+    var(--ink-900);
+  color: #ffffff;
+  box-shadow: 0 18px 40px -24px rgba(17, 17, 19, 0.55);
+}
+
+.ark-app-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 100%);
+  pointer-events: none;
+}
+
+.ark-app-hero__text { flex: 1; min-width: 0; }
+
+.ark-app-hero__eyebrow {
+  display: block;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: #ff8a73;
+}
+
+.ark-app-hero__title {
+  margin: var(--space-1) 0 0;
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+.ark-app-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ark-app-hero__sep {
+  width: 3px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.ark-app-hero__meta strong { font-weight: 600; color: #ffffff; }
+
+/* Status, as a pill made for the dark ground: a dot in the status's
+ * colour and the word in white. The page's Badge is tinted for white. */
+.ark-app-hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  padding: 6px 12px 6px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.ark-app-hero__status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--status-dot, rgba(255, 255, 255, 0.5));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-dot, #ffffff) 25%, transparent);
+}
+
+.ark-app-hero__status[data-tone="blue"] { --status-dot: #60a5fa; }
+.ark-app-hero__status[data-tone="green"] { --status-dot: #34d399; }
+.ark-app-hero__status[data-tone="amber"] { --status-dot: #fbbf24; }
+.ark-app-hero__status[data-tone="red"] { --status-dot: #f87171; }
+
+@media (max-width: 640px) {
+  .ark-app-hero { flex-wrap: wrap; padding: 20px; }
+  .ark-app-hero .ark-tile--xl { width: 44px; height: 44px; }
+}
+
+/* An application's outcome. The tone sets one colour pair, used only on
+ * the marks that carry the meaning — the icon, the status word — never
+ * as a wash over the card. */
+.ark-outcome,
+.ark-outcome-banner { --tone-fg: var(--ink-600); --tone-bg: var(--surface-bg-alt); }
+
+.ark-outcome[data-tone="green"],
+.ark-outcome-banner[data-tone="green"] { --tone-fg: var(--success-text); --tone-bg: var(--success-bg); }
+
+.ark-outcome[data-tone="red"],
+.ark-outcome-banner[data-tone="red"] { --tone-fg: var(--danger-text); --tone-bg: var(--danger-bg); }
+
+/* The closed application's screen (ClosedApplicationScreen): what
+ * happened, how far they got, where to go next. */
+.ark-outcome {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.ark-outcome__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.ark-outcome__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+.ark-outcome__intro { min-width: 0; }
+
+.ark-outcome__eyebrow {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--tone-fg);
+}
+
+.ark-outcome__title {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  color: var(--ink-950);
+}
+
+.ark-outcome__text {
+  max-width: 62ch;
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--ink-700);
+}
+
+.ark-outcome__text strong { color: var(--ink-900); }
+
+/* How far they got — figures side by side, sized to their content. */
+.ark-outcome__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--space-3);
+}
+
+.ark-outcome__stat {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+}
+
+.ark-outcome__stat-label {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+
+.ark-outcome__stat-value {
+  margin-top: 2px;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--ink-950);
+}
+
+.ark-outcome__stat-note { font-size: var(--text-xs); color: var(--ink-600); }
+
+.ark-outcome__next {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--hairline);
+}
+
+.ark-outcome__section-title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--ink-950);
+}
+
+.ark-outcome__section-sub {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-sm);
+  color: var(--ink-600);
+}
+
+.ark-outcome__jobs {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.ark-outcome__job {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 12px 16px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  color: var(--ink-400);
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+
+.ark-outcome__job svg { flex-shrink: 0; transition: transform var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.ark-outcome__job:hover { border-color: var(--accent); background: var(--surface-bg); }
+.ark-outcome__job:hover svg { color: var(--accent); transform: translateX(2px); }
+
+.ark-outcome__job-title {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.ark-outcome__job-dept { display: block; font-size: var(--text-xs); color: var(--ink-600); }
+
+.ark-outcome__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.ark-outcome__actions .ark-go { font-size: var(--text-sm); }
+
+/* The outcome at the head of the journey (ApplicationJourney): the icon
+ * in the status colour, a title, a line — on the card's white, set off
+ * from the stage list by a hairline. */
+.ark-outcome-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ark-outcome-banner__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+.ark-outcome-banner__title {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--tone-fg);
+}
+
+.ark-outcome-banner__text {
+  display: block;
+  margin-top: 1px;
+  font-size: var(--text-sm);
+  color: var(--ink-700);
+}
+
+/* The application page (StageLayout): the current stage's screen leads,
+ * with the journey and the application's documents in a rail beside it.
+ * Below 1200px the rail drops under the screen — the task first — since
+ * beside a 240px sidebar a 340px rail would squeeze the task column. */
+.ark-stage-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.ark-stage-layout__main,
+.ark-stage-layout__rail {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+@media (max-width: 1199px) {
+  .ark-stage-layout { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 1023px) {
+  .ark-browse { grid-template-columns: minmax(0, 1fr); }
+  .ark-browse__detail { position: static; max-height: none; overflow: visible; }
+}
+
+@media (max-width: 640px) {
+  .ark-jobpanel { padding: var(--space-5); }
+  .ark-jobpanel__head { flex-wrap: wrap; }
+  .ark-jobpanel__actions { width: 100%; justify-content: flex-start; }
+  .ark-jobpanel__facts { grid-template-columns: minmax(0, 1fr); }
+  .ark-filter { flex: 1 1 100%; }
+  .ark-filter select { max-width: none; flex: 1; }
+}

@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Backend: FastAPI (uvicorn)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--reload", "--port", "8000"],
+      "cwd": "${workspaceFolder}/backend",
+      // Deliberately no "python" key: VS Code then uses whichever
+      // interpreter you have selected (Ctrl+Shift+P, "Python: Select
+      // Interpreter"), which lives in your own machine's workspace
+      // state rather than in the repo.
+      //
+      // Hardcoding it here is what kept breaking. A virtualenv is
+      // gitignored, so its path is per-machine -- .venv at the root and
+      // backend/.venv both exist on this project, and a checked-in
+      // absolute path can only ever be right for one person. Each
+      // correction then broke it for whoever was not that person.
+      "envFile": "${workspaceFolder}/backend/.env",
+      "justMyCode": true
+    },
+    {
+      "name": "Frontend: Vite Dev Server (npm run dev)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/frontend"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Run Full Stack (Backend + Frontend)",
+      "configurations": ["Backend: FastAPI (uvicorn)", "Frontend: Vite Dev Server (npm run dev)"],
+      "stopAll": true
+    }
+  ]
+}

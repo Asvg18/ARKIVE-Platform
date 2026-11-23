@@ -1,0 +1,51 @@
+/* ================================================================= Tags
+ * A soft colour pill (shared/ui/Tag): fully rounded, a light tint and
+ * darker text of the same colour. `.ark-tone--*` is the same pair for
+ * anything else that carries a tone, like a sender mark. `.ark-pill` is
+ * the tag's older name, kept as an alias so nothing that still uses it
+ * breaks. */
+
+.ark-tag,
+.ark-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  height: 20px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  font-family: var(--arkive-font);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+.ark-tag__dot { width: 6px; height: 6px; flex-shrink: 0; border-radius: var(--radius-full); background: var(--tag-dot, currentColor); }
+
+.ark-tag--neutral, .ark-pill--neutral, .ark-tone--neutral { background: var(--surface-bg-alt); color: var(--ink-700); }
+.ark-tag--blue,    .ark-tone--blue    { background: var(--info-bg);    color: var(--info-text); }
+.ark-tag--green,   .ark-pill--success, .ark-tone--green   { background: var(--success-bg); color: var(--success-text); }
+.ark-tag--amber,   .ark-pill--warning, .ark-tone--amber   { background: var(--warning-bg); color: var(--warning-text); }
+.ark-tag--red,     .ark-pill--danger,  .ark-tone--red     { background: var(--danger-bg);  color: var(--danger-text); }
+.ark-tag--violet,  .ark-tone--violet  { background: var(--violet-bg);  color: var(--violet-text); }
+.ark-tag--teal,    .ark-tone--teal    { background: var(--teal-bg);    color: var(--teal-text); }
+
+/* A column of status tags: every tag in it the
+ * same width, its dot and word starting at the same place, so
+ * "Accepting" and "Deadline passed" line up down the table. --wide is
+ * for a column whose longest word is longer, like "Flagged for Review",
+ * and --short for one-word statuses, up to "Deactivated" (the widths fit
+ * "Deadline passed", "Unlikely to progress" and "Deactivated"). */
+.ark-status-cell { --status-tag-width: 7.5rem; }
+.ark-status-cell--wide { --status-tag-width: 8.25rem; }
+.ark-status-cell--short { --status-tag-width: 5.5rem; }
+.ark-status-cell .ark-tag { width: var(--status-tag-width); }
+/* The column as wide as its tags plus the cell's own padding: a table
+ * with a fixed layout takes its column widths from the header. */
+th.ark-status-cell { box-sizing: content-box; width: var(--status-tag-width); }
+/* A roomy table keeps its padding elsewhere; a status column needs the
+ * width for its tags more than for air. */
+.ark-table .ark-status-cell { padding-left: var(--space-3); padding-right: var(--space-3); }
+
+/* The applicant's answer to an interview time, beside the time. */
+.ark-interview__confirmation { margin-left: var(--space-2); }

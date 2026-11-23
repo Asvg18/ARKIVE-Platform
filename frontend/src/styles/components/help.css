@@ -1,0 +1,232 @@
+/* ===================================================================== Help
+ * The user manual (features/help). Contents and search on the left,
+ * sticky so the way around stays in reach down a long guide; the text on
+ * the right at a reading measure, since this page is read, not scanned. */
+.ark-help {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.ark-help__aside {
+  position: sticky;
+  top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-height: calc(100vh - 2 * var(--space-6));
+  min-width: 0;
+}
+
+.ark-help__toc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow-y: auto;
+  padding-right: var(--space-2);
+}
+
+.ark-help__toc-group { display: flex; flex-direction: column; }
+
+.ark-help__toc-section,
+.ark-help__toc-topic {
+  display: block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  line-height: var(--leading-snug);
+}
+
+.ark-help__toc-section {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-help__toc-topic {
+  font-size: var(--text-sm);
+  color: var(--ink-600);
+}
+
+.ark-help__toc-section:hover,
+.ark-help__toc-topic:hover { background: var(--surface-bg-alt); color: var(--ink-900); }
+
+.ark-help__toc-topic[aria-current="location"] {
+  background: var(--accent-bg);
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+.ark-help__body {
+  max-width: 760px;
+  min-width: 0;
+}
+
+.ark-help__section {
+  padding-bottom: var(--space-8);
+  margin-bottom: var(--space-8);
+  border-bottom: 1px solid var(--hairline);
+  scroll-margin-top: var(--space-6);
+}
+.ark-help__section:last-child { border-bottom: 0; }
+
+.ark-help__eyebrow {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ark-help__title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--track-tight);
+  color: var(--ink-950);
+}
+
+.ark-help__topic {
+  margin-top: var(--space-6);
+  padding: var(--space-1) 0;
+  scroll-margin-top: var(--space-6);
+  border-radius: var(--radius);
+}
+
+/* The topic the ? opened, marked so the eye lands on it after the jump. */
+.ark-help__topic[data-current] {
+  padding: var(--space-4) var(--space-5);
+  background: var(--accent-bg);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.ark-help__topic-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-lg);
+  color: var(--ink-900);
+}
+
+.ark-help__p,
+.ark-help__list {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--ink-700);
+}
+
+.ark-help__p strong,
+.ark-help__list strong,
+.ark-help__table strong { color: var(--ink-900); font-weight: 600; }
+
+.ark-help__list { padding-left: var(--space-6); }
+.ark-help__list li + li { margin-top: var(--space-1-5); }
+
+/* The onboarding checklist: a box to read, not to tick here (the
+ * applicant ticks the real one on their Onboarding screen). */
+.ark-help__list--check { list-style: none; padding-left: var(--space-1); }
+.ark-help__list--check li { display: flex; gap: var(--space-2-5); }
+.ark-help__list--check li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  border: 1.5px solid var(--ink-400);
+  border-radius: var(--radius-xs);
+}
+
+.ark-help__table-wrap {
+  margin: 0 0 var(--space-4);
+  overflow-x: auto;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+}
+
+.ark-help__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+.ark-help__table th {
+  padding: var(--space-2-5) var(--space-3);
+  text-align: left;
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-600);
+  background: var(--surface-bg);
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.ark-help__table td {
+  padding: var(--space-2-5) var(--space-3);
+  vertical-align: top;
+  color: var(--ink-700);
+  border-bottom: 1px solid var(--hairline);
+}
+.ark-help__table tr:last-child td { border-bottom: 0; }
+.ark-help__table td:first-child { font-weight: 600; color: var(--ink-900); }
+
+.ark-help__empty {
+  padding: var(--space-8);
+  border: 1px dashed var(--surface-border-strong);
+  border-radius: var(--radius);
+  color: var(--ink-600);
+  font-size: var(--text-sm);
+}
+.ark-help__empty p { margin: 0; }
+.ark-help__empty-title { font-weight: 600; color: var(--ink-900); margin-bottom: var(--space-1) !important; }
+
+/* Measured on the room the page has, not the window: the HR sidebar
+ * takes 250px the public page does not. Below this the contents give way
+ * to the text; the search stays, and the page reads top to bottom. */
+.ark-help-frame { container-type: inline-size; }
+
+@container (max-width: 840px) {
+  .ark-help { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .ark-help__aside { position: static; max-height: none; }
+  .ark-help__toc { display: none; }
+  .ark-help__topic[data-current] { padding: var(--space-3); }
+  .ark-help__list { padding-left: var(--space-5); }
+  .ark-help__title { font-size: var(--text-xl); }
+}
+
+/* Signed out: no portal yet, so a plain bar and the page. */
+.ark-help-public {
+  min-height: 100vh;
+  background: var(--surface-bg);
+}
+
+.ark-help-public__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6);
+}
+
+.ark-help-public__brand { text-decoration: none; }
+
+.ark-help-public__signin {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ark-help-public__main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6) var(--space-12);
+}
+
+@media (max-width: 600px) {
+  .ark-help-public__bar,
+  .ark-help-public__main { padding-left: var(--space-4); padding-right: var(--space-4); }
+}

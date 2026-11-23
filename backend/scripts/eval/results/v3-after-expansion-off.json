@@ -1,0 +1,2608 @@
+{
+  "name": "v3-after-expansion-off",
+  "score_method": "applied_job_v3",
+  "query_expansion": false,
+  "labels_reviewed_by": null,
+  "runs": [
+    [
+      {
+        "id": "app3011",
+        "match_score": 63.9,
+        "arithmetic_score": 40.2,
+        "requirement_coverage": 87.5,
+        "terminal_state": "manual_review",
+        "seconds": 74.8,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Experience in designing and implementing project-based learning activities.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Proven track record of student success in computer science competitions or exams.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app2438",
+        "match_score": 50.4,
+        "arithmetic_score": 42.5,
+        "requirement_coverage": 58.3,
+        "terminal_state": "manual_review",
+        "seconds": 67.7,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          }
+        ]
+      },
+      {
+        "id": "app1951",
+        "match_score": 61.9,
+        "arithmetic_score": 39.8,
+        "requirement_coverage": 84.0,
+        "terminal_state": "manual_review",
+        "seconds": 119.2,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in designing and implementing project-based learning activities.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proven track record of student success in computer science competitions or exams.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in educating students on programming, algorithms, and data structures.",
+            "verdict": "not_met",
+            "verified": false,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to develop and implement comprehensive lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience with various software development tools and technologies.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to facilitate hands-on learning through labs and coding workshops.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong mentoring skills to guide students on academic and career pathways in technology.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Willingness to stay updated with advancements in computer science.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to work collaboratively with other educators to integrate computer science across the curriculum.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience with assessing student progress effectively.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills and ability to manage extracurricular activities such as coding clubs.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1696",
+        "match_score": 78.5,
+        "arithmetic_score": 67.1,
+        "requirement_coverage": 90.0,
+        "terminal_state": "manual_review",
+        "seconds": 49.8,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1657",
+        "match_score": 62.1,
+        "arithmetic_score": 49.2,
+        "requirement_coverage": 75.0,
+        "terminal_state": "manual_review",
+        "seconds": 46.0,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app1621",
+        "match_score": 52.0,
+        "arithmetic_score": 25.4,
+        "requirement_coverage": 78.6,
+        "terminal_state": "manual_review",
+        "seconds": 38.0,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app1622",
+        "match_score": 44.5,
+        "arithmetic_score": 31.8,
+        "requirement_coverage": 57.1,
+        "terminal_state": "manual_review",
+        "seconds": 34.9,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app575",
+        "match_score": 64.3,
+        "arithmetic_score": 38.7,
+        "requirement_coverage": 90.0,
+        "terminal_state": "manual_review",
+        "seconds": 47.4,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app576",
+        "match_score": 62.1,
+        "arithmetic_score": 49.2,
+        "requirement_coverage": 75.0,
+        "terminal_state": "manual_review",
+        "seconds": 49.0,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app38",
+        "match_score": 48.9,
+        "arithmetic_score": 26.3,
+        "requirement_coverage": 71.4,
+        "terminal_state": "manual_review",
+        "seconds": 47.0,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics, or related fields is essential.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Some companies may require expertise in particular high-level programming languages such as C++, Java, or Scala.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualize processes and outcomes.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          }
+        ]
+      },
+      {
+        "id": "app37",
+        "match_score": 51.1,
+        "arithmetic_score": 27.2,
+        "requirement_coverage": 75.0,
+        "terminal_state": "manual_review",
+        "seconds": 38.8,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualize processes and outcomes",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app1939",
+        "match_score": 45.6,
+        "arithmetic_score": 41.2,
+        "requirement_coverage": 50.0,
+        "terminal_state": "manual_review",
+        "seconds": 27.9,
+        "requirements": [
+          {
+            "requirement": "2 Years of Experience in Related Field",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Test",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1622-vs-job2449",
+        "match_score": 11.9,
+        "arithmetic_score": 23.7,
+        "requirement_coverage": 0.0,
+        "terminal_state": "manual_review",
+        "seconds": 112.4,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in designing and implementing project-based learning activities.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Proven track record of student success in computer science competitions or exams.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in educating students on programming, algorithms, and data structures.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to develop and implement comprehensive lesson plans.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with various software development tools and technologies.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to facilitate hands-on learning through labs and coding workshops.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong mentoring skills to guide students on academic and career pathways in technology.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Willingness to stay updated with advancements in computer science.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to work collaboratively with other educators to integrate computer science across the curriculum.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with assessing student progress effectively.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong organizational skills and ability to manage extracurricular activities such as coding clubs.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          }
+        ]
+      },
+      {
+        "id": "app3011-vs-job2059",
+        "match_score": 50.2,
+        "arithmetic_score": 29.0,
+        "requirement_coverage": 71.4,
+        "terminal_state": "manual_review",
+        "seconds": 54.7,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1939-vs-job678",
+        "match_score": 64.8,
+        "arithmetic_score": 49.7,
+        "requirement_coverage": 80.0,
+        "terminal_state": "manual_review",
+        "seconds": 48.0,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "not_met",
+            "verified": false,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "app3011",
+        "match_score": 63.9,
+        "arithmetic_score": 40.2,
+        "requirement_coverage": 87.5,
+        "terminal_state": "manual_review",
+        "seconds": 69.9,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in designing and implementing project-based learning activities.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Proven track record of student success in computer science competitions or exams.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app2438",
+        "match_score": 56.7,
+        "arithmetic_score": 42.5,
+        "requirement_coverage": 70.8,
+        "terminal_state": "manual_review",
+        "seconds": 59.3,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1951",
+        "match_score": 66.9,
+        "arithmetic_score": 39.8,
+        "requirement_coverage": 94.0,
+        "terminal_state": "manual_review",
+        "seconds": 101.2,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Experience in designing and implementing project-based learning activities.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Proven track record of student success in computer science competitions or exams.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience in educating students on programming, algorithms, and data structures.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to develop and implement comprehensive lesson plans.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience with various software development tools and technologies.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to facilitate hands-on learning through labs and coding workshops.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong mentoring skills to guide students on academic and career pathways in technology.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Willingness to stay updated with advancements in computer science.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to work collaboratively with other educators to integrate computer science across the curriculum.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Experience with assessing student progress effectively.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills and ability to manage extracurricular activities such as coding clubs.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1696",
+        "match_score": 81.0,
+        "arithmetic_score": 67.1,
+        "requirement_coverage": 95.0,
+        "terminal_state": "manual_review",
+        "seconds": 62.4,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1657",
+        "match_score": 67.1,
+        "arithmetic_score": 49.2,
+        "requirement_coverage": 85.0,
+        "terminal_state": "manual_review",
+        "seconds": 52.1,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app1621",
+        "match_score": 48.4,
+        "arithmetic_score": 25.4,
+        "requirement_coverage": 71.4,
+        "terminal_state": "manual_review",
+        "seconds": 51.3,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app1622",
+        "match_score": 44.5,
+        "arithmetic_score": 31.8,
+        "requirement_coverage": 57.1,
+        "terminal_state": "manual_review",
+        "seconds": 33.8,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app575",
+        "match_score": 64.3,
+        "arithmetic_score": 38.6,
+        "requirement_coverage": 90.0,
+        "terminal_state": "manual_review",
+        "seconds": 49.9,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app576",
+        "match_score": 67.1,
+        "arithmetic_score": 49.2,
+        "requirement_coverage": 85.0,
+        "terminal_state": "manual_review",
+        "seconds": 47.3,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app38",
+        "match_score": 63.1,
+        "arithmetic_score": 26.3,
+        "requirement_coverage": 100.0,
+        "terminal_state": "manual_review",
+        "seconds": 40.5,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics, or related fields is essential.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Some companies may require expertise in particular high-level programming languages such as C++, Java, or Scala.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualize processes and outcomes.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app37",
+        "match_score": 51.1,
+        "arithmetic_score": 27.2,
+        "requirement_coverage": 75.0,
+        "terminal_state": "manual_review",
+        "seconds": 40.5,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualize processes and outcomes",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1939",
+        "match_score": 45.6,
+        "arithmetic_score": 41.2,
+        "requirement_coverage": 50.0,
+        "terminal_state": "manual_review",
+        "seconds": 19.4,
+        "requirements": [
+          {
+            "requirement": "2 Years of Experience in Related Field",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Test",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      },
+      {
+        "id": "app1622-vs-job2449",
+        "match_score": 11.9,
+        "arithmetic_score": 23.7,
+        "requirement_coverage": 0.0,
+        "terminal_state": "manual_review",
+        "seconds": 90.4,
+        "requirements": [
+          {
+            "requirement": "Master's degree in Computer Science, Education, or a related field.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in designing and implementing project-based learning activities.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Proven track record of student success in computer science competitions or exams.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong communication and organizational skills.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Bachelor's degree in Computer Science or a related field.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Teaching certification or licensure in computer science or related subject.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to create engaging and effective lesson plans.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to work effectively with diverse student populations.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience in educating students on programming, algorithms, and data structures.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to develop and implement comprehensive lesson plans.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with various software development tools and technologies.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to facilitate hands-on learning through labs and coding workshops.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong mentoring skills to guide students on academic and career pathways in technology.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Willingness to stay updated with advancements in computer science.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Ability to work collaboratively with other educators to integrate computer science across the curriculum.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Experience with assessing student progress effectively.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "Strong organizational skills and ability to manage extracurricular activities such as coding clubs.",
+            "verdict": "not_met",
+            "verified": true,
+            "counted": "not_met",
+            "basis": "none"
+          }
+        ]
+      },
+      {
+        "id": "app3011-vs-job2059",
+        "match_score": 50.2,
+        "arithmetic_score": 29.0,
+        "requirement_coverage": 71.4,
+        "terminal_state": "manual_review",
+        "seconds": 41.9,
+        "requirements": [
+          {
+            "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "A passion for solving problems and providing workable solutions.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Knowledge of algorithms and data structures.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          }
+        ]
+      },
+      {
+        "id": "app1939-vs-job678",
+        "match_score": 57.3,
+        "arithmetic_score": 49.7,
+        "requirement_coverage": 65.0,
+        "terminal_state": "manual_review",
+        "seconds": 46.9,
+        "requirements": [
+          {
+            "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+            "verdict": "not_met",
+            "verified": false,
+            "counted": "not_met",
+            "basis": "none"
+          },
+          {
+            "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "equivalent"
+          },
+          {
+            "requirement": "Experience in project management and QA methodology",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          },
+          {
+            "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Ability to document and troubleshoot errors",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Excellent communication skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "related"
+          },
+          {
+            "requirement": "Attention to detail",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Analytical mind and problem-solving aptitude",
+            "verdict": "met",
+            "verified": true,
+            "counted": "met",
+            "basis": "direct"
+          },
+          {
+            "requirement": "Strong organizational skills",
+            "verdict": "partial",
+            "verified": true,
+            "counted": "partial",
+            "basis": "transferable"
+          }
+        ]
+      }
+    ]
+  ]
+}

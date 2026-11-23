@@ -1,0 +1,29 @@
+# Line-ending policy. Without this, Git guesses per machine and a Windows
+# checkout can rewrite files as CRLF — which matters here because some of
+# them are executed inside Linux containers, where a stray carriage return
+# in a shebang line makes the file "not found" with no useful error.
+
+# Normalise everything to LF inside the repository. Windows working
+# copies still get native endings for ordinary text, so nothing about
+# editing changes.
+* text=auto
+
+# These are read by Linux, never by Windows, so they stay LF even in a
+# Windows working copy.
+*.sh text eol=lf
+Dockerfile text eol=lf
+docker-compose*.yml text eol=lf
+Caddyfile text eol=lf
+*.py text eol=lf
+
+# Binary — never touch these.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.ico binary
+*.crt binary
+
+# Left out of `git archive` source zips. w/ is a thesis-document build
+# workspace (Word templates, rendered pages, scripts) that no part of the
+# app uses; it stays in Git until its owner decides where it belongs.
+w/ export-ignore

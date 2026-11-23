@@ -1,0 +1,100 @@
+/* ======================================================== Notifications
+ * One notice, drawn the same in the bell, the corner pop-up and the
+ * inbox (features/notifications/view/components/NotificationItem): who
+ * it came from, the subject, the message. Unread reads as bolder lines
+ * and a red dot, never a tinted row, which turns a long list into
+ * stripes. */
+
+.ark-nitem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+  font-family: var(--arkive-font);
+}
+
+.ark-nitem__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+
+.ark-nitem__top { display: flex; align-items: baseline; gap: var(--space-2); min-width: 0; }
+
+.ark-nitem__sender {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-700);
+}
+
+.ark-nitem__time {
+  flex-shrink: 0;
+  font-size: var(--text-2xs);
+  color: var(--ink-600);
+  font-variant-numeric: tabular-nums;
+}
+
+.ark-nitem__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-900);
+}
+
+/* Clamped here, in full in the reading pane. */
+.ark-nitem__preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-600);
+}
+.ark-nitem[data-density="menu"] .ark-nitem__preview { -webkit-line-clamp: 1; }
+
+.ark-nitem[data-unread] .ark-nitem__sender,
+.ark-nitem[data-unread] .ark-nitem__title { font-weight: 700; color: var(--ink-950); }
+
+.ark-nitem__foot { display: flex; align-items: center; gap: var(--space-2); min-width: 0; margin-top: var(--space-1-5); }
+
+.ark-nitem__job {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-2xs);
+  color: var(--ink-600);
+}
+
+.ark-nitem__dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+/* Who it came from, when it isn't a person: the ARKIVE mark for the HR
+ * Office, or the kind's icon on its own soft colour for ARKIVE itself.
+ * The same round shape and sizes as a person's avatar (32/36/44). */
+.ark-sender-mark {
+  --mark: 36px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--mark);
+  height: var(--mark);
+  border-radius: var(--radius-full);
+}
+.ark-sender-mark--sm { --mark: 32px; }
+.ark-sender-mark--lg { --mark: 44px; }
+.ark-sender-mark--office { background: var(--surface); border: 1px solid var(--surface-border); }
+.ark-sender-mark--office img { width: 64%; height: 64%; object-fit: contain; }

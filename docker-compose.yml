@@ -1,0 +1,146 @@
+# Development stack. Everything the app needs runs in containers, so the
+# only thing a machine has to have installed is Docker — no Python, no
+# venv, no node. Bring it up with:
+#
+#   docker compose up -d --build
+#
+# Frontend on http://localhost:5173, API on http://localhost:8000.
+# Both hot-reload from the working tree. See docs/ARKIVE-development.md.
+#
+# To run just the database and keep the API and frontend native (the
+# older hybrid workflow, still supported):
+#
+#   docker compose up -d db
+
+# Pinned rather than derived from the directory name. Compose defaults
+# the project name to the folder it finds this file in, which means
+# renaming or cloning the folder silently orphans the existing database
+# volume — the data is still there, under a name nothing points at any
+# more. `arkive` is the name the existing volume already carries
+# (arkive_arkive_pg_data), so pinning it here keeps current dev data.
+name: arkive
+
+services:
+  db:
+    # Plain Postgres 16. This was pgvector/pgvector:pg16 for most of the
+    # project's life, on the reasoning that having the binary present
+    # would make adopting pgvector a one-line CREATE EXTENSION later.
+    # That adoption was then decided against for good reasons (~12
+    # requisitions; an ANN index would cost more than it saves — see the
+    # development guide S10), which left the deployment pulling a heavier
+    # image for an extension it deliberately never enables. Verified safe
+    # to switch: SELECT extname FROM pg_extension returns only plpgsql
+    # and no column anywhere has a vector type, so nothing in the
+    # existing data depends on it.
+    image: postgres:16
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      # Still published, so psql, a GUI client, or a natively-run test
+      # suite on the host can reach it exactly as before.
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - arkive_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      # The working tree, live. This is what makes an edit on the host
+      # reload the server in the container.
+      - ./backend:/app
+      # Anonymous volume shadowing the host's __pycache__: the host venv
+      # is a different Python (3.14 on the Windows machine) and its .pyc
+      # files carry a different magic number. Harmless — CPython just
+      # regenerates them — but it means the two interpreters would
+      # otherwise fight over the same directory on every run.
+      - /app/__pycache__
+      # Same shadowing, for the venv itself. backend/.venv is a Windows
+      # Python 3.14 tree (~900 files) that the container has no use for —
+      # it has its own site-packages baked into the image. Left visible,
+      # WATCHFILES_FORCE_POLLING below makes uvicorn's reloader stat every
+      # one of those files on every poll, across Docker Desktop's Windows
+      # file-sharing bridge. That is what killed the container with
+      # "Bad address (os error 14)" on a .venv pyc path, and took the
+      # frontend's watcher down with the same mount ("EIO, stat '/app'").
+      - /app/.venv
+    env_file:
+      # The dev secrets (JWT key, OpenAI key) already live here, per the
+      # split documented in .env.example. Marked not-required so a fresh
+      # clone can still bring the stack up and get a clear error from the
+      # app rather than an opaque one from compose.
+      - path: ./backend/.env
+        required: false
+    environment:
+      # Overrides whatever backend/.env says, and must: that file points
+      # at localhost:5432 for native runs, which inside a container means
+      # the container itself. `db` is the service name on the compose
+      # network. Env vars beat env_file in pydantic-settings, so this
+      # wins without needing to edit backend/.env.
+      #
+      # Overridable in turn by setting DATABASE_URL in the root .env —
+      # same escape hatch docker-compose.prod.yml offers. Point it at a
+      # managed Postgres (Neon, Supabase) and the whole team shares one
+      # database instead of each laptop having its own; the bundled `db`
+      # container then just sits unused. See "Sharing data" in README.
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+      # uvicorn --reload watches via watchfiles, which uses inotify.
+      # Bind-mounted host files do not deliver inotify events through
+      # Docker Desktop — on Windows especially — so without this the
+      # server starts fine and then simply never reloads. Polling costs
+      # a little CPU; a reloader that does not reload costs more.
+      WATCHFILES_FORCE_POLLING: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    # Migrations first, for the same reason the production entrypoint
+    # does it: 21 migrations exist, and an un-migrated database fails
+    # with "relation does not exist" rather than anything that points at
+    # the cause. --reload here, unlike production, is the whole point.
+    command: >
+      sh -c "alembic upgrade head &&
+             exec python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      # The critical one. Without it the host's node_modules is mounted
+      # over the image's, and the container gets native binaries built
+      # for the host OS — on Windows that means Vite dies immediately on
+      # a rollup/esbuild binary it cannot execute. An anonymous volume
+      # here keeps the Linux node_modules that `npm ci` installed during
+      # the build, while everything else still comes from the host.
+      - /app/node_modules
+    environment:
+      # The browser runs on the host, not in the container, so it
+      # reaches the API through the published port — localhost, not the
+      # `db`-style service name the backend uses.
+      VITE_API_BASE_URL: http://localhost:8000
+      # Same inotify problem as the backend; see the note there. Read by
+      # vite.config.ts, which turns on the polling watcher.
+      VITE_USE_POLLING: "true"
+    depends_on:
+      - backend
+    # --host 0.0.0.0 because a dev server bound to the container's
+    # loopback is not reachable from the host, published port or not.
+    command: npm run dev -- --host 0.0.0.0 --port 5173
+
+volumes:
+  arkive_pg_data:

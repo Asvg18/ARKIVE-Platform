@@ -1,0 +1,1724 @@
+{
+  "about": "Skill-matching evaluation set: real résumé/job pairs from the dev database (contact details removed), each requirement labelled met / partial / not_met. Labels are DRAFTS written by Claude on 2026-10-18 and must be confirmed or corrected by HR before any result is quoted; set `reviewed_by` once they are.",
+  "reviewed_by": null,
+  "pairs": [
+    {
+      "id": "app3011",
+      "source_application_id": 3011,
+      "pairing": "as applied",
+      "job": {
+        "title": "ComSci Prof 2",
+        "department": "Computer Science",
+        "description": "A Computer Science Teacher is responsible for educating students in the principles of computer science, covering both theoretical and practical aspects. This role involves developing curricula that foster computational thinking and problem-solving skills, preparing students for future academic and professional endeavors in the tech industry.",
+        "qualifications": "Master's degree in Computer Science, Education, or a related field.\nExperience with multiple programming languages such as Python, Java, and C++.\nProfessional certifications like CompTIA, Cisco, or similar.\nExperience in designing and implementing project-based learning activities.\nKnowledge of current educational technologies and e-learning platforms.\nProven track record of student success in computer science competitions or exams.\nExperience in mentoring or coaching students for STEM competitions.\nBachelor's degree in Computer Science or a related field.\nTeaching certification or licensure in computer science or related subject.\nPrevious teaching experience at the middle school, high school, or college level.",
+        "requirements": "Strong communication and organizational skills.\nStrong understanding of computer science fundamentals and programming languages.\nAbility to create engaging and effective lesson plans.\nStrong problem-solving skills and the ability to convey complex concepts clearly.\nAbility to work effectively with diverse student populations.\nCommitment to ongoing professional development in the field of education and computer science."
+      },
+      "resume": {
+        "professional_summary": "",
+        "experience": [
+          {
+            "company": "CodeAdvantage",
+            "title": "Computer Science Teacher",
+            "description": "Developed and implemented a comprehensive computer science curriculum for over 500 K-12 students at CodeAdvantage, leading to a 45% increase in students' coding proficiency within one academic year. Successfully mentored and prepared 100+ high school students for prestigious national and international coding competitions, with 15 students winning top awards in events like the USA Computing Olympiad and the International Collegiate Programming Contest. Spearheaded the creation of an after-school coding club for underprivileged students in the local community, providing free programming education to over 200 students and resulting in a 60% increase in their interest and engagement in STEM fields."
+          },
+          {
+            "company": "ID Tech",
+            "title": "Assistant Computer Science Teacher",
+            "description": "Successfully mentored over 50 students in various computer science subjects, resulting in a 95% pass rate and an average improvement of 20% in their exam scores. Developed and implemented an innovative curriculum for the Introduction to Python course, leading to a 30% increase in student enrollment and a 90% satisfaction rate in post-course surveys. Collaborated with the lead teacher to organize and host a successful annual coding competition, attracting over 100 participants and raising $5,000 for the school's computer science department."
+          }
+        ],
+        "education": [
+          {
+            "school": "Rutgers University",
+            "degree": "Master of Education",
+            "field_of_study": "Computer Science Teaching",
+            "honors": ""
+          }
+        ],
+        "skills": [
+          "Python",
+          "Java",
+          "HTML/CSS",
+          "JavaScript",
+          "SQL",
+          "C++",
+          "Machine Learning"
+        ],
+        "certifications": [
+          "Microsoft Certified Educator (MCE)",
+          "Google for Education Certified Trainer"
+        ],
+        "additional_sections": [
+          {
+            "title": "Languages",
+            "content": "English\nDutch"
+          },
+          {
+            "title": "Memberships",
+            "content": "Association for Computing Machinery (ACM)\nComputer Science Teachers Association (CSTA)"
+          }
+        ]
+      },
+      "labels": [
+        {
+          "requirement": "Master's degree in Computer Science, Education, or a related field.",
+          "label": "met",
+          "note": "M.Ed. major in Computer Science Teaching, for a CS teaching role"
+        },
+        {
+          "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+          "label": "met",
+          "note": "Skills list Python, Java, C++; taught Python"
+        },
+        {
+          "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+          "label": "partial",
+          "note": "Educator certifications (MCE, Google for Education), not IT certifications like CompTIA/Cisco"
+        },
+        {
+          "requirement": "Experience in designing and implementing project-based learning activities.",
+          "label": "partial",
+          "note": "Built curricula and a coding club; project-based learning is not named"
+        },
+        {
+          "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+          "label": "met",
+          "note": "Google for Education Certified Trainer, Microsoft Certified Educator"
+        },
+        {
+          "requirement": "Proven track record of student success in computer science competitions or exams.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Bachelor's degree in Computer Science or a related field.",
+          "label": "met",
+          "note": "A master's in the field meets a bachelor's requirement"
+        },
+        {
+          "requirement": "Teaching certification or licensure in computer science or related subject.",
+          "label": "partial",
+          "note": "Educator certifications and an M.Ed., but no teaching licence"
+        },
+        {
+          "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+          "label": "met",
+          "note": "K-12 and high-school teaching"
+        },
+        {
+          "requirement": "Strong communication and organizational skills.",
+          "label": "met",
+          "note": "Mentoring, organising competitions and a coding club"
+        },
+        {
+          "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to create engaging and effective lesson plans.",
+          "label": "met",
+          "note": "Designed curricula with 90% satisfaction"
+        },
+        {
+          "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+          "label": "met",
+          "note": "Teaching outcomes show complex concepts conveyed"
+        },
+        {
+          "requirement": "Ability to work effectively with diverse student populations.",
+          "label": "met",
+          "note": "Coding club for underprivileged students; 500+ K-12 students"
+        },
+        {
+          "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+          "label": "met",
+          "note": "Certifications and ACM/CSTA memberships"
+        }
+      ]
+    },
+    {
+      "id": "app2438",
+      "source_application_id": 2438,
+      "pairing": "as applied",
+      "job": {
+        "title": "ComSci Prof",
+        "department": "Computer Science",
+        "description": "A Computer Science Teacher is responsible for educating students in the principles of computer science, covering both theoretical and practical aspects. This role involves developing curricula that foster computational thinking and problem-solving skills, preparing students for future academic and professional endeavors in the tech industry.",
+        "qualifications": "• Master's degree in Computer Science, Education, or a related field.\n• Bachelor's degree in Computer Science or a related field.\n• Teaching certification or licensure in computer science or related subject.\n• Experience with multiple programming languages such as Python, Java, and C++.\n• Professional certifications like CompTIA, Cisco, or similar.\n• Previous teaching experience at the middle school, high school, or college level.",
+        "requirements": "• Strong communication and organizational skills.\n• Strong understanding of computer science fundamentals and programming languages.\n• Ability to create engaging and effective lesson plans.\n• Strong problem-solving skills and the ability to convey complex concepts clearly.\n• Ability to work effectively with diverse student populations.\n• Commitment to ongoing professional development in the field of education and computer science."
+      },
+      "resume": {
+        "professional_summary": "Dedicated Computer Science Teacher with 1 year of experience in delivering engaging and effective lessons in computer programming, algorithms, and web development. Adept at creating an inclusive learning environment, fostering students' curiosity, and leveraging technology to enhance the educational experience. Committed to promoting digital literacy and preparing students for successful careers in the ever-evolving tech landscape.",
+        "experience": [
+          {
+            "company": "CodeAdvantage, NJ",
+            "title": "Computer Science Teacher",
+            "description": "Developed and implemented a comprehensive computer science curriculum for over 500 K-12 students at CodeAdvantage, leading to a 45% increase in students' coding proficiency within one academic year. Successfully mentored and prepared 100+ high school students for prestigious national and international coding competitions, with 15 students winning top awards in events like the USA Computing Olympiad and the International Collegiate Programming Contest. Spearheaded the creation of an after-school coding club for underprivileged students in the local community, providing free programming education to over 200 students and resulting in a 60% increase in their interest and engagement in STEM fields."
+          },
+          {
+            "company": "ID Tech, NJ",
+            "title": "Assistant Computer Science Teacher",
+            "description": "Successfully mentored over 50 students in various computer science subjects, resulting in a 95% pass rate and an average improvement of 20% in their exam scores. Developed and implemented an innovative curriculum for the Introduction to Python course, leading to a 30% increase in student enrollment and a 90% satisfaction rate in post-course surveys. Collaborated with the lead teacher to organize and host a successful annual coding competition, attracting over 100 participants and raising $5,000 for the school's computer science department."
+          }
+        ],
+        "education": [
+          {
+            "school": "Rutgers University, New Brunswick, NJ",
+            "degree": "Master of Education",
+            "field_of_study": "Computer Science Teaching",
+            "honors": ""
+          }
+        ],
+        "skills": [
+          "Python",
+          "Java",
+          "HTML/CSS",
+          "JavaScript",
+          "SQL",
+          "C++",
+          "Machine Learning"
+        ],
+        "certifications": [
+          "Microsoft Certified Educator (MCE)",
+          "Google for Education Certified Trainer"
+        ],
+        "additional_sections": [
+          {
+            "title": "Languages",
+            "content": "English\nDutch"
+          },
+          {
+            "title": "Memberships",
+            "content": "Association for Computing Machinery (ACM)\nComputer Science Teachers Association (CSTA)"
+          }
+        ]
+      },
+      "labels": [
+        {
+          "requirement": "Master's degree in Computer Science, Education, or a related field.",
+          "label": "met",
+          "note": "M.Ed. major in Computer Science Teaching"
+        },
+        {
+          "requirement": "Bachelor's degree in Computer Science or a related field.",
+          "label": "met",
+          "note": "A master's in the field meets a bachelor's requirement"
+        },
+        {
+          "requirement": "Teaching certification or licensure in computer science or related subject.",
+          "label": "partial",
+          "note": "Educator certifications and an M.Ed., but no teaching licence"
+        },
+        {
+          "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+          "label": "partial",
+          "note": "Educator certifications, not IT certifications like CompTIA/Cisco"
+        },
+        {
+          "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong communication and organizational skills.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to create engaging and effective lesson plans.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to work effectively with diverse student populations.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+          "label": "met",
+          "note": "Certifications and ACM/CSTA memberships"
+        }
+      ]
+    },
+    {
+      "id": "app1951",
+      "source_application_id": 1951,
+      "pairing": "as applied",
+      "job": {
+        "title": "Computer Science Professor",
+        "department": "Computer Science",
+        "description": "A Computer Science Teacher is responsible for educating students in the principles of computer science, covering both theoretical and practical aspects. This role involves developing curricula that foster computational thinking and problem-solving skills, preparing students for future academic and professional endeavors in the tech industry. The Computer Science Teacher plays a pivotal role in shaping the next generation of programmers, software engineers, and IT specialists by instilling a strong foundation in computing fundamentals.",
+        "qualifications": "Master's degree in Computer Science, Education, or a related field.\nExperience with multiple programming languages such as Python, Java, and C++.\nProfessional certifications like CompTIA, Cisco, or similar.\nExperience in designing and implementing project-based learning activities.\nKnowledge of current educational technologies and e-learning platforms.\nProven track record of student success in computer science competitions or exams.\nExperience in mentoring or coaching students for STEM competitions.\nStrong communication and organizational skills.\nBachelor's degree in Computer Science or a related field.\nTeaching certification or licensure in computer science or related subject.\nStrong understanding of computer science fundamentals and programming languages.\nPrevious teaching experience at the middle school, high school, or college level.\nAbility to create engaging and effective lesson plans.\nStrong problem-solving skills and the ability to convey complex concepts clearly.\nAbility to work effectively with diverse student populations.\nCommitment to ongoing professional development in the field of education and computer science.",
+        "requirements": "Experience in educating students on programming, algorithms, and data structures.\nAbility to develop and implement comprehensive lesson plans.\nExperience with various software development tools and technologies.\nAbility to facilitate hands-on learning through labs and coding workshops.\nStrong mentoring skills to guide students on academic and career pathways in technology.\nWillingness to stay updated with advancements in computer science.\nAbility to work collaboratively with other educators to integrate computer science across the curriculum.\nExperience with assessing student progress effectively.\nStrong organizational skills and ability to manage extracurricular activities such as coding clubs."
+      },
+      "resume": {
+        "professional_summary": "",
+        "experience": [
+          {
+            "company": "CodeAdvantage, NJ",
+            "title": "Computer Science Teacher",
+            "description": "Developed and implemented a comprehensive computer science curriculum for over 500 K-12 students at CodeAdvantage, leading to a 45% increase in students' coding proficiency within one academic year. Successfully mentored and prepared 100+ high school students for prestigious national and international coding competitions, with 15 students winning top awards in events like the USA Computing Olympiad and the International Collegiate Programming Contest. Spearheaded the creation of an after-school coding club for underprivileged students in the local community, providing free programming education to over 200 students and resulting in a 60% increase in their interest and engagement in STEM fields."
+          },
+          {
+            "company": "ID Tech, NJ",
+            "title": "Assistant Computer Science Teacher",
+            "description": "Successfully mentored over 50 students in various computer science subjects, resulting in a 95% pass rate and an average improvement of 20% in their exam scores. Developed and implemented an innovative curriculum for the Introduction to Python course, leading to a 30% increase in student enrollment and a 90% satisfaction rate in post-course surveys. Collaborated with the lead teacher to organize and host a successful annual coding competition, attracting over 100 participants and raising $5,000 for the school's computer science department."
+          }
+        ],
+        "education": [
+          {
+            "school": "Rutgers University, New Brunswick, NJ",
+            "degree": "Master of Education",
+            "field_of_study": "Computer Science Teaching",
+            "honors": ""
+          }
+        ],
+        "skills": [
+          "Python",
+          "Java",
+          "HTML/CSS",
+          "JavaScript",
+          "SQL",
+          "C++",
+          "Machine Learning"
+        ],
+        "certifications": [
+          "Microsoft Certified Educator (MCE)",
+          "Google for Education Certified Trainer"
+        ],
+        "additional_sections": [
+          {
+            "title": "Languages",
+            "content": "English\nDutch"
+          },
+          {
+            "title": "Memberships",
+            "content": "Association for Computing Machinery (ACM)\nComputer Science Teachers Association (CSTA)"
+          }
+        ]
+      },
+      "labels": [
+        {
+          "requirement": "Master's degree in Computer Science, Education, or a related field.",
+          "label": "met",
+          "note": "M.Ed. major in Computer Science Teaching"
+        },
+        {
+          "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+          "label": "partial",
+          "note": "Educator certifications, not IT certifications like CompTIA/Cisco"
+        },
+        {
+          "requirement": "Experience in designing and implementing project-based learning activities.",
+          "label": "partial",
+          "note": "Curricula and a coding club; project-based learning is not named"
+        },
+        {
+          "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+          "label": "met",
+          "note": "Google for Education Certified Trainer"
+        },
+        {
+          "requirement": "Proven track record of student success in computer science competitions or exams.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong communication and organizational skills.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Bachelor's degree in Computer Science or a related field.",
+          "label": "met",
+          "note": "A master's in the field meets a bachelor's requirement"
+        },
+        {
+          "requirement": "Teaching certification or licensure in computer science or related subject.",
+          "label": "partial",
+          "note": "Educator certifications and an M.Ed., but no teaching licence"
+        },
+        {
+          "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to create engaging and effective lesson plans.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to work effectively with diverse student populations.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+          "label": "met",
+          "note": "Certifications and ACM/CSTA memberships"
+        },
+        {
+          "requirement": "Experience in educating students on programming, algorithms, and data structures.",
+          "label": "partial",
+          "note": "Programming and competition coaching; data structures not stated"
+        },
+        {
+          "requirement": "Ability to develop and implement comprehensive lesson plans.",
+          "label": "met",
+          "note": "Developed and implemented a comprehensive curriculum"
+        },
+        {
+          "requirement": "Experience with various software development tools and technologies.",
+          "label": "partial",
+          "note": "Languages and SQL listed; development tools not stated"
+        },
+        {
+          "requirement": "Ability to facilitate hands-on learning through labs and coding workshops.",
+          "label": "met",
+          "note": "After-school coding club, coding competitions"
+        },
+        {
+          "requirement": "Strong mentoring skills to guide students on academic and career pathways in technology.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Willingness to stay updated with advancements in computer science.",
+          "label": "met",
+          "note": "ACM membership, certifications"
+        },
+        {
+          "requirement": "Ability to work collaboratively with other educators to integrate computer science across the curriculum.",
+          "label": "partial",
+          "note": "Collaborated with the lead teacher on a competition, not on curriculum integration"
+        },
+        {
+          "requirement": "Experience with assessing student progress effectively.",
+          "label": "partial",
+          "note": "Reports pass rates and exam improvement; assessment practice not described"
+        },
+        {
+          "requirement": "Strong organizational skills and ability to manage extracurricular activities such as coding clubs.",
+          "label": "met",
+          "note": "Ran an after-school coding club"
+        }
+      ]
+    },
+    {
+      "id": "app1696",
+      "source_application_id": 1696,
+      "pairing": "as applied",
+      "job": {
+        "title": "Tester QA",
+        "department": "CCMS",
+        "description": "A QA Tester assesses software quality through manual and automated testing, responsible for finding and reporting bugs and glitches. This role requires a keen eye for detail and excellent communication skills, ensuring that products, applications, and systems work correctly throughout the software development lifecycle.",
+        "qualifications": "Proven experience as a Quality Assurance Tester or similar role\nBSc/BA in Computer Science, Engineering or a related field",
+        "requirements": "Experience in project management and QA methodology\nFamiliarity with Agile frameworks and regression testing is a plus\nAbility to document and troubleshoot errors\nWorking knowledge of test management software (e.g. qTest, Zephyr) and SQL\nExcellent communication skills\nAttention to detail\nAnalytical mind and problem-solving aptitude\nStrong organizational skills"
+      },
+      "resume": {
+        "professional_summary": "Detail-oriented and passionate professional with proven experience as a Quality Assurance Tester assessing software quality through manual and automated testing. Recognized for having a keen eye for detail, an analytical mind, and a problem-solving aptitude. Highly competent in finding and reporting bugs and glitches to ensure that products, applications, and systems work correctly.",
+        "experience": [
+          {
+            "company": "TechSolutions Inc.",
+            "title": "Quality Assurance Tester",
+            "description": "Review and analyze system specifications to ensure comprehensive test coverage. Collaborate with QA Engineers to develop effective strategies and test plans. Execute test cases (manual or automated), execute test scripts, and analyze results. Evaluate product code according to specifications. Create logs to document testing phases and defects. Report bugs and errors to development teams and document technical issues. Help troubleshoot issues and document troubleshooting steps. Conduct post-release/post-implementation testing. Work with cross-functional teams to ensure quality throughout the software development lifecycle."
+          }
+        ],
+        "education": [
+          {
+            "school": "University of Washington",
+            "degree": "BSc",
+            "field_of_study": "Computer Science",
+            "honors": ""
+          }
+        ],
+        "skills": [
+          "QA methodology",
+          "Agile frameworks",
+          "regression testing",
+          "manual testing",
+          "automated testing",
+          "test management software",
+          "qTest",
+          "Zephyr",
+          "SQL",
+          "project management",
+          "communication",
+          "attention to detail",
+          "organizational skills",
+          "problem-solving"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience in project management and QA methodology",
+          "label": "met",
+          "note": "Project management and QA methodology both listed"
+        },
+        {
+          "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to document and troubleshoot errors",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Excellent communication skills",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Attention to detail",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Analytical mind and problem-solving aptitude",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong organizational skills",
+          "label": "met",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "app1657",
+      "source_application_id": 1657,
+      "pairing": "as applied",
+      "job": {
+        "title": "Tester QA",
+        "department": "CCMS",
+        "description": "A QA Tester assesses software quality through manual and automated testing, responsible for finding and reporting bugs and glitches. This role requires a keen eye for detail and excellent communication skills, ensuring that products, applications, and systems work correctly throughout the software development lifecycle.",
+        "qualifications": "Proven experience as a Quality Assurance Tester or similar role\nBSc/BA in Computer Science, Engineering or a related field",
+        "requirements": "Experience in project management and QA methodology\nFamiliarity with Agile frameworks and regression testing is a plus\nAbility to document and troubleshoot errors\nWorking knowledge of test management software (e.g. qTest, Zephyr) and SQL\nExcellent communication skills\nAttention to detail\nAnalytical mind and problem-solving aptitude\nStrong organizational skills"
+      },
+      "resume": {
+        "professional_summary": "Detail-oriented Quality Assurance Tester with proven experience in assessing software quality through both manual and automated testing. Adept at reviewing and analyzing system specifications to develop effective test strategies. Highly competent in executing test cases, demonstrating excellent communication skills, and passionately ensuring that products, applications, and systems work correctly across the software development lifecycle.",
+        "experience": [
+          {
+            "company": "Nexus Tech Solutions",
+            "title": "QA Tester",
+            "description": "Review and analyze system specifications to evaluate product code and determine testing requirements. Collaborate with QA Engineers to develop effective strategies and comprehensive test plans. Execute manual and automated test cases, analyze the results, and create logs to document testing phases and defects. Report bugs, glitches, and technical issues directly to development teams and help troubleshoot errors. Work closely with cross-functional teams to ensure continuous quality throughout the software development lifecycle. Conduct thorough post-release and post-implementation testing to verify system integrity."
+          },
+          {
+            "company": "Crestline Software",
+            "title": "Junior Quality Assurance Tester",
+            "description": "Assessed software quality by executing test scripts and reviewing results under the guidance of senior engineers. Documented technical issues, logged defects utilizing Zephyr, and effectively reported bugs to developers. Applied working knowledge of SQL to query databases during the troubleshooting of application errors. Maintained a keen eye for detail while ensuring all product code was evaluated strictly according to specifications. Assisted in project management tasks and adapted to testing within fast-paced Agile frameworks."
+          }
+        ],
+        "education": [],
+        "skills": [
+          "Manual Testing",
+          "Automated Testing",
+          "QA Methodology",
+          "Agile Frameworks",
+          "SDLC",
+          "qTest",
+          "Zephyr",
+          "SQL Database Querying",
+          "Regression Testing",
+          "Defect Logging",
+          "Tracking",
+          "Troubleshooting",
+          "Cross-functional Collaboration"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+          "label": "not_met",
+          "note": "No education listed"
+        },
+        {
+          "requirement": "Experience in project management and QA methodology",
+          "label": "partial",
+          "note": "QA methodology yes; project management only assisted"
+        },
+        {
+          "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to document and troubleshoot errors",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+          "label": "met",
+          "note": "qTest, Zephyr and SQL"
+        },
+        {
+          "requirement": "Excellent communication skills",
+          "label": "met",
+          "note": "Reports to developers, cross-functional work"
+        },
+        {
+          "requirement": "Attention to detail",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Analytical mind and problem-solving aptitude",
+          "label": "met",
+          "note": "Analyses specifications and results; troubleshooting"
+        },
+        {
+          "requirement": "Strong organizational skills",
+          "label": "partial",
+          "note": "Test plans and defect logs; organisation shown only indirectly"
+        }
+      ]
+    },
+    {
+      "id": "app1621",
+      "source_application_id": 1621,
+      "pairing": "as applied",
+      "job": {
+        "title": "Software Engineer 3",
+        "department": "CCMS",
+        "description": "A Software Engineer needs to address the entire software development lifecycle by analysing needs, designing, testing, and developing software solutions. The role includes improving system quality, enhancing applications, maintaining existing codebases, liaising with colleagues for technical designs, and investigating new technologies.",
+        "qualifications": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.\nExpertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+        "requirements": "A passion for solving problems and providing workable solutions.\nKnowledge of algorithms and data structures.\nStrong analytical and reasoning skills with an ability to visualise processes and outcomes.\nProficiency in troubleshooting software issues and debugging a large codebase.\nOutstanding all-round communication skills and ability to work collaboratively."
+      },
+      "resume": {
+        "professional_summary": "Senior QA Engineer with six years of experience breaking software on purpose. I specialize in migrating manual test suites to Cypress and Playwright. My automation frameworks have cut release cycles from days to hours at two different startups.",
+        "experience": [
+          {
+            "company": "MedFlow Systems",
+            "title": "Senior QA Engineer",
+            "description": "Architected a new end-to-end testing framework using Playwright and TypeScript, replacing a brittle Selenium setup that failed 40% of the time. Reduced regression testing time from 3 days to 4 hours by parallelizing test execution across GitHub Actions runners. Caught a critical race condition in the patient billing module two days before a major release, preventing an estimated $120k in misrouted charges."
+          },
+          {
+            "company": "LogisTech Solutions",
+            "title": "QA Automation Engineer",
+            "description": "Wrote over 400 automated API tests using Postman and Newman, integrating them directly into the CI/CD pipeline. Mentored three manual testers on JavaScript fundamentals, helping them transition into automation roles within six months. Identified and documented 150+ high-priority bugs in the core routing algorithm, working directly with backend engineers to resolve them."
+          },
+          {
+            "company": "RetailNova",
+            "title": "Software Quality Assurance Tester",
+            "description": "Executed manual test plans for a high-traffic e-commerce platform handling 50k daily active users. Created detailed bug reports in Jira with exact reproduction steps, network logs, and screen recordings."
+          }
+        ],
+        "education": [
+          {
+            "school": "University of Illinois",
+            "degree": "B.S.",
+            "field_of_study": "Computer Science",
+            "honors": ""
+          }
+        ],
+        "skills": [
+          "Playwright",
+          "Cypress",
+          "Selenium WebDriver",
+          "TypeScript",
+          "JavaScript",
+          "Python",
+          "Postman",
+          "REST APIs",
+          "GraphQL",
+          "GitHub Actions",
+          "Jenkins",
+          "Docker",
+          "SQL",
+          "Jira",
+          "TestRail",
+          "Agile/Scrum"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+          "label": "met",
+          "note": "B.S. Computer Science"
+        },
+        {
+          "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+          "label": "met",
+          "note": "'such as' lists examples; TypeScript, Python, JavaScript expertise"
+        },
+        {
+          "requirement": "A passion for solving problems and providing workable solutions.",
+          "label": "met",
+          "note": "Caught a race condition; cut release cycles"
+        },
+        {
+          "requirement": "Knowledge of algorithms and data structures.",
+          "label": "partial",
+          "note": "CS degree; no direct algorithms/data-structures work"
+        },
+        {
+          "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+          "label": "partial",
+          "note": "Finds and documents bugs with backend engineers; not debugging a codebase as a developer"
+        },
+        {
+          "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+          "label": "met",
+          "note": "Mentored testers, worked directly with backend engineers"
+        }
+      ]
+    },
+    {
+      "id": "app1622",
+      "source_application_id": 1622,
+      "pairing": "as applied",
+      "job": {
+        "title": "Software Engineer 3",
+        "department": "CCMS",
+        "description": "A Software Engineer needs to address the entire software development lifecycle by analysing needs, designing, testing, and developing software solutions. The role includes improving system quality, enhancing applications, maintaining existing codebases, liaising with colleagues for technical designs, and investigating new technologies.",
+        "qualifications": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.\nExpertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+        "requirements": "A passion for solving problems and providing workable solutions.\nKnowledge of algorithms and data structures.\nStrong analytical and reasoning skills with an ability to visualise processes and outcomes.\nProficiency in troubleshooting software issues and debugging a large codebase.\nOutstanding all-round communication skills and ability to work collaboratively."
+      },
+      "resume": {
+        "professional_summary": "Detail-oriented Quality Assurance Tester with proven experience in assessing software quality through both manual and automated testing. Adept at reviewing and analyzing system specifications to develop effective test strategies. Highly competent in executing test cases, demonstrating excellent communication skills, and passionately ensuring that products, applications, and systems work correctly across the software development lifecycle.",
+        "experience": [
+          {
+            "company": "Nexus Tech Solutions",
+            "title": "QA Tester",
+            "description": "Review and analyze system specifications to evaluate product code and determine testing requirements. Collaborate with QA Engineers to develop effective strategies and comprehensive test plans. Execute manual and automated test cases, analyze the results, and create logs to document testing phases and defects. Report bugs, glitches, and technical issues directly to development teams and help troubleshoot errors. Work closely with cross-functional teams to ensure continuous quality throughout the software development lifecycle. Conduct thorough post-release and post-implementation testing to verify system integrity."
+          },
+          {
+            "company": "Crestline Software",
+            "title": "Junior Quality Assurance Tester",
+            "description": "Assessed software quality by executing test scripts and reviewing results under the guidance of senior engineers. Documented technical issues, logged defects utilizing Zephyr, and effectively reported bugs to developers. Applied working knowledge of SQL to query databases during the troubleshooting of application errors. Maintained a keen eye for detail while ensuring all product code was evaluated strictly according to specifications. Assisted in project management tasks and adapted to testing within fast-paced Agile frameworks."
+          }
+        ],
+        "education": [],
+        "skills": [
+          "Manual Testing",
+          "Automated Testing",
+          "QA Methodology",
+          "Agile Frameworks",
+          "SDLC",
+          "qTest",
+          "Zephyr",
+          "SQL Database Querying",
+          "Regression Testing",
+          "Defect Logging",
+          "Defect Tracking",
+          "Troubleshooting",
+          "Cross-functional Collaboration"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+          "label": "not_met",
+          "note": "No education listed"
+        },
+        {
+          "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+          "label": "not_met",
+          "note": "Only SQL; no high-level programming language"
+        },
+        {
+          "requirement": "A passion for solving problems and providing workable solutions.",
+          "label": "partial",
+          "note": "Troubleshooting errors; solutions not built"
+        },
+        {
+          "requirement": "Knowledge of algorithms and data structures.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+          "label": "met",
+          "note": "Analyses specifications and test results"
+        },
+        {
+          "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+          "label": "partial",
+          "note": "Helps troubleshoot errors; no codebase debugging"
+        },
+        {
+          "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+          "label": "met",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "app575",
+      "source_application_id": 575,
+      "pairing": "as applied",
+      "job": {
+        "title": "QA Tester",
+        "department": "Testing",
+        "description": "The role involves assessing software quality through both manual and automated testing. Responsibilities include reviewing system specifications, executing test scripts, reporting bugs, and collaborating with QA Engineers to develop effective strategies and test plans. The QA Tester will ensure that products, applications, and systems work correctly by documenting testing phases and troubleshooting issues throughout the software development lifecycle.",
+        "qualifications": "Proven experience as a Quality Assurance Tester or similar role\nBSc/BA in Computer Science, Engineering or a related field",
+        "requirements": "Experience in project management and QA methodology\nFamiliarity with Agile frameworks and regression testing is a plus\nAbility to document and troubleshoot errors\nWorking knowledge of test management software (e.g. qTest, Zephyr) and SQL\nExcellent communication skills\nAttention to detail\nAnalytical mind and problem-solving aptitude\nStrong organizational skills"
+      },
+      "resume": {
+        "professional_summary": "Senior QA Engineer with six years of experience breaking software on purpose. I specialize in migrating manual test suites to Cypress and Playwright. My automation frameworks have cut release cycles from days to hours at two different startups.",
+        "experience": [
+          {
+            "company": "MedFlow Systems",
+            "title": "Senior QA Engineer",
+            "description": "Architected a new end-to-end testing framework using Playwright and TypeScript, replacing a brittle Selenium setup that failed 40% of the time.\nReduced regression testing time from 3 days to 4 hours by parallelizing test execution across GitHub Actions runners.\nCaught a critical race condition in the patient billing module two days before a major release, preventing an estimated $120k in misrouted charges."
+          },
+          {
+            "company": "LogisTech Solutions",
+            "title": "QA Automation Engineer",
+            "description": "Wrote over 400 automated API tests using Postman and Newman, integrating them directly into the CI/CD pipeline.\nMentored three manual testers on JavaScript fundamentals, helping them transition into automation roles within six months.\nIdentified and documented 150+ high-priority bugs in the core routing algorithm, working directly with backend engineers to resolve them."
+          },
+          {
+            "company": "RetailNova",
+            "title": "Software Quality Assurance Tester",
+            "description": "Executed manual test plans for a high-traffic e-commerce platform handling 50k daily active users.\nCreated detailed bug reports in Jira with exact reproduction steps, network logs, and screen recordings."
+          }
+        ],
+        "education": [
+          {
+            "school": "University of Illinois",
+            "degree": "B.S.",
+            "field_of_study": "Computer Science",
+            "honors": ""
+          }
+        ],
+        "skills": [
+          "Playwright",
+          "Cypress",
+          "Selenium WebDriver",
+          "TypeScript",
+          "JavaScript",
+          "Python",
+          "Postman",
+          "REST APIs",
+          "GraphQL",
+          "GitHub Actions",
+          "Jenkins",
+          "Docker",
+          "SQL",
+          "Jira",
+          "TestRail",
+          "Agile/Scrum"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+          "label": "met",
+          "note": "B.S. Computer Science"
+        },
+        {
+          "requirement": "Experience in project management and QA methodology",
+          "label": "partial",
+          "note": "QA methodology yes; no project management"
+        },
+        {
+          "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+          "label": "met",
+          "note": "Agile/Scrum; regression testing"
+        },
+        {
+          "requirement": "Ability to document and troubleshoot errors",
+          "label": "met",
+          "note": "Detailed bug reports; documented 150+ bugs"
+        },
+        {
+          "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+          "label": "met",
+          "note": "'e.g.' lists examples; TestRail and SQL"
+        },
+        {
+          "requirement": "Excellent communication skills",
+          "label": "met",
+          "note": "Mentored testers; worked with backend engineers"
+        },
+        {
+          "requirement": "Attention to detail",
+          "label": "met",
+          "note": "Caught a race condition; detailed reproduction steps"
+        },
+        {
+          "requirement": "Analytical mind and problem-solving aptitude",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong organizational skills",
+          "label": "partial",
+          "note": "Built frameworks and parallelised runs; organisation shown only indirectly"
+        }
+      ]
+    },
+    {
+      "id": "app576",
+      "source_application_id": 576,
+      "pairing": "as applied",
+      "job": {
+        "title": "QA Tester",
+        "department": "Testing",
+        "description": "The role involves assessing software quality through both manual and automated testing. Responsibilities include reviewing system specifications, executing test scripts, reporting bugs, and collaborating with QA Engineers to develop effective strategies and test plans. The QA Tester will ensure that products, applications, and systems work correctly by documenting testing phases and troubleshooting issues throughout the software development lifecycle.",
+        "qualifications": "Proven experience as a Quality Assurance Tester or similar role\nBSc/BA in Computer Science, Engineering or a related field",
+        "requirements": "Experience in project management and QA methodology\nFamiliarity with Agile frameworks and regression testing is a plus\nAbility to document and troubleshoot errors\nWorking knowledge of test management software (e.g. qTest, Zephyr) and SQL\nExcellent communication skills\nAttention to detail\nAnalytical mind and problem-solving aptitude\nStrong organizational skills"
+      },
+      "resume": {
+        "professional_summary": "Detail-oriented Quality Assurance Tester with proven experience in assessing software quality through both manual and automated testing. Adept at reviewing and analyzing system specifications to develop effective test strategies. Highly competent in executing test cases, demonstrating excellent communication skills, and passionately ensuring that products, applications, and systems work correctly across the software development lifecycle.",
+        "experience": [
+          {
+            "company": "Nexus Tech Solutions",
+            "title": "QA Tester",
+            "description": "Review and analyze system specifications to evaluate product code and determine testing requirements. Collaborate with QA Engineers to develop effective strategies and comprehensive test plans. Execute manual and automated test cases, analyze the results, and create logs to document testing phases and defects. Report bugs, glitches, and technical issues directly to development teams and help troubleshoot errors. Work closely with cross-functional teams to ensure continuous quality throughout the software development lifecycle. Conduct thorough post-release and post-implementation testing to verify system integrity."
+          },
+          {
+            "company": "Crestline Software",
+            "title": "Junior Quality Assurance Tester",
+            "description": "Assessed software quality by executing test scripts and reviewing results under the guidance of senior engineers. Documented technical issues, logged defects utilizing Zephyr, and effectively reported bugs to developers. Applied working knowledge of SQL to query databases during the troubleshooting of application errors. Maintained a keen eye for detail while ensuring all product code was evaluated strictly according to specifications. Assisted in project management tasks and adapted to testing within fast-paced Agile frameworks."
+          }
+        ],
+        "education": [],
+        "skills": [
+          "Manual Testing",
+          "Automated Testing",
+          "QA Methodology",
+          "Agile Frameworks",
+          "SDLC",
+          "qTest",
+          "Zephyr",
+          "SQL",
+          "Regression Testing",
+          "Defect Logging",
+          "Defect Tracking",
+          "Troubleshooting",
+          "Cross-functional Collaboration"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+          "label": "not_met",
+          "note": "No education listed"
+        },
+        {
+          "requirement": "Experience in project management and QA methodology",
+          "label": "partial",
+          "note": "QA methodology yes; project management only assisted"
+        },
+        {
+          "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to document and troubleshoot errors",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+          "label": "met",
+          "note": "qTest, Zephyr and SQL"
+        },
+        {
+          "requirement": "Excellent communication skills",
+          "label": "met",
+          "note": "Reports to developers, cross-functional work"
+        },
+        {
+          "requirement": "Attention to detail",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Analytical mind and problem-solving aptitude",
+          "label": "met",
+          "note": "Analyses specifications and results; troubleshooting"
+        },
+        {
+          "requirement": "Strong organizational skills",
+          "label": "partial",
+          "note": "Test plans and defect logs; organisation shown only indirectly"
+        }
+      ]
+    },
+    {
+      "id": "app38",
+      "source_application_id": 38,
+      "pairing": "as applied",
+      "job": {
+        "title": "Software Engineer 2",
+        "department": "CCMS",
+        "description": "Software Engineers are pivotal in the development of software that provides real solutions. They address the entire software development lifecycle by analyzing needs, designing, testing, and developing software to meet those needs. This role entails documenting processes using diagrams and flowcharts, and developing computer instructions through algorithms. Responsibilities include improving system quality, enhancing applications, maintaining existing codebases, liaising with colleagues for technical implementations, investigating new technologies, and providing written knowledge transfer materials.",
+        "qualifications": "A degree in Software Engineering, Computer Science, Mathematics, or related fields is essential.\nSome companies may require expertise in particular high-level programming languages such as C++, Java, or Scala.",
+        "requirements": "A passion for solving problems and providing workable solutions.\nKnowledge of algorithms and data structures.\nStrong analytical and reasoning skills with an ability to visualize processes and outcomes.\nProficiency in troubleshooting software issues and debugging a large codebase.\nOutstanding all-round communication skills and ability to work collaboratively."
+      },
+      "resume": {
+        "professional_summary": "Senior staff engineer with 10+ years shipping ML infrastructure at frontier-lab scale. Architected training and inference systems serving 200M+ users. Led cross-org platform bets from design doc to GA, grew teams from 4 to 30, and drove $40M+ in annual compute savings. Two best-paper nominations (NeurIPS, ICML).",
+        "experience": [
+          {
+            "company": "OpenAI",
+            "title": "Senior Staff Engineer",
+            "description": "Architected the next-generation training platform that reduced GPT-scale pre-training cost by 38%, saving $40M+ annually across 50k+ H100 GPU-hours per run. Led a cross-functional team of 18 engineers to ship a real-time inference router that serves 200M+ monthly active users at 99.97% uptime. Designed and rolled out the post-training evaluation framework adopted by 60+ research teams; caught 3 critical regressions before public launch."
+          },
+          {
+            "company": "Anthropic",
+            "title": "Staff Research Engineer",
+            "description": "Built the distributed inference stack behind Claude from prototype to production; achieved 3.2x throughput improvement at 45% lower p99 latency. Open-sourced an interpretability toolkit that reached 12k GitHub stars in 8 months; adopted by 5 external research labs."
+          },
+          {
+            "company": "Google DeepMind",
+            "title": "Senior Software Engineer",
+            "description": "Spearheaded the RLHF data pipeline serving 500k+ preference comparisons per day with sub-second freshness. Shipped the unified training telemetry platform used by 400+ researchers across the Brain–DeepMind merger, reducing experiment debug time by 60%. First-authored a NeurIPS 2020 paper on efficient attention at 64k sequence length (best paper honorable mention, 280+ citations)."
+          },
+          {
+            "company": "Meta AI (FAIR)",
+            "title": "Software Engineer",
+            "description": "Led the Gemini-precursor multi-modal data pipeline processing 2B+ image-text pairs per day. Built the PyTorch distributed training backend that scaled model-parallel training to 256 GPUs with near-linear efficiency. Co-authored 3 peer-reviewed papers on large-scale representation learning (CVPR, ICLR)."
+          }
+        ],
+        "education": [
+          {
+            "school": "Stanford University",
+            "degree": "M.S.",
+            "field_of_study": "Computer Science",
+            "honors": "Dean's List"
+          },
+          {
+            "school": "UC Berkeley",
+            "degree": "B.S.",
+            "field_of_study": "Electrical Engineering & Computer Science",
+            "honors": "GPA 3.96, Phi Beta Kappa, Regents' Scholar, ACM ICPC regional finalist"
+          }
+        ],
+        "skills": [
+          "Python",
+          "CUDA",
+          "C++",
+          "Rust",
+          "Triton",
+          "Go",
+          "TypeScript",
+          "PyTorch",
+          "JAX",
+          "Ray",
+          "Megatron-LM",
+          "vLLM",
+          "DeepSpeed",
+          "NCCL",
+          "TensorRT",
+          "H100/A100 clusters",
+          "Slurm",
+          "Kubernetes",
+          "AWS",
+          "GCP",
+          "Kafka",
+          "PostgreSQL",
+          "Redis",
+          "Technical roadmapping",
+          "architecture review",
+          "hiring",
+          "mentoring",
+          "cross-org alignment"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "A degree in Software Engineering, Computer Science, Mathematics, or related fields is essential.",
+          "label": "met",
+          "note": "M.S. Computer Science; B.S. EECS"
+        },
+        {
+          "requirement": "Some companies may require expertise in particular high-level programming languages such as C++, Java, or Scala.",
+          "label": "met",
+          "note": "C++"
+        },
+        {
+          "requirement": "A passion for solving problems and providing workable solutions.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Knowledge of algorithms and data structures.",
+          "label": "met",
+          "note": "ICPC regional finalist; efficient-attention research"
+        },
+        {
+          "requirement": "Strong analytical and reasoning skills with an ability to visualize processes and outcomes.",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+          "label": "met",
+          "note": "Caught critical regressions; cut debug time 60%"
+        },
+        {
+          "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+          "label": "met",
+          "note": "Led cross-functional teams; cross-org alignment"
+        }
+      ]
+    },
+    {
+      "id": "app37",
+      "source_application_id": 37,
+      "pairing": "as applied",
+      "job": {
+        "title": "Software Engineer",
+        "department": "IT",
+        "description": "Software Engineers are pivotal in the development of software that provides real solutions. They address the entire software development lifecycle by analyzing needs, designing, testing, and developing software to meet those needs. This role involves improving system quality, enhancing applications, maintaining existing codebases, liaising with colleagues on technical designs, investigating new technologies, and providing written knowledge transfer material.",
+        "qualifications": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+        "requirements": "A passion for solving problems and providing workable solutions\nKnowledge of algorithms and data structures\nStrong analytical and reasoning skills with an ability to visualize processes and outcomes\nProficiency in troubleshooting software issues and debugging a large codebase\nOutstanding all-round communication skills and ability to work collaboratively"
+      },
+      "resume": {
+        "professional_summary": "Senior staff engineer with 10+ years shipping ML infrastructure at frontier-lab scale. Architected training and inference systems serving 200M+ users. Led cross-org platform bets from design doc to GA, grew teams from 4 to 30, and drove $40M+ in annual compute savings. Two best-paper nominations (NeurIPS, ICML).",
+        "experience": [
+          {
+            "company": "OpenAI",
+            "title": "Senior Staff Engineer",
+            "description": "Architected the next-generation training platform that reduced GPT-scale pre-training cost by 38%, saving $40M+ annually across 50k+ H100 GPU-hours per run. Led a cross-functional team of 18 engineers to ship a real-time inference router that serves 200M+ monthly active users at 99.97% uptime. Designed and rolled out the post-training evaluation framework adopted by 60+ research teams; caught 3 critical regressions before public launch. Promoted from Staff to Senior Staff within 18 months; nominated for the internal Distinguished Engineer track. Built the distributed inference stack behind Claude from prototype to production; achieved 3.2x throughput improvement at 45% lower p99 latency. Open-sourced an interpretability toolkit that reached 12k GitHub stars in 8 months; adopted by 5 external research labs. Spearheaded the RLHF data pipeline serving 500k+ preference comparisons per day with sub-second freshness. Shipped the unified training telemetry platform used by 400+ researchers across the Brain–DeepMind merger, reducing experiment debug time by 60%. First-authored a NeurIPS 2020 paper on efficient attention at 64k sequence length (best paper honorable mention, 280+ citations). Led the Gemini-precursor multi-modal data pipeline processing 2B+ image-text pairs per day. Built the PyTorch distributed training backend that scaled model-parallel training to 256 GPUs with near-linear efficiency. Co-authored 3 peer-reviewed papers on large-scale representation learning (CVPR, ICLR)."
+          },
+          {
+            "company": "Anthropic",
+            "title": "Staff Research Engineer",
+            "description": ""
+          },
+          {
+            "company": "Google DeepMind",
+            "title": "Senior Software Engineer",
+            "description": ""
+          },
+          {
+            "company": "Meta AI (FAIR)",
+            "title": "Software Engineer",
+            "description": ""
+          }
+        ],
+        "education": [
+          {
+            "school": "Stanford University",
+            "degree": "M.S.",
+            "field_of_study": "Computer Science",
+            "honors": "Dean's List"
+          },
+          {
+            "school": "UC Berkeley",
+            "degree": "B.S.",
+            "field_of_study": "Electrical Engineering & Computer Science",
+            "honors": "GPA 3.96, Phi Beta Kappa, Regents' Scholar, ACM ICPC regional finalist"
+          }
+        ],
+        "skills": [
+          "Python",
+          "CUDA",
+          "C++",
+          "Rust",
+          "Triton",
+          "Go",
+          "TypeScript",
+          "PyTorch",
+          "JAX",
+          "Ray",
+          "Megatron-LM",
+          "vLLM",
+          "DeepSpeed",
+          "NCCL",
+          "TensorRT",
+          "H100/A100 clusters",
+          "Slurm",
+          "Kubernetes",
+          "AWS",
+          "GCP",
+          "Kafka",
+          "PostgreSQL",
+          "Redis",
+          "Technical roadmapping",
+          "architecture review",
+          "hiring",
+          "mentoring",
+          "cross-org alignment"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+          "label": "met",
+          "note": "M.S. Computer Science; B.S. EECS"
+        },
+        {
+          "requirement": "A passion for solving problems and providing workable solutions",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Knowledge of algorithms and data structures",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong analytical and reasoning skills with an ability to visualize processes and outcomes",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase",
+          "label": "met",
+          "note": ""
+        },
+        {
+          "requirement": "Outstanding all-round communication skills and ability to work collaboratively",
+          "label": "met",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "app1939",
+      "source_application_id": 1939,
+      "pairing": "as applied",
+      "job": {
+        "title": "Cybersecurity Analyst",
+        "department": "Cybersecurity",
+        "description": "As a Cybersecurity Analyst, you will safeguard an organization’s computer systems and networks from cyber threats. Your responsibilities include monitoring network traffic, identifying vulnerabilities, and implementing security measures to protect sensitive data. The role demands strong analytical skills, technical expertise, and the ability to think like a hacker to preemptively address potential breaches. You will collaborate with IT teams to ensure the company’s systems are secure and up-to-date with the latest security protocols.",
+        "qualifications": "2 Years of Experience in Related Field",
+        "requirements": "Test"
+      },
+      "resume": {
+        "professional_summary": "A Computer Science student with great harmony in multiple team personalities. Seeking a Quality Assurance internship role to fully utilize software testing skills.",
+        "experience": [
+          {
+            "company": "MSEUF Wildcats Esports",
+            "title": "Vice President for Internal Affairs",
+            "description": "Tasked to handle the organization’s internal affairs and communications for the sole E-Sports organization of the university, while acting as President during the President’s absence."
+          }
+        ],
+        "education": [
+          {
+            "school": "Manuel S. Enverga University Foundation",
+            "degree": "Bachelor of Science",
+            "field_of_study": "Computer Science, Major in Software Engineering",
+            "honors": "GWA: 1.25"
+          }
+        ],
+        "skills": [
+          "System Analysis",
+          "Data Analysis",
+          "Reporting",
+          "Agile Scrum",
+          "Agile Kanban",
+          "Agile Scrumban",
+          "Test Document",
+          "Test Case",
+          "Manual Testing",
+          "Selenium",
+          "Python",
+          "Java",
+          "C++",
+          "Dart",
+          "Swift",
+          "SQL",
+          "PostgreSQL",
+          "Firebase",
+          "Google Colab",
+          "Git",
+          "GitHub",
+          "Software team facilitation",
+          "continuous learner",
+          "composed under pressure",
+          "keen to details",
+          "interpersonal skills",
+          "critical thinker"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "2 Years of Experience in Related Field",
+          "label": "not_met",
+          "note": "Student; an esports organisation officer role, not 2 years in a related field"
+        },
+        {
+          "requirement": "Test",
+          "label": null,
+          "note": "'Test' names nothing to judge -- left out"
+        }
+      ]
+    },
+    {
+      "id": "app1622-vs-job2449",
+      "source_application_id": 1622,
+      "pairing": "constructed: this résumé against another real job",
+      "job": {
+        "title": "Computer Science Professor",
+        "department": "Computer Science",
+        "description": "A Computer Science Teacher is responsible for educating students in the principles of computer science, covering both theoretical and practical aspects. This role involves developing curricula that foster computational thinking and problem-solving skills, preparing students for future academic and professional endeavors in the tech industry. The Computer Science Teacher plays a pivotal role in shaping the next generation of programmers, software engineers, and IT specialists by instilling a strong foundation in computing fundamentals.",
+        "qualifications": "Master's degree in Computer Science, Education, or a related field.\nExperience with multiple programming languages such as Python, Java, and C++.\nProfessional certifications like CompTIA, Cisco, or similar.\nExperience in designing and implementing project-based learning activities.\nKnowledge of current educational technologies and e-learning platforms.\nProven track record of student success in computer science competitions or exams.\nExperience in mentoring or coaching students for STEM competitions.\nStrong communication and organizational skills.\nBachelor's degree in Computer Science or a related field.\nTeaching certification or licensure in computer science or related subject.\nStrong understanding of computer science fundamentals and programming languages.\nPrevious teaching experience at the middle school, high school, or college level.\nAbility to create engaging and effective lesson plans.\nStrong problem-solving skills and the ability to convey complex concepts clearly.\nAbility to work effectively with diverse student populations.\nCommitment to ongoing professional development in the field of education and computer science.",
+        "requirements": "Experience in educating students on programming, algorithms, and data structures.\nAbility to develop and implement comprehensive lesson plans.\nExperience with various software development tools and technologies.\nAbility to facilitate hands-on learning through labs and coding workshops.\nStrong mentoring skills to guide students on academic and career pathways in technology.\nWillingness to stay updated with advancements in computer science.\nAbility to work collaboratively with other educators to integrate computer science across the curriculum.\nExperience with assessing student progress effectively.\nStrong organizational skills and ability to manage extracurricular activities such as coding clubs."
+      },
+      "resume": {
+        "professional_summary": "Detail-oriented Quality Assurance Tester with proven experience in assessing software quality through both manual and automated testing. Adept at reviewing and analyzing system specifications to develop effective test strategies. Highly competent in executing test cases, demonstrating excellent communication skills, and passionately ensuring that products, applications, and systems work correctly across the software development lifecycle.",
+        "experience": [
+          {
+            "company": "Nexus Tech Solutions",
+            "title": "QA Tester",
+            "description": "Review and analyze system specifications to evaluate product code and determine testing requirements. Collaborate with QA Engineers to develop effective strategies and comprehensive test plans. Execute manual and automated test cases, analyze the results, and create logs to document testing phases and defects. Report bugs, glitches, and technical issues directly to development teams and help troubleshoot errors. Work closely with cross-functional teams to ensure continuous quality throughout the software development lifecycle. Conduct thorough post-release and post-implementation testing to verify system integrity."
+          },
+          {
+            "company": "Crestline Software",
+            "title": "Junior Quality Assurance Tester",
+            "description": "Assessed software quality by executing test scripts and reviewing results under the guidance of senior engineers. Documented technical issues, logged defects utilizing Zephyr, and effectively reported bugs to developers. Applied working knowledge of SQL to query databases during the troubleshooting of application errors. Maintained a keen eye for detail while ensuring all product code was evaluated strictly according to specifications. Assisted in project management tasks and adapted to testing within fast-paced Agile frameworks."
+          }
+        ],
+        "education": [],
+        "skills": [
+          "Manual Testing",
+          "Automated Testing",
+          "QA Methodology",
+          "Agile Frameworks",
+          "SDLC",
+          "qTest",
+          "Zephyr",
+          "SQL Database Querying",
+          "Regression Testing",
+          "Defect Logging",
+          "Defect Tracking",
+          "Troubleshooting",
+          "Cross-functional Collaboration"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "Master's degree in Computer Science, Education, or a related field.",
+          "label": "not_met",
+          "note": "No education listed"
+        },
+        {
+          "requirement": "Experience with multiple programming languages such as Python, Java, and C++.",
+          "label": "not_met",
+          "note": "Only SQL"
+        },
+        {
+          "requirement": "Professional certifications like CompTIA, Cisco, or similar.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience in designing and implementing project-based learning activities.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Knowledge of current educational technologies and e-learning platforms.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Proven track record of student success in computer science competitions or exams.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience in mentoring or coaching students for STEM competitions.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong communication and organizational skills.",
+          "label": "partial",
+          "note": "Communication shown (reports, cross-functional work); organisation only indirectly"
+        },
+        {
+          "requirement": "Bachelor's degree in Computer Science or a related field.",
+          "label": "not_met",
+          "note": "No education listed"
+        },
+        {
+          "requirement": "Teaching certification or licensure in computer science or related subject.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong understanding of computer science fundamentals and programming languages.",
+          "label": "not_met",
+          "note": "Testing and SQL; no programming languages"
+        },
+        {
+          "requirement": "Previous teaching experience at the middle school, high school, or college level.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to create engaging and effective lesson plans.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong problem-solving skills and the ability to convey complex concepts clearly.",
+          "label": "partial",
+          "note": "Troubleshooting and reporting issues to developers"
+        },
+        {
+          "requirement": "Ability to work effectively with diverse student populations.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Commitment to ongoing professional development in the field of education and computer science.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience in educating students on programming, algorithms, and data structures.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to develop and implement comprehensive lesson plans.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience with various software development tools and technologies.",
+          "label": "partial",
+          "note": "qTest, Zephyr, SQL: tools around development, not development tools"
+        },
+        {
+          "requirement": "Ability to facilitate hands-on learning through labs and coding workshops.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong mentoring skills to guide students on academic and career pathways in technology.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Willingness to stay updated with advancements in computer science.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Ability to work collaboratively with other educators to integrate computer science across the curriculum.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Experience with assessing student progress effectively.",
+          "label": "not_met",
+          "note": ""
+        },
+        {
+          "requirement": "Strong organizational skills and ability to manage extracurricular activities such as coding clubs.",
+          "label": "not_met",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "app3011-vs-job2059",
+      "source_application_id": 3011,
+      "pairing": "constructed: this résumé against another real job",
+      "job": {
+        "title": "Software Engineer 3",
+        "department": "CCMS",
+        "description": "A Software Engineer needs to address the entire software development lifecycle by analysing needs, designing, testing, and developing software solutions. The role includes improving system quality, enhancing applications, maintaining existing codebases, liaising with colleagues for technical designs, and investigating new technologies.",
+        "qualifications": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.\nExpertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+        "requirements": "A passion for solving problems and providing workable solutions.\nKnowledge of algorithms and data structures.\nStrong analytical and reasoning skills with an ability to visualise processes and outcomes.\nProficiency in troubleshooting software issues and debugging a large codebase.\nOutstanding all-round communication skills and ability to work collaboratively."
+      },
+      "resume": {
+        "professional_summary": "",
+        "experience": [
+          {
+            "company": "CodeAdvantage",
+            "title": "Computer Science Teacher",
+            "description": "Developed and implemented a comprehensive computer science curriculum for over 500 K-12 students at CodeAdvantage, leading to a 45% increase in students' coding proficiency within one academic year. Successfully mentored and prepared 100+ high school students for prestigious national and international coding competitions, with 15 students winning top awards in events like the USA Computing Olympiad and the International Collegiate Programming Contest. Spearheaded the creation of an after-school coding club for underprivileged students in the local community, providing free programming education to over 200 students and resulting in a 60% increase in their interest and engagement in STEM fields."
+          },
+          {
+            "company": "ID Tech",
+            "title": "Assistant Computer Science Teacher",
+            "description": "Successfully mentored over 50 students in various computer science subjects, resulting in a 95% pass rate and an average improvement of 20% in their exam scores. Developed and implemented an innovative curriculum for the Introduction to Python course, leading to a 30% increase in student enrollment and a 90% satisfaction rate in post-course surveys. Collaborated with the lead teacher to organize and host a successful annual coding competition, attracting over 100 participants and raising $5,000 for the school's computer science department."
+          }
+        ],
+        "education": [
+          {
+            "school": "Rutgers University",
+            "degree": "Master of Education",
+            "field_of_study": "Computer Science Teaching",
+            "honors": ""
+          }
+        ],
+        "skills": [
+          "Python",
+          "Java",
+          "HTML/CSS",
+          "JavaScript",
+          "SQL",
+          "C++",
+          "Machine Learning"
+        ],
+        "certifications": [
+          "Microsoft Certified Educator (MCE)",
+          "Google for Education Certified Trainer"
+        ],
+        "additional_sections": [
+          {
+            "title": "Languages",
+            "content": "English\nDutch"
+          },
+          {
+            "title": "Memberships",
+            "content": "Association for Computing Machinery (ACM)\nComputer Science Teachers Association (CSTA)"
+          }
+        ]
+      },
+      "labels": [
+        {
+          "requirement": "A degree in Software Engineering, Computer Science, Mathematics or related fields is essential.",
+          "label": "met",
+          "note": "M.Ed. major in Computer Science Teaching; the requirement accepts related fields"
+        },
+        {
+          "requirement": "Expertise in particular high-level programming languages such as C++, Java, or Scala may be required.",
+          "label": "partial",
+          "note": "Lists and teaches languages; no professional development work in them"
+        },
+        {
+          "requirement": "A passion for solving problems and providing workable solutions.",
+          "label": "partial",
+          "note": "Problem-solving shown through teaching and competition coaching"
+        },
+        {
+          "requirement": "Knowledge of algorithms and data structures.",
+          "label": "partial",
+          "note": "Coaches algorithmic competitions; data structures not stated"
+        },
+        {
+          "requirement": "Strong analytical and reasoning skills with an ability to visualise processes and outcomes.",
+          "label": "partial",
+          "note": ""
+        },
+        {
+          "requirement": "Proficiency in troubleshooting software issues and debugging a large codebase.",
+          "label": "not_met",
+          "note": "No software debugging experience"
+        },
+        {
+          "requirement": "Outstanding all-round communication skills and ability to work collaboratively.",
+          "label": "met",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "app1939-vs-job678",
+      "source_application_id": 1939,
+      "pairing": "constructed: this résumé against another real job",
+      "job": {
+        "title": "QA Tester",
+        "department": "Testing",
+        "description": "The role involves assessing software quality through both manual and automated testing. Responsibilities include reviewing system specifications, executing test scripts, reporting bugs, and collaborating with QA Engineers to develop effective strategies and test plans. The QA Tester will ensure that products, applications, and systems work correctly by documenting testing phases and troubleshooting issues throughout the software development lifecycle.",
+        "qualifications": "Proven experience as a Quality Assurance Tester or similar role\nBSc/BA in Computer Science, Engineering or a related field",
+        "requirements": "Experience in project management and QA methodology\nFamiliarity with Agile frameworks and regression testing is a plus\nAbility to document and troubleshoot errors\nWorking knowledge of test management software (e.g. qTest, Zephyr) and SQL\nExcellent communication skills\nAttention to detail\nAnalytical mind and problem-solving aptitude\nStrong organizational skills"
+      },
+      "resume": {
+        "professional_summary": "A Computer Science student with great harmony in multiple team personalities. Seeking a Quality Assurance internship role to fully utilize software testing skills.",
+        "experience": [
+          {
+            "company": "MSEUF Wildcats Esports",
+            "title": "Vice President for Internal Affairs",
+            "description": "Tasked to handle the organization’s internal affairs and communications for the sole E-Sports organization of the university, while acting as President during the President’s absence."
+          }
+        ],
+        "education": [
+          {
+            "school": "Manuel S. Enverga University Foundation",
+            "degree": "Bachelor of Science",
+            "field_of_study": "Computer Science, Major in Software Engineering",
+            "honors": "GWA: 1.25"
+          }
+        ],
+        "skills": [
+          "System Analysis",
+          "Data Analysis",
+          "Reporting",
+          "Agile Scrum",
+          "Agile Kanban",
+          "Agile Scrumban",
+          "Test Document",
+          "Test Case",
+          "Manual Testing",
+          "Selenium",
+          "Python",
+          "Java",
+          "C++",
+          "Dart",
+          "Swift",
+          "SQL",
+          "PostgreSQL",
+          "Firebase",
+          "Google Colab",
+          "Git",
+          "GitHub",
+          "Software team facilitation",
+          "continuous learner",
+          "composed under pressure",
+          "keen to details",
+          "interpersonal skills",
+          "critical thinker"
+        ],
+        "certifications": [],
+        "additional_sections": []
+      },
+      "labels": [
+        {
+          "requirement": "Proven experience as a Quality Assurance Tester or similar role",
+          "label": "not_met",
+          "note": "Seeking an internship; no QA role held"
+        },
+        {
+          "requirement": "BSc/BA in Computer Science, Engineering or a related field",
+          "label": "met",
+          "note": "B.S. Computer Science"
+        },
+        {
+          "requirement": "Experience in project management and QA methodology",
+          "label": "partial",
+          "note": "Team facilitation, test documents, Agile; no project management"
+        },
+        {
+          "requirement": "Familiarity with Agile frameworks and regression testing is a plus",
+          "label": "partial",
+          "note": "Agile yes; regression testing not stated"
+        },
+        {
+          "requirement": "Ability to document and troubleshoot errors",
+          "label": "partial",
+          "note": "Writes test documents and cases; troubleshooting not described"
+        },
+        {
+          "requirement": "Working knowledge of test management software (e.g. qTest, Zephyr) and SQL",
+          "label": "partial",
+          "note": "SQL and PostgreSQL; no test management tool"
+        },
+        {
+          "requirement": "Excellent communication skills",
+          "label": "met",
+          "note": "Handled the organisation's internal affairs and communications"
+        },
+        {
+          "requirement": "Attention to detail",
+          "label": "partial",
+          "note": "Only claimed ('keen to details'), not shown"
+        },
+        {
+          "requirement": "Analytical mind and problem-solving aptitude",
+          "label": "partial",
+          "note": "System and data analysis skills; claimed critical thinking"
+        },
+        {
+          "requirement": "Strong organizational skills",
+          "label": "met",
+          "note": "Ran internal affairs; acted as president"
+        }
+      ]
+    }
+  ]
+}

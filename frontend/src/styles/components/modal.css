@@ -1,0 +1,98 @@
+/* =================================================================== Modal
+ * A dialog holding a small task (Modal.tsx): the wizard panel's head,
+ * body and footer, lifted onto a dimmed page. The body scrolls on its
+ * own so the footer's actions never leave the screen. */
+
+.ark-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6);
+  background: rgba(17, 17, 19, 0.42);
+  animation: ark-fade-in var(--dur) var(--ease) both;
+}
+
+@keyframes ark-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.ark-modal__panel {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  max-height: calc(100vh - 2 * var(--space-6));
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  --pop-y: 8px;
+  transform-origin: center;
+  animation: ark-pop-in var(--dur-slow) var(--ease) both;
+}
+
+.ark-modal__panel:focus { outline: none; }
+
+.ark-modal__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-8) var(--space-6);
+}
+
+.ark-modal__step {
+  flex-shrink: 0;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--ink-400);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .ark-modal { padding: var(--space-3); }
+  .ark-modal__body { padding-left: var(--space-5); padding-right: var(--space-5); }
+}
+
+/* What a replacement does, said before it is done. */
+.ark-replace-summary {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--surface-bg);
+}
+
+.ark-replace-summary__title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  color: var(--ink-900);
+}
+
+.ark-replace-summary__list {
+  display: grid;
+  gap: var(--space-1-5);
+  margin: var(--space-2-5) 0 0;
+  padding: 0 0 0 var(--space-4);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-700);
+}
+
+.ark-replace-summary__changes {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--text-xs);
+  color: var(--ink-600);
+}
+
+.ark-replace-summary__typed {
+  padding: 1px var(--space-1-5);
+  border-radius: var(--radius-xs);
+  background: var(--surface-bg-alt);
+  font-weight: 650;
+  color: var(--ink-950);
+}

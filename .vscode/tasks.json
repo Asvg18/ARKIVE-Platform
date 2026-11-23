@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "DB: Start Postgres (docker compose)",
+      "type": "shell",
+      "command": "docker compose up -d",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "DB: Stop Postgres",
+      "type": "shell",
+      "command": "docker compose down",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: Run Migrations (alembic upgrade head)",
+      "type": "shell",
+      "command": "venv/bin/python -m alembic upgrade head",
+      "windows": { "command": "venv\\Scripts\\python.exe -m alembic upgrade head" },
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: Run Tests (pytest)",
+      "type": "shell",
+      "command": "venv/bin/python -m pytest -q",
+      "windows": { "command": "venv\\Scripts\\python.exe -m pytest -q" },
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: Seed Demo Data",
+      "type": "shell",
+      "command": "venv/bin/python -m scripts.seed_demo_users && venv/bin/python -m scripts.seed_demo_pipeline",
+      "windows": { "command": "venv\\Scripts\\python.exe -m scripts.seed_demo_users; if ($?) { venv\\Scripts\\python.exe -m scripts.seed_demo_pipeline }" },
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: Install Dependencies (npm install)",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "problemMatcher": []
+    }
+  ]
+}

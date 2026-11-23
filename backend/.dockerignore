@@ -1,0 +1,15 @@
+# The venv is 94 MB of host-built wheels — copying it in would bloat the
+# build context and, worse, could shadow the container's own install.
+venv/
+.venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+# Real applicant files. These belong in a volume, never baked into an
+# image that gets copied around.
+uploads/
+*.sql
+# Secrets never enter an image; compose supplies them as env vars.
+.env
+tests/

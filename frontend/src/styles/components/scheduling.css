@@ -1,0 +1,464 @@
+/* ============================================================ Calendar
+ * A month of days to press (shared/ui/CalendarPicker) — for exam booking,
+ * where only days with a free seat can be picked, and for HR adding
+ * sessions on several days at once. A pickable day reads as ink; a chosen
+ * one takes the accent. */
+
+.ark-cal {
+  width: 100%;
+  max-width: 320px;
+}
+
+.ark-cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.ark-cal__month {
+  font-size: var(--text-sm);
+  font-weight: 650;
+  color: var(--ink-900);
+}
+
+.ark-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.ark-cal__weekday {
+  padding: var(--space-1) 0;
+  text-align: center;
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  color: var(--ink-400);
+}
+
+.ark-cal__day {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.ark-cal__day:hover:not(:disabled) { background: var(--surface-bg-alt); }
+.ark-cal__day[data-today] { border-color: var(--surface-border-strong); }
+.ark-cal__day:disabled { color: var(--ink-300); font-weight: 400; cursor: default; }
+
+.ark-cal__day[aria-pressed="true"],
+.ark-cal__day[aria-pressed="true"]:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ======================================================= Exam sessions
+ * A job's exam sessions on its page: one line each — day, time window,
+ * place — with the seats left at the end. */
+
+.ark-sessions {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-sessions__group {
+  margin: var(--space-3) 0 var(--space-1);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+
+.ark-sessions__group:first-child { margin-top: 0; }
+
+.ark-session {
+  padding: var(--space-2-5) 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.ark-session__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ark-session:first-child { border-top: none; }
+
+.ark-session__text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ark-session__when {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-session__where {
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-600);
+}
+
+.ark-session__seats {
+  flex-shrink: 0;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-600);
+  font-variant-numeric: tabular-nums;
+}
+
+.ark-session__seats[data-full] { color: var(--warning-text); }
+
+.ark-session .ark-icon-btn { width: 30px; height: 30px; }
+.ark-session .ark-icon-btn:disabled { color: var(--ink-300); background: transparent; cursor: default; }
+
+/* The time windows in Add sessions: start – end, with a remove control. */
+.ark-windows {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ark-window {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ark-window .ark-input { width: 140px; }
+
+.ark-window__dash {
+  font-size: var(--text-sm);
+  color: var(--ink-400);
+}
+
+/* The sessions a day offers, under the applicant's calendar. */
+.ark-book {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-6);
+  align-items: start;
+  margin-top: var(--space-4);
+}
+
+.ark-book__day {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  color: var(--ink-900);
+}
+
+.ark-book__hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-400);
+}
+
+/* The slots HR ticks to send an applicant (candidate profile, Interviews
+ * tab): one checkbox pill per slot, grouped under its day. A slot taken
+ * by another candidate of the same evaluator stays visible, struck. */
+.ark-slots__day {
+  margin-bottom: var(--space-1-5);
+  font-size: var(--text-xs);
+  font-weight: 650;
+  color: var(--ink-900);
+}
+
+.ark-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1-5);
+}
+
+.ark-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: 5px 10px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-900);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+
+.ark-slot:has(input:checked) { border-color: var(--accent); }
+.ark-slot input { margin: 0; accent-color: var(--accent); }
+
+.ark-slot[data-taken] {
+  color: var(--ink-400);
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.ark-slot__note {
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--ink-400);
+}
+
+/* The evaluator's form while the applicant hasn't confirmed a time
+ * still readable, visibly out of
+ * reach. `inert` on the form does the actual disabling. */
+.ark-eval__form[data-waiting] {
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+
+/* ======================================================= Exam sessions 2
+ * The roster under each session, the Add
+ * sessions presets / date range / preview, HR's "Book a session for
+ * them" list, and the Examinations tab's score editor. */
+
+.ark-session__booked {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-700);
+  cursor: pointer;
+}
+.ark-session__booked:hover:not(:disabled) { background: var(--surface-bg-alt); color: var(--ink-950); }
+.ark-session__booked:disabled { cursor: default; color: var(--ink-400); }
+.ark-session__booked [data-full] { color: var(--warning-text); }
+.ark-session__booked[aria-expanded="true"] svg { transform: rotate(180deg); }
+.ark-session__booked svg { transition: transform var(--dur-fast) var(--ease); }
+
+.ark-roster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1-5);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-roster__person {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: 3px 10px 3px 3px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-900);
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.ark-roster__person:hover { border-color: var(--accent); color: var(--accent-dark); }
+
+.ark-session-notice {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--success-text);
+}
+
+.ark-form-error {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--danger-text);
+}
+
+.ark-check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--text-sm);
+  color: var(--ink-700);
+  cursor: pointer;
+}
+.ark-check input { margin: 0; accent-color: var(--accent); }
+
+.ark-chip__remove {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ark-session-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: var(--space-3);
+}
+.ark-session-range .ark-check { padding-bottom: var(--space-2-5); }
+.ark-session-range__count { grid-column: 1 / -1; margin: 0; }
+
+.ark-session-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1-5);
+}
+
+.ark-preset {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: 5px 12px;
+  border: 1px dashed var(--surface-border-strong);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-900);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.ark-preset:hover:not(:disabled) { border-color: var(--accent); }
+.ark-preset:disabled { border-style: solid; background: var(--surface-bg-alt); color: var(--ink-400); cursor: default; }
+.ark-preset__time { font-weight: 500; color: var(--ink-600); font-variant-numeric: tabular-nums; }
+
+.ark-session-preview {
+  display: grid;
+  gap: 2px;
+  max-height: 180px;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  overflow-y: auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  background: var(--surface-bg);
+  list-style: none;
+}
+.ark-session-preview li { display: flex; justify-content: space-between; gap: var(--space-3); font-size: var(--text-xs); }
+.ark-session-preview__when { color: var(--ink-900); font-variant-numeric: tabular-nums; }
+.ark-session-preview li[data-exists] .ark-session-preview__when { color: var(--ink-400); text-decoration: line-through; }
+.ark-session-preview__note { color: var(--ink-400); }
+
+.ark-book-list { display: grid; gap: var(--space-3); }
+.ark-book-list__day {
+  margin: 0 0 var(--space-1-5);
+  font-size: var(--text-xs);
+  font-weight: 650;
+  color: var(--ink-900);
+}
+
+.ark-book-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2-5) var(--space-3);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.ark-book-option + .ark-book-option { margin-top: var(--space-1-5); }
+.ark-book-option:hover:not([data-disabled]) { border-color: var(--ink-400); }
+.ark-book-option:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.ark-book-option[data-disabled] { cursor: default; background: var(--surface-bg); }
+.ark-book-option input { margin: 0; accent-color: var(--accent); }
+.ark-book-option__text { display: grid; gap: 1px; flex: 1; min-width: 0; }
+.ark-book-option__when { font-size: var(--text-sm); font-weight: 600; color: var(--ink-900); font-variant-numeric: tabular-nums; }
+.ark-book-option__where { font-size: var(--text-xs); color: var(--ink-600); }
+.ark-book-option__seats { flex-shrink: 0; font-size: var(--text-xs); font-weight: 600; color: var(--ink-600); }
+.ark-book-option[data-disabled] .ark-book-option__when { color: var(--ink-400); }
+
+.ark-stagecard__actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.ark-score-editor {
+  display: grid;
+  grid-template-columns: 140px 180px 1fr;
+  align-items: end;
+  gap: var(--space-3);
+}
+.ark-score-editor__actions { display: flex; gap: var(--space-2); padding-bottom: 2px; }
+.ark-score-editor .ark-stagecard__error { grid-column: 1 / -1; }
+
+
+@media (max-width: 640px) {
+  .ark-session-range,
+  .ark-score-editor { grid-template-columns: 1fr; }
+}
+
+/* The applicant's stage screens (exam booking): the same
+ * heading and lede the other stage screens draw inline, as classes. */
+.ark-stage-title {
+  margin: 0;
+  font-family: var(--arkive-font);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.ark-stage-sub {
+  margin: 6px 0 0;
+  font-family: var(--arkive-font);
+  font-size: var(--text-base);
+  color: var(--ink-600);
+}
+
+.ark-stage-hint {
+  font-size: var(--text-sm);
+  color: var(--ink-600);
+}
+
+.ark-stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.ark-stage-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--warning-bg);
+  box-shadow: inset 3px 0 0 var(--warning-text);
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+}
+.ark-stage-note svg { flex-shrink: 0; margin-top: 2px; color: var(--warning-text); }
+
+.ark-stage-panel {
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  background: var(--surface-bg);
+}
+.ark-stage-panel .ark-stage-actions { margin-top: var(--space-3); }

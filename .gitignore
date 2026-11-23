@@ -1,0 +1,59 @@
+.claude/
+.DS_Store
+
+# docs/ holds the team's how-tos only. Handoff notes, sprint plans, test
+# case sheets, the manuscript and other working notes stay on the
+# maintainer's machine: ignore the folder, then re-admit each how-to.
+docs/*
+!docs/ARKIVE-architecture.md
+!docs/ARKIVE-development-guide.md
+!docs/ARKIVE-deployment.md
+!docs/ARKIVE-free-hosting-guide.pdf
+!docs/ARKIVE-operations-notes.md
+!docs/ARKIVE-skill-matching-algorithm.md
+!docs/ARKIVE-Team-Guide.pdf
+!docs/SETUP.pdf
+
+# secrets — never commit real .env files, only .env.example
+#
+# Glob, not three exact paths. `.env` alone already matched at any depth,
+# so the backend/frontend lines were redundant -- and none of them
+# matched `.env.bak`, `.env.local`, `.env.prod` or anything else someone
+# leaves behind while editing, each of which is a live API key one
+# `git add -A` away from the remote. Ignore every variant, then re-admit
+# the templates explicitly.
+#
+# These patterns have no leading slash, so they apply at every level:
+# root, backend/ and frontend/ alike.
+.env
+.env.*
+!.env.example
+
+# backend (Python)
+# venv/ and .venv/ at any level, not just backend/venv/ -- the actual
+# environments here are .venv and backend/.venv, which that pattern never
+# matched. They only stayed out of `git status` because `python -m venv`
+# writes a self-ignoring .gitignore inside itself, which is luck rather
+# than a rule.
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+# applicant-uploaded resume files — real user data, never committed
+backend/uploads/
+*.sql
+
+# frontend (Node)
+# node_modules/ at any level, not just frontend/. A stray `npm install`
+# in the repo root or in backend/ used to land 39MB of untracked files
+# each, sitting in `git status` waiting to be added by an unlucky
+# `git add -A` -- which is exactly what happened here.
+node_modules/
+dist/
+
+# colima / docker volumes are managed by docker, not git
+
+# Exported Caddy local CA — environment-specific, regenerate with the
+# command in docs/ARKIVE-deployment.md rather than committing it.
+arkive-root-ca.crt

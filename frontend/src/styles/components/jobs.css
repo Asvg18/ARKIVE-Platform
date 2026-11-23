@@ -1,0 +1,295 @@
+/* ================================================ Job description history
+ * The table under Create Job Opening's wizard (JobDescriptionLibrary). */
+
+/* Full page width, below the centred wizard: a table of every job's
+ * documents needs the room, and was cramped inside the wizard's column. */
+.ark-jd-library { margin-top: var(--space-12); }
+
+.ark-jd-library .ark-alert { margin-top: 0; }
+
+.ark-jd-doc {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* Long file names ("Pair_10_JobDesc_Product_Manager_Final.pdf") end in
+ * an ellipsis rather than stretching the column; the full name is in
+ * the title tooltip. */
+.ark-jd-doc__text {
+  display: block;
+  min-width: 0;
+  max-width: 320px;
+}
+
+.ark-jd-doc__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.ark-jd-doc__icon[data-kind="none"] {
+  background: var(--surface-bg-alt);
+  color: var(--ink-400);
+}
+
+.ark-jd-version {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ark-jd-version__n {
+  font-size: var(--text-sm);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-900);
+}
+
+/* One version's text, read-only. */
+.ark-jd-text {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.ark-jd-text__label {
+  margin: 0 0 var(--space-1-5);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+.ark-jd-text__body {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-900);
+  white-space: pre-wrap;
+}
+
+.ark-jd-text__body[data-empty] { color: var(--ink-400); font-style: italic; }
+
+/* A job description's other sections (salary, benefits, documents to
+ * submit...): read as titled blocks under one label, edited as a stack
+ * of removable boxes — a heading field over a details field. */
+.ark-jd-sections {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.ark-jd-sections__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.ark-jd-section-edit {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  background: var(--surface-bg);
+}
+
+.ark-jd-section-edit__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ark-jd-section-edit__head .ark-input { flex: 1; min-width: 0; }
+.ark-jd-section-edit__head .ark-file__remove { flex-shrink: 0; }
+
+/* ======================================================= Job opening detail
+ * One job opening on its own page: the posting on the left, how its
+ * hiring runs on the right. Panels share the wizard panel's frame (head,
+ * body, a tinted floor for the link out) at a smaller inset, since several
+ * sit on one screen rather than one filling it. */
+
+.ark-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.ark-detail-grid__side {
+  display: grid;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+/* Stacks sooner than the viewport alone suggests: the HR sidebar takes a
+ * quarter of a laptop screen, and below this the side panels squeeze
+ * their titles onto two lines. Side by side again under the stack so the
+ * two short panels don't each take the full width. */
+@media (max-width: 1200px) {
+  .ark-detail-grid { grid-template-columns: minmax(0, 1fr); }
+  .ark-detail-grid__side { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
+
+@media (max-width: 900px) {
+  .ark-detail-grid__side { grid-template-columns: minmax(0, 1fr); }
+}
+
+.ark-panel {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.ark-panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6) 0;
+}
+
+.ark-panel__title {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-950);
+}
+
+.ark-panel__count {
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-400);
+  white-space: nowrap;
+}
+
+.ark-panel__sub {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+}
+
+.ark-panel__body { padding: var(--space-4) var(--space-6) var(--space-6); }
+
+.ark-panel__foot {
+  padding: var(--space-3) var(--space-6);
+  border-top: 1px solid var(--hairline);
+  background: var(--surface-bg);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.ark-panel__foot a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+/* An action in a panel's head (the job posting's Edit). The head aligns
+ * on the title's baseline, so a button taller than the title would push
+ * the title down out of line with the panels beside it; pulled up by its
+ * own overhang instead. */
+.ark-panel__head > .ark-btn { margin-top: calc(-1 * var(--space-1-5)); }
+
+/* A panel being edited in place (the job posting): Cancel / Save sit on
+ * the tinted floor, right-aligned like a dialog's footer. */
+.ark-panel__foot--actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.ark-panel__empty {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-400);
+}
+
+/* A short ordered list read top to bottom — a job's stages, its
+ * pre-screening questions. The marker is the same small numbered disc as
+ * a workflow's .ark-flow__n, so a stage number reads the same everywhere. */
+.ark-numbered {
+  display: grid;
+  gap: var(--space-2-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-numbered li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  min-width: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--ink-900);
+}
+
+.ark-numbered li > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+
+.ark-numbered .ark-flow__n { flex-shrink: 0; margin-top: -1px; }
+
+/* A ranked list (the interview results panel): the name takes the row,
+ * the score sits at its right edge. */
+.ark-numbered__grow { flex: 1; }
+.ark-numbered li > .ark-numbered__score {
+  flex-shrink: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ark-numbered li.ark-numbered__more { padding-left: 28px; font-size: var(--text-xs); color: var(--ink-600); }
+
+/* Who the interview results report is still waiting on. */
+.ark-report-waiting__label {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+.ark-report-waiting {
+  display: grid;
+  gap: var(--space-2-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-report-waiting li { display: grid; gap: 2px; font-size: var(--text-sm); line-height: var(--leading-snug); }
+.ark-report-waiting__name { font-weight: 600; color: var(--ink-900); }
+.ark-report-waiting__detail { font-size: var(--text-xs); color: var(--ink-600); }
+
+/* The report's PDF inside the preview dialog, in the browser's own viewer:
+ * as tall as the dialog allows, so a page reads without scrolling the
+ * dialog as well as the document. */
+.ark-report-preview {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 260px);
+  min-height: 360px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  background: var(--surface-bg-alt);
+}
+
+.ark-numbered__tag {
+  margin-left: var(--space-1-5);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  color: var(--ink-400);
+}

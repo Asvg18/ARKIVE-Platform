@@ -1,0 +1,950 @@
+/* ============================================================== App shell
+ * The frame around every signed-in page — HR, Evaluator and Applicant.
+ *
+ * Navigation on a soft grey ground; the page inside one white rounded
+ * panel, inset from the window edge, with its own top bar. The panel is
+ * the workspace and the ground around it is chrome, so the eye has
+ * exactly one place to settle and the menu never competes with it.
+ *
+ * --shell-bar is the top bar's height; the brand row matches it, so the
+ * logo and the account sit on one line across the whole width.
+ * --shell-max is the content ceiling. --shell-inset is the gap between
+ * the panel and the window edge. */
+
+.ark-shell {
+  --shell-bar: 60px;
+  --shell-inset: var(--space-2);
+  --shell-gutter: var(--space-6);
+  --sidebar-w: 240px;
+  display: flex;
+  min-height: 100vh;
+  background: var(--shell-ground);
+  font-family: var(--arkive-font);
+}
+
+/* Sticky, so a long page never scrolls the navigation away. */
+.ark-shell__sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--shell-inset) var(--space-3) var(--space-4);
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition:
+    width var(--dur-slow) var(--ease),
+    padding var(--dur-slow) var(--ease),
+    opacity var(--dur) var(--ease);
+}
+
+/* Held at full width while the column narrows around them, so hiding
+ * the sidebar slides it away instead of squashing every label. */
+.ark-shell__sidebar > * { min-width: calc(var(--sidebar-w) - 2 * var(--space-3)); }
+
+/* Hidden (HR's sidebar toggle, AppShell). Width and padding go to zero
+ * and the column fades; visibility flips only once the slide has
+ * finished, which is also what takes its links out of the tab order. */
+.ark-shell[data-sidebar="hidden"] .ark-shell__sidebar {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    width var(--dur-slow) var(--ease),
+    padding var(--dur-slow) var(--ease),
+    opacity var(--dur-fast) var(--ease),
+    visibility 0s linear var(--dur-slow);
+}
+
+/* The panel's left edge normally meets the sidebar; with none, it takes
+ * the same inset as its other three sides. */
+.ark-shell[data-sidebar="hidden"] .ark-shell__body { margin-left: var(--shell-inset); }
+
+/* The logo and, at the row's other end, the button that hides the
+ * sidebar -- where Figma keeps its own. */
+.ark-shell__brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  height: var(--shell-bar);
+  margin-bottom: var(--space-5);
+}
+
+.ark-shell__brand-row .ark-shell__brand {
+  flex: 1;
+  min-width: 0;
+  height: auto;
+  margin-bottom: 0;
+}
+
+.ark-sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-400);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-sidebar-toggle:hover {
+  background: rgba(17, 17, 19, 0.05);
+  color: var(--ink-900);
+}
+
+.ark-shell--dark .ark-sidebar-toggle { color: rgba(255, 255, 255, 0.5); }
+
+.ark-shell--dark .ark-sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+/* Its counterpart in the top bar, shown only while the sidebar is away:
+ * the same glyph, at the bar's left edge, styled like the bell. */
+.ark-shell__show-sidebar {
+  flex-shrink: 0;
+  margin-right: var(--space-3);
+  animation: ark-fade-in var(--dur) var(--ease) both;
+}
+
+.ark-shell__brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: var(--shell-bar);
+  padding: 0 var(--space-2-5);
+  margin-bottom: var(--space-5);
+  text-decoration: none;
+}
+
+/* "MENU" above the page links. */
+.ark-shell__label {
+  padding: 0 var(--space-2-5);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+.ark-shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* The panel. */
+.ark-shell__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin: var(--shell-inset) var(--shell-inset) var(--shell-inset) 0;
+  transition: margin var(--dur-slow) var(--ease);
+  min-height: calc(100vh - 2 * var(--shell-inset));
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+.ark-shell__topbar {
+  flex-shrink: 0;
+  height: var(--shell-bar);
+  padding: 0 var(--shell-gutter);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* The top bar keeps the full ceiling even where a portal narrows its
+ * pages (the applicant's 1080px reading width): the bell and the account
+ * belong at the panel's right edge on every page, not wherever that
+ * page's content happens to end. */
+.ark-shell__topbar-inner {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Pushes the bell and the account to the right edge whether or not a
+ * search sits on the left. */
+.ark-shell__topbar-end {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ark-shell__topbar-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--surface-border);
+}
+
+.ark-shell__main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6) var(--shell-gutter) var(--space-10);
+}
+
+.ark-shell__page {
+  max-width: var(--shell-max, var(--page-max));
+  margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .ark-shell { --shell-gutter: var(--space-5); --sidebar-w: 216px; }
+}
+
+/* Navigation items. The current page is lifted onto white — the panel's
+ * own material — with the accent on its icon; hover is a faint wash of
+ * the ink. Both stay light, so the menu never outweighs the page. */
+.ark-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  padding: var(--space-2) var(--space-2-5);
+  border-radius: var(--radius-sm);
+  /* 13px, not 14: at 14px the current page's bolder weight
+   * pushed "Pre-Screening Questions" to 170px, past the 168px a 240px
+   * sidebar leaves for text, so it broke onto a second line only while
+   * highlighted. 13px measures 158px. */
+  font-size: var(--text-sm);
+  font-weight: 450;
+  line-height: 1.4;
+  letter-spacing: var(--track-normal);
+  color: var(--ink-700);
+  text-decoration: none;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+
+.ark-nav-item svg {
+  flex-shrink: 0;
+  color: var(--ink-400);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.ark-nav-item:hover {
+  background: rgba(17, 17, 19, 0.04);
+  color: var(--ink-900);
+}
+
+.ark-nav-item:hover svg { color: var(--ink-600); }
+
+.ark-nav-item[aria-current="page"] {
+  background: var(--surface);
+  color: var(--ink-950);
+  font-weight: 550;
+  box-shadow: var(--shadow-xs), 0 0 0 1px var(--hairline);
+}
+
+.ark-nav-item[aria-current="page"] svg { color: var(--accent); }
+
+/* Dark chrome: a dark grey sidebar, close to Figma's, so the menu reads as
+ * distinct from the pages beside it. The whole ground goes dark, not just
+ * the sidebar column: the white page panel is inset from the window, so a
+ * dark sidebar on a light ground would leave light slivers around the
+ * panel's corners. Dark all round, the panel reads as the lit canvas inside
+ * the tool — which is Figma's own arrangement.
+ *
+ * The ground is --ink-900, the ink every heading and body line in the app
+ * is already written in, so the chrome is the brand's own colour rather
+ * than a new one. It carries the faint cool cast of the neutral scale,
+ * which sits opposite the red-orange accent on the wheel -- the accent
+ * pops against it, where a warm brown-black would muddy it.
+ *
+ * Text steps are white at falling opacity, so they sit on the ground
+ * rather than fighting it. The accent is lifted for this ground only:
+ * --accent (#cf2814) on the selected pill measures about 2.5:1, under the
+ * 3:1 an icon needs; --accent-on-dark (#f24e33, same hue, brighter)
+ * reaches about 3.8:1 without drifting to coral. */
+.ark-shell--dark {
+  --shell-ground: var(--ink-900);
+  --accent-on-dark: #f24e33;
+  --logo-ink: #ffffff;
+  --logo-sub: rgba(255, 255, 255, 0.45);
+}
+
+.ark-shell--dark .ark-shell__body {
+  border-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.ark-shell--dark .ark-shell__label { color: rgba(255, 255, 255, 0.4); }
+
+.ark-shell--dark .ark-nav-item {
+  position: relative;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ark-shell--dark .ark-nav-item svg { color: rgba(255, 255, 255, 0.45); }
+
+/* Hover and the current page share one shape — light that starts at the
+ * item's left edge and fades out across it — in white for hover and the
+ * accent for "you are here". The filled grey box it replaces was the
+ * stock sidebar highlight, and boxed the current page in rather than
+ * marking it. */
+.ark-shell--dark .ark-nav-item:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0) 100%);
+  color: #ffffff;
+}
+
+.ark-shell--dark .ark-nav-item:hover svg { color: rgba(255, 255, 255, 0.75); }
+
+.ark-shell--dark .ark-nav-item[aria-current="page"] {
+  background: linear-gradient(90deg, rgba(242, 78, 51, 0.2) 0%, rgba(242, 78, 51, 0.07) 55%, rgba(242, 78, 51, 0) 100%);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.ark-shell--dark .ark-nav-item[aria-current="page"] svg {
+  color: var(--accent-on-dark);
+  filter: drop-shadow(0 0 6px rgba(242, 78, 51, 0.5));
+}
+
+/* The marker: a short bar of the accent at the item's left edge, with a
+ * faint glow, drawn in as the page becomes current. */
+.ark-shell--dark .ark-nav-item[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  bottom: 7px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--accent-on-dark);
+  box-shadow: 0 0 10px 1px rgba(242, 78, 51, 0.6);
+  animation: ark-nav-mark var(--dur) var(--ease) both;
+}
+
+@keyframes ark-nav-mark {
+  from { opacity: 0; transform: scaleY(0.3); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+/* The focus ring's inner gap is drawn in --surface (white); on the dark
+ * ground that reads as a hard white halo, so the gap takes the ground. */
+.ark-shell--dark .ark-shell__sidebar :focus-visible {
+  box-shadow: 0 0 0 2px var(--shell-ground), 0 0 0 4px var(--accent-on-dark);
+}
+
+/* Thin, quiet scrollbar on the dark column, for a short window. */
+.ark-shell--dark .ark-shell__sidebar { scrollbar-color: rgba(255, 255, 255, 0.2) transparent; }
+
+/* ============================================================ Page header
+ * See PageHeader.tsx. The title is 24px/700 — a label for the page, not
+ * a poster; at 30px/800 it outweighed the tables it introduced. The
+ * description is capped so it wraps at a readable length instead of
+ * running the full width of a wide monitor, and the gap beneath is the
+ * same on every page, so content always starts at the same height. */
+
+.ark-page-head {
+  margin-bottom: var(--space-6);
+}
+
+.ark-page-head__above {
+  margin-bottom: var(--space-3);
+}
+
+.ark-page-head__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.ark-page-head__text { min-width: 0; }
+
+/* The title and its ⓘ. flex-start with a nudge rather than centre, so on
+ * a title long enough to wrap the ⓘ stays level with the first line. */
+.ark-page-head__title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.ark-page-head__title-row .ark-tip-icon { margin-top: 3px; }
+
+.ark-page-head__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: var(--track-tight);
+  line-height: var(--leading-tight);
+  color: var(--ink-950);
+}
+
+.ark-page-head__desc {
+  margin-top: var(--space-1-5);
+  max-width: 720px;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--ink-600);
+}
+
+.ark-page-head__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+@media (max-width: 720px) {
+  .ark-page-head__row { flex-direction: column; }
+}
+
+/* "← Back to …" above a page title or a profile card. Was restyled inline
+ * on eight pages at body size, the same weight as the title's own
+ * description; it is a way out, so it sits a step quieter and firms up
+ * under the cursor. */
+.ark-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-600);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.ark-back:hover { color: var(--ink-900); }
+
+
+/* A round, borderless icon control for the top bar. Its chrome appears
+ * only under the cursor or while its panel is open. */
+.ark-icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  color: var(--ink-600);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-icon-btn:hover,
+.ark-icon-btn[aria-expanded="true"] {
+  background: var(--surface-bg-alt);
+  color: var(--ink-900);
+}
+
+.ark-icon-btn:focus-visible { border-radius: var(--radius-full); }
+
+/* The ring in the ground colour cuts the badge out of the icon beneath,
+ * so the two read as separate shapes rather than one smudge. */
+.ark-icon-btn__badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+/* The signed-in account. No container: an avatar, a name, an email and
+ * a caret are already a recognisable control, and the pill that held them
+ * was the one boxed object in an otherwise open bar. Hover firms the text
+ * and rings the avatar instead of drawing a shape around them. Name over
+ * email with a larger avatar; the role is in the menu (see ProfileMenu). */
+.ark-account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1);
+  margin-right: calc(-1 * var(--space-1));
+  text-align: left;
+}
+
+.ark-account__avatar {
+  display: flex;
+  border-radius: var(--radius-full);
+  transition: box-shadow var(--dur) var(--ease);
+}
+
+.ark-account__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.ark-account__name {
+  font-size: var(--text-base);
+  font-weight: 650;
+  letter-spacing: var(--track-snug);
+  color: var(--ink-900);
+  white-space: nowrap;
+}
+
+.ark-account__email {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--text-xs);
+  color: var(--ink-600);
+  white-space: nowrap;
+}
+
+/* In the menu's head, under the name and email. */
+.ark-account__role {
+  margin-top: var(--space-1);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  white-space: nowrap;
+}
+
+.ark-menu__head .ark-account__email { max-width: 240px; }
+
+/* On a narrow window the name and email would crowd the search box out
+ * of the bar; the avatar alone still says who is signed in, and the menu
+ * repeats the name and email in full. */
+@media (max-width: 900px) {
+  .ark-account > .ark-account__text { display: none; }
+}
+
+.ark-account__caret {
+  flex-shrink: 0;
+  color: var(--ink-400);
+  transition: transform var(--dur) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-account:hover .ark-account__avatar,
+.ark-account[aria-expanded="true"] .ark-account__avatar {
+  box-shadow: 0 0 0 2px var(--surface-bg), 0 0 0 4px var(--surface-border-strong);
+}
+
+.ark-account:hover .ark-account__name { color: var(--ink-950); }
+
+.ark-account:hover .ark-account__caret,
+.ark-account[aria-expanded="true"] .ark-account__caret { color: var(--ink-700); }
+
+.ark-account[aria-expanded="true"] .ark-account__caret { transform: rotate(180deg); }
+
+/* ================================================================== Menus
+ * The dropdown panel behind the account, the notification bell and a
+ * table row's overflow button. Items had no hover state at all — inline
+ * styles cannot express one — so pointing at "Log out" gave no sign it
+ * was the thing about to be pressed. */
+
+.ark-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  min-width: 220px;
+  padding: var(--space-1-5);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  transform-origin: top right;
+  animation: ark-menu-in var(--dur) var(--ease) both;
+}
+
+@keyframes ark-menu-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+.ark-menu__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  padding: var(--space-2) var(--space-2-5) var(--space-3);
+  margin-bottom: var(--space-1-5);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ark-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  width: 100%;
+  padding: var(--space-2) var(--space-2-5);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 550;
+  color: var(--ink-900);
+  text-align: left;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.ark-menu__item svg { flex-shrink: 0; color: var(--ink-400); }
+
+.ark-menu__item:hover,
+.ark-menu__item:focus-visible { background: var(--surface-bg); }
+
+/* The one line under an item that says what it does (or, greyed, why it
+ * can't be used). Quieter than the label so the menu still scans as a
+ * list of verbs. */
+.ark-menu__sub {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: var(--leading-snug);
+  color: var(--ink-600);
+}
+
+/* Red from the label down to the hover wash, so a pointer resting on it
+ * shows it is the dangerous one before anything is pressed. */
+.ark-menu__item--danger { color: var(--danger-text); }
+.ark-menu__item--danger svg { color: var(--danger-text); }
+.ark-menu__item--danger .ark-menu__sub { color: var(--danger-text); opacity: 0.8; }
+.ark-menu__item--danger:hover,
+.ark-menu__item--danger:focus-visible { background: var(--danger-bg); }
+
+.ark-menu__item[aria-disabled="true"],
+.ark-menu__item[aria-disabled="true"] .ark-menu__sub { color: var(--ink-400); }
+.ark-menu__item[aria-disabled="true"] { cursor: not-allowed; }
+.ark-menu__item[aria-disabled="true"]:hover { background: transparent; }
+
+.ark-menu__sep {
+  height: 1px;
+  margin: var(--space-1-5) calc(-1 * var(--space-1-5));
+  background: var(--hairline);
+}
+
+/* Row menus live in <body>, positioned from their trigger, so a table's
+ * scroll wrapper cannot clip them. Coordinates are set by RowMenu. */
+.ark-menu--floating { position: fixed; top: 0; right: 0; }
+.ark-menu--up { transform-origin: bottom right; }
+
+/* A row menu's labelled trigger, for a row whose only actions are in the
+ * menu. The caret turns over while the menu is open. */
+.ark-menu-trigger { gap: var(--space-1-5); }
+.ark-menu-trigger__caret {
+  flex-shrink: 0;
+  margin-right: -2px;
+  color: var(--ink-400);
+  transition: transform var(--dur) var(--ease), color var(--dur-fast) var(--ease);
+}
+.ark-menu-trigger:hover .ark-menu-trigger__caret { color: var(--ink-700); }
+.ark-menu-trigger[aria-expanded="true"] {
+  background: var(--surface-bg-alt);
+  color: var(--ink-900);
+  border-color: var(--ink-300);
+}
+.ark-menu-trigger[aria-expanded="true"] .ark-menu-trigger__caret {
+  transform: rotate(180deg);
+  color: var(--ink-700);
+}
+
+/* A table row's overflow trigger. A bordered box on every row would read
+ * as a column of buttons competing with the data. The ⋮ glyph is already
+ * read
+ * as "more"; it gets its chrome when the row is hovered or the menu is
+ * open, which is when it is about to be used. */
+.ark-kebab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-400);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.ark-table--rows tbody tr:hover .ark-kebab { color: var(--ink-700); }
+
+.ark-kebab:hover,
+.ark-kebab[aria-expanded="true"] {
+  background: var(--surface-bg-alt);
+  color: var(--ink-900);
+}
+
+/* ============================================================== Info tips
+ * A word in a table cell with an (i) beside it, opening a small card of
+ * detail (InfoTip). The trigger borrows its colour from the cell, so a
+ * warning word gets a warning-tinted wash; its padding is cancelled by a
+ * matching negative margin so the word still lines up with the plain
+ * values in the rows above and below. */
+
+.ark-tip-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: -3px -6px;
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.ark-tip-trigger__icon {
+  display: inline-flex;
+  opacity: 0.65;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.ark-tip-trigger:hover,
+.ark-tip-trigger[data-open] { background: color-mix(in srgb, currentColor 9%, transparent); }
+
+.ark-tip-trigger:hover .ark-tip-trigger__icon,
+.ark-tip-trigger[data-open] .ark-tip-trigger__icon { opacity: 1; }
+
+/* The ⓘ on its own — beside a page title. Quiet at rest so it never
+ * competes with the title; it firms up under the cursor and takes the
+ * accent while its card is open, so the card has a visible owner. */
+.ark-tip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  color: var(--ink-400);
+  transition:
+    color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.ark-tip-icon:hover {
+  color: var(--ink-900);
+  background: var(--surface-bg-alt);
+}
+
+.ark-tip-icon[data-open] {
+  color: var(--accent);
+  background: var(--accent-bg);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-bg) 60%, transparent);
+}
+
+.ark-tip-icon:focus-visible { border-radius: var(--radius-full); }
+
+.ark-tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  box-sizing: border-box;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font);
+  font-size: var(--text-xs);
+  font-variant-numeric: normal;
+  line-height: var(--leading-snug);
+  color: var(--ink-900);
+  text-align: left;
+  white-space: normal;
+  /* Grows out of the arrow, and back into it on close — so the card
+   * reads as coming from the ⓘ rather than appearing near it. */
+  --pop-y: -6px;
+  transform-origin: var(--arrow-x, 24px) top;
+  animation: ark-pop-in var(--dur-slow) var(--ease) both;
+}
+
+.ark-tip--up {
+  --pop-y: 6px;
+  transform-origin: var(--arrow-x, 24px) bottom;
+}
+
+.ark-tip[data-state="closed"] {
+  pointer-events: none;
+  animation: ark-pop-out var(--dur) var(--ease) both;
+}
+
+@keyframes ark-pop-in {
+  from { opacity: 0; transform: translateY(var(--pop-y)) scale(0.94); filter: blur(3px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+
+@keyframes ark-pop-out {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(calc(var(--pop-y) * 0.5)) scale(0.97); }
+}
+
+/* The arrow: a rotated square whose two bordered sides form the point,
+ * drawn over the card's own border so the two read as one outline.
+ * --arrow-x is the (i)'s centre, set by InfoTip. */
+.ark-tip::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: calc(var(--arrow-x, 24px) - 5px);
+  width: 10px;
+  height: 10px;
+  background: var(--surface);
+  border-top: 1px solid var(--surface-border);
+  border-left: 1px solid var(--surface-border);
+  border-top-left-radius: 2px;
+  transform: rotate(45deg);
+}
+
+.ark-tip--up::before {
+  top: auto;
+  bottom: -6px;
+  transform: rotate(225deg);
+}
+
+.ark-tip__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2-5);
+  margin-bottom: var(--space-2-5);
+  border-bottom: 1px solid var(--hairline);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  letter-spacing: var(--track-snug);
+}
+
+.ark-tip__head svg { flex-shrink: 0; }
+
+/* Label / value pairs. Labels take the width of the longest one, so every
+ * value starts on the same line and a wrapped value stays in its column. */
+.ark-tip__facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  margin: 0;
+}
+
+.ark-tip__facts dt {
+  color: var(--ink-600);
+  font-weight: 500;
+}
+
+.ark-tip__facts dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ark-tip__facts dd small {
+  display: block;
+  margin-top: 1px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--ink-600);
+}
+
+.ark-tip__note {
+  margin: var(--space-2-5) 0 0;
+  padding-top: var(--space-2-5);
+  border-top: 1px solid var(--hairline);
+  color: var(--ink-600);
+}
+
+/* A page's "about" card (PageHeader's `info`). Roomier than a table
+ * cell's tip, because it is read rather than glanced at. Its lines
+ * arrive a beat after the card, one after another, so the eye is led
+ * down it instead of meeting a block of text all at once. */
+.ark-tip--about {
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+}
+
+.ark-about > * {
+  animation: ark-enter var(--dur-slow) var(--ease) both;
+}
+.ark-about > :nth-child(2) { animation-delay: 40ms; }
+.ark-about > :nth-child(3) { animation-delay: 80ms; }
+
+.ark-about__eyebrow {
+  margin: 0 0 var(--space-1-5);
+  font-size: var(--text-2xs);
+  font-weight: 650;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ark-about__summary {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-900);
+}
+
+.ark-about__points {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--hairline);
+  list-style: none;
+}
+
+.ark-about__points li {
+  position: relative;
+  padding-left: var(--space-4);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-600);
+}
+
+.ark-about__points li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background: var(--ink-300);
+}
+
+/* Terms and their meanings, in an about card: each term keeps the dot
+ * and colour it has on the page, so the card reads as a legend. */
+.ark-about__terms {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-4);
+  row-gap: var(--space-2-5);
+  margin: var(--space-1) 0 0;
+}
+
+.ark-about__terms dt {
+  align-self: start;
+  line-height: var(--leading-normal);
+  font-weight: 600;
+}
+
+.ark-about__terms dd {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-700);
+}

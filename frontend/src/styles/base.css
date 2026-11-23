@@ -1,0 +1,191 @@
+/* Base layer — the things that should be true everywhere, set once.
+ *
+ * Deliberately small. This is not a utility framework; the app styles
+ * itself with components and the inline `style` prop, and that is fine
+ * for layout. What belongs here is only what the inline prop *cannot*
+ * express: pseudo-classes, selection, scrollbars, media queries, and the
+ * typographic defaults every screen was otherwise re-declaring by hand.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* A full-bleed element sized in `vw` measures the viewport *including*
+   * the scrollbar, so it overhangs by a few pixels and the page gains a
+   * horizontal scrollbar of its own. `clip` removes the overhang without
+   * the side effect `overflow: hidden` has of making the element a
+   * scroll container, which would break `position: sticky` inside it. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-bg);
+  color: var(--ink-900);
+  font-family: var(--font);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--track-normal);
+  /* Inter's defaults leave the text looking slightly loose and the
+   * numerals uneven in dense lists. `cv11` gives a single-storey a
+   * (steadier at small sizes), `ss01` tidies the punctuation. */
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings inherit the app font and lose the browser's default margins,
+ * so no screen zeroes them inline. Sizes stay with the caller — the same <h2> is a page title on
+ * one screen and a card title on another. */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 700;
+  letter-spacing: var(--track-tight);
+  line-height: var(--leading-tight);
+  color: var(--ink-950);
+}
+
+p { margin: 0; }
+
+/* ------------------------------------------------------------------ Focus
+ * Every focusable element shows a ring, so a keyboard user can tell
+ * where they are. :focus-visible rather than :focus so a
+ * mouse click does not leave a ring behind, which is the reason focus
+ * styling gets removed in the first place. */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ------------------------------------------------------------- Selection */
+::selection {
+  background: var(--accent-bg-strong);
+  color: var(--accent-dark);
+}
+
+/* ------------------------------------------------------------ Scrollbars
+ * The pipeline rail and every tall panel scroll internally, and the
+ * platform default bar is a heavy grey slab that cuts the panel in two.
+ * Thin, low-contrast, and it firms up on hover so it is still findable. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-300) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: 3px solid transparent;
+  border-radius: var(--radius-full);
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 10px var(--ink-300);
+  transition: box-shadow var(--dur) var(--ease);
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0 10px var(--ink-400);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 0 0 0 10px var(--ink-600);
+}
+
+/* ---------------------------------------------------------------- Inputs
+ * The old global `input` rule painted a 1px --border box on every field
+ * in the app, including ones that had already styled themselves inline —
+ * so fields disagreed with each other by a pixel and a shade. Reset to
+ * inherit and let .ark-input (or the caller) decide. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  border: 1px solid var(--surface-border);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-2-5);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--ink-400);
+}
+
+input:hover:not(:disabled):not(:focus),
+textarea:hover:not(:disabled):not(:focus),
+select:hover:not(:disabled):not(:focus) {
+  border-color: var(--surface-border-strong);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background: var(--surface-bg-alt);
+  color: var(--ink-400);
+  cursor: not-allowed;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Checkboxes and radios keep the platform control but take the brand
+ * colour, which is one line and looks deliberate. */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--accent);
+  width: auto;
+  padding: 0;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+
+/* Numerals in any dense, aligned context. Proportional figures make a
+ * column of counts look ragged because a 1 is narrower than a 7. */
+.ark-num,
+table td,
+table th {
+  font-variant-numeric: tabular-nums;
+}

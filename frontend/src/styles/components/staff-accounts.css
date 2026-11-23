@@ -1,0 +1,28 @@
+/* ===================================================== Staff accounts
+ * User Management: the list of interviews still waiting
+ * on an evaluator, shown in an Alert before their account is switched
+ * off. */
+
+.ark-waiting__list {
+  display: grid;
+  gap: var(--space-1-5);
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ark-waiting__list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-700);
+}
+
+/* Candidate Profile: Reject sits in its own section below the main
+ * action, labelled as the dangerous one, so a hand reaching for Advance
+ * can't land on it. */
+.ark-rail-danger .ark-eyebrow-quiet { color: var(--danger-text); }
+.ark-rail-danger .ark-rail-text { color: var(--ink-600); }
+.ark-rail-danger .ark-rail-actions { margin-top: var(--space-3); }
